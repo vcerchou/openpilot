@@ -8,6 +8,18 @@
 #define MAZDA_STEER_TORQUE  0x240
 #define MAZDA_ENGINE_DATA   0x202
 #define MAZDA_PEDALS        0x165
+#define MAZDA_CRZ_EVENTS    0x21F
+
+// Radar
+
+#define MAZDA_CRZ_INFO      0x21B
+#define MAZDA_RADAR_361     0x361
+#define MAZDA_RADAR_362     0x362
+#define MAZDA_RADAR_363     0x363
+#define MAZDA_RADAR_364     0x364
+#define MAZDA_RADAR_365     0x365
+#define MAZDA_RADAR_366     0x366
+#define MAZDA_RADAR_499     0x499
 
 // CAN bus numbers
 #define MAZDA_MAIN 0
@@ -25,7 +37,10 @@ const SteeringLimits MAZDA_STEERING_LIMITS = {
   .type = TorqueDriverLimited,
 };
 
-const CanMsg MAZDA_TX_MSGS[] = {{MAZDA_LKAS, 0, 8}, {MAZDA_CRZ_BTNS, 0, 8}, {MAZDA_LKAS2, 0, 8}, {MAZDA_LKAS_HUD, 0, 8}};
+const CanMsg MAZDA_TX_MSGS[] = {{MAZDA_LKAS, 0, 8}, {MAZDA_CRZ_BTNS, 0, 8}, {MAZDA_LKAS2, 1, 8}, {MAZDA_LKAS_HUD, 0, 8},
+                                {MAZDA_CRZ_CTRL, 0, 8}, {MAZDA_CRZ_INFO, 0, 8}, {MAZDA_RADAR_361, 0, 8}, {MAZDA_RADAR_362, 0, 8},
+                                {MAZDA_RADAR_363, 0, 8}, {MAZDA_RADAR_364, 0, 8}, {MAZDA_RADAR_365, 0, 8}, {MAZDA_RADAR_366, 0, 8}, 
+                                {MAZDA_RADAR_499, 0, 8}};
 
 RxCheck mazda_rx_checks[] = {
   {.msg = {{MAZDA_CRZ_CTRL,     0, 8, .frequency = 50U}, { 0 }, { 0 }}},
@@ -59,18 +74,17 @@ static void mazda_rx_hook(const CANPacket_t *to_push) {
       update_sample(&torque_driver, torque_driver_new);
     }
 
-    // enter controls on rising edge of ACC, exit controls on ACC off
-    if (addr == MAZDA_CRZ_CTRL) {
-      bool cruise_engaged = GET_BYTE(to_push, 0) & 0x8U;
-      pcm_cruise_check(cruise_engaged);
-    }
-
     if (addr == MAZDA_ENGINE_DATA) {
       gas_pressed = (GET_BYTE(to_push, 4) || (GET_BYTE(to_push, 5) & 0xF0U));
     }
 
     if (addr == MAZDA_PEDALS) {
       brake_pressed = (GET_BYTE(to_push, 0) & 0x10U);
+    }
+
+    if (addr == MAZDA_CRZ_EVENTS) {
+      bool cruise_engaged = GET_BYTE(to_push, 2) & 0x1U;
+      pcm_cruise_check(cruise_engaged);
     }
 
     generic_rx_checks((addr == MAZDA_LKAS));
@@ -117,11 +131,23 @@ static bool mazda_tx_hook(const CANPacket_t *to_send) {
 
 static int mazda_fwd_hook(int bus, int addr) {
   int bus_fwd = -1;
-
+  bool block = (addr == MAZDA_LKAS2);
   if (bus == MAZDA_MAIN) {
-    bus_fwd = MAZDA_CAM;
+    if (!block) {
+      bus_fwd = MAZDA_CAM;
+    }
   } else if (bus == MAZDA_CAM) {
-    bool block = (addr == MAZDA_LKAS) || (addr == MAZDA_LKAS_HUD);
+    block |= (addr == MAZDA_LKAS);
+    block |= (addr == MAZDA_LKAS_HUD);
+    block |= (addr == MAZDA_CRZ_INFO);
+    block |= (addr == MAZDA_CRZ_CTRL);
+    block |= (addr == MAZDA_RADAR_361);
+    block |= (addr == MAZDA_RADAR_362);
+    block |= (addr == MAZDA_RADAR_363);
+    block |= (addr == MAZDA_RADAR_364);
+    block |= (addr == MAZDA_RADAR_365);
+    block |= (addr == MAZDA_RADAR_366);
+    
     if (!block) {
       bus_fwd = MAZDA_MAIN;
     }
