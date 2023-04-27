@@ -1,8 +1,10 @@
 // CAN msgs we care about
 #define MAZDA_LKAS          0x243
+#define MAZDA_LKAS2         0x249
 #define MAZDA_LKAS_HUD      0x440
 #define MAZDA_CRZ_CTRL      0x21c
 #define MAZDA_CRZ_BTNS      0x09d
+#define TI_STEER_TORQUE     0x24A
 #define MAZDA_STEER_TORQUE  0x240
 #define MAZDA_ENGINE_DATA   0x202
 #define MAZDA_PEDALS        0x165
@@ -23,7 +25,7 @@ const SteeringLimits MAZDA_STEERING_LIMITS = {
   .type = TorqueDriverLimited,
 };
 
-const CanMsg MAZDA_TX_MSGS[] = {{MAZDA_LKAS, 0, 8}, {MAZDA_CRZ_BTNS, 0, 8}, {MAZDA_LKAS_HUD, 0, 8}};
+const CanMsg MAZDA_TX_MSGS[] = {{MAZDA_LKAS, 0, 8}, {MAZDA_CRZ_BTNS, 0, 8}, {MAZDA_LKAS2, 0, 8}, {MAZDA_LKAS_HUD, 0, 8}};
 
 RxCheck mazda_rx_checks[] = {
   {.msg = {{MAZDA_CRZ_CTRL,     0, 8, .frequency = 50U}, { 0 }, { 0 }}},
@@ -33,18 +35,25 @@ RxCheck mazda_rx_checks[] = {
   {.msg = {{MAZDA_PEDALS,       0, 8, .frequency = 50U}, { 0 }, { 0 }}},
 };
 
+RxCheck mazda_ti_rx_checks[] = {
+  {.msg = {{MAZDA_CRZ_BTNS,     0, 8, .frequency = 10U}, { 0 }, { 0 }}},
+  {.msg = {{MAZDA_STEER_TORQUE, 0, 8, .frequency = 83U}, { 0 }, { 0 }}},
+  {.msg = {{MAZDA_ENGINE_DATA,  0, 8, .frequency = 100U}, { 0 }, { 0 }}},
+  {.msg = {{MAZDA_PEDALS,       0, 8, .frequency = 50U}, { 0 }, { 0 }}},
+  {.msg = {{TI_STEER_TORQUE,    1, 8, .frequency = 50U}, { 0 }, { 0 }}},
+};
+
 // track msgs coming from OP so that we know what CAM msgs to drop and what to forward
 static void mazda_rx_hook(const CANPacket_t *to_push) {
+  int addr = GET_ADDR(to_push);
   if ((int)GET_BUS(to_push) == MAZDA_MAIN) {
-    int addr = GET_ADDR(to_push);
-
     if (addr == MAZDA_ENGINE_DATA) {
       // sample speed: scale by 0.01 to get kph
       int speed = (GET_BYTE(to_push, 2) << 8) | GET_BYTE(to_push, 3);
       vehicle_moving = speed > 10; // moving when speed > 0.1 kph
     }
 
-    if (addr == MAZDA_STEER_TORQUE) {
+    if (addr == MAZDA_STEER_TORQUE && !torque_interceptor_detected) {
       int torque_driver_new = GET_BYTE(to_push, 0) - 127U;
       // update array of samples
       update_sample(&torque_driver, torque_driver_new);
@@ -65,6 +74,14 @@ static void mazda_rx_hook(const CANPacket_t *to_push) {
     }
 
     generic_rx_checks((addr == MAZDA_LKAS));
+  }
+
+  if ((GET_BUS(to_push) == MAZDA_AUX)) {
+    int addr = GET_ADDR(to_push);
+    if (addr == TI_STEER_TORQUE) {
+      int torque_driver_new = GET_BYTE(to_push, 0) - 126;
+      update_sample(&torque_driver, torque_driver_new);
+    }
   }
 }
 

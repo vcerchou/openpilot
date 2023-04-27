@@ -18,7 +18,7 @@ from openpilot.common.params import Params
 from openpilot.common.realtime import config_realtime_process, Priority, Ratekeeper, DT_CTRL
 from openpilot.common.swaglog import cloudlog
 
-from openpilot.selfdrive.car.car_helpers import get_car_interface, get_startup_event
+from openpilot.selfdrive.car.car_helpers import get_car_interface, get_startup_event, get_ti
 from openpilot.selfdrive.controls.lib.alertmanager import AlertManager, set_offroad_alert
 from openpilot.selfdrive.controls.lib.drive_helpers import VCruiseHelper, clip_curvature
 from openpilot.selfdrive.controls.lib.events import Events, ET
@@ -102,6 +102,8 @@ class Controls:
                                   frequency=int(1/DT_CTRL))
 
     self.joystick_mode = self.params.get_bool("JoystickDebugMode")
+
+    self.ti_ready = False
 
     # read params
     self.is_metric = self.params.get_bool("IsMetric")
@@ -286,6 +288,12 @@ class Controls:
       if log.PandaState.FaultType.relayMalfunction in pandaState.faults:
         self.events.add(EventName.relayMalfunction)
 
+      if pandaState.torqueInterceptorDetected and not self.ti_ready:
+        self.ti_ready = True
+        self.CP.enableTorqueInterceptor = True
+        #Update CP based on torque_interceptor_ready
+        self.CP = get_ti()
+        
     # Handle HW and system malfunctions
     # Order is very intentional here. Be careful when modifying this.
     # All events here should at least have NO_ENTRY and SOFT_DISABLE.

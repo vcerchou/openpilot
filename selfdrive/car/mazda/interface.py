@@ -4,6 +4,7 @@ from openpilot.common.conversions import Conversions as CV
 from openpilot.selfdrive.car.mazda.values import CAR, LKAS_LIMITS
 from openpilot.selfdrive.car import create_button_events, get_safety_config
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase
+from openpilot.selfdrive.global_ti import TI
 
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
@@ -16,7 +17,7 @@ class CarInterface(CarInterfaceBase):
     ret.safetyConfigs = [get_safety_config(car.CarParams.SafetyModel.mazda)]
     ret.radarUnavailable = True
 
-    ret.dashcamOnly = candidate not in (CAR.MAZDA_CX5_2022, CAR.MAZDA_CX9_2021)
+    ret.dashcamOnly = False
 
     ret.steerActuatorDelay = 0.1
     ret.steerLimitTimer = 0.8
@@ -32,7 +33,12 @@ class CarInterface(CarInterfaceBase):
 
   # returns a car.CarState
   def _update(self, c):
-    ret = self.CS.update(self.cp, self.cp_cam)
+    if self.CP.enableTorqueInterceptor and not TI.enabled:
+      TI.enabled = True
+      self.cp_body = self.CS.get_body_can_parser(self.CP)
+      self.can_parsers = [self.cp, self.cp_cam, self.cp_adas, self.cp_body, self.cp_loopback]
+
+    ret = self.CS.update(self.cp, self.cp_cam, self.cp_body)
 
      # TODO: add button types for inc and dec
     ret.buttonEvents = create_button_events(self.CS.distance_button, self.CS.prev_distance_button, {1: ButtonType.gapAdjustCruise})
@@ -45,6 +51,9 @@ class CarInterface(CarInterfaceBase):
     elif self.CS.low_speed_alert:
       events.add(EventName.belowSteerSpeed)
 
+    if not self.CS.acc_active_last and not self.CS.ti_lkas_allowed:
+      events.add(EventName.steerTempUnavailable)
+      
     ret.events = events.to_msg()
 
     return ret

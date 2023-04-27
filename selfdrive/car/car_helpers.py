@@ -13,8 +13,10 @@ from openpilot.common.swaglog import cloudlog
 import cereal.messaging as messaging
 from openpilot.selfdrive.car import gen_empty_fingerprint
 from openpilot.system.version import get_build_metadata
+from openpilot.selfdrive.global_ti import TI
 
 FRAME_FINGERPRINT = 100  # 1s
+
 
 EventName = car.CarEvent.EventName
 
@@ -203,6 +205,7 @@ def get_car(logcan, sendcan, experimental_long_allowed, num_pandas=1):
   CP.carFw = car_fw
   CP.fingerprintSource = source
   CP.fuzzyFingerprint = not exact_match
+  TI.saved_CarInterface = CarInterface
 
   return get_car_interface(CP), CP
 
@@ -217,3 +220,9 @@ def get_demo_car_params():
   CarInterface, _, _ = interfaces[platform]
   CP = CarInterface.get_non_essential_params(platform)
   return CP
+
+def get_ti():
+  print("get_ti, entering get_params")
+  car_params = TI.saved_CarInterface.get_params(TI.saved_candidate, TI.saved_finger, list(), False, False)
+
+  return car_params
