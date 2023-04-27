@@ -98,8 +98,8 @@ class CarState(CarStateBase):
 
     # TODO: the signal used for available seems to be the adaptive cruise signal, instead of the main on
     #       it should be used for carState.cruiseState.nonAdaptive instead
-    ret.cruiseState.available = cp.vl["CRZ_CTRL"]["CRZ_AVAILABLE"] == 1
-    ret.cruiseState.enabled = cp.vl["CRZ_CTRL"]["CRZ_ACTIVE"] == 1
+    ret.cruiseState.available = cp_cam.vl["CRZ_CTRL"]["CRZ_AVAILABLE"] == 1
+    ret.cruiseState.enabled = cp.vl["CRZ_EVENTS"]["CRUISE_ACTIVE_CAR_MOVING"] == 1
     ret.cruiseState.standstill = cp.vl["PEDALS"]["STANDSTILL"] == 1
     ret.cruiseState.speed = cp.vl["CRZ_EVENTS"]["CRZ_SPEED"] * CV.KPH_TO_MS
 
@@ -124,6 +124,9 @@ class CarState(CarStateBase):
     self.cam_laneinfo = cp_cam.vl["CAM_LANEINFO"]
     ret.steerFaultPermanent = cp_cam.vl["CAM_LKAS"]["ERR_BIT_1"] == 1
 
+    self.cp_cam = cp_cam
+    self.cp = cp
+
     return ret
 
   @staticmethod
@@ -140,7 +143,6 @@ class CarState(CarStateBase):
     if CP.carFingerprint in GEN1:
       messages += [
         ("ENGINE_DATA", 100),
-        ("CRZ_CTRL", 50),
         ("CRZ_EVENTS", 50),
         ("CRZ_BTNS", 10),
         ("PEDALS", 50),
@@ -152,17 +154,7 @@ class CarState(CarStateBase):
       ]
     # get real driver torque if we are using a torque interceptor
     if CP.enableTorqueInterceptor:
-      signals += [
-        ("TI_TORQUE_SENSOR", "TI_FEEDBACK", 0),
-        ("CHKSUM", "TI_FEEDBACK", 0),
-        ("VERSION_NUMBER", "TI_FEEDBACK", 0),
-        ("STATE", "TI_FEEDBACK", 0),
-        ("VIOL", "TI_FEEDBACK", 0),
-        ("ERROR", "TI_FEEDBACK", 0),
-        ("RAMP_DOWN", "TI_FEEDBACK", 0),
-      ]
-
-      checks += [
+      messages += [
         ("TI_FEEDBACK", 100),
       ]
       
@@ -177,29 +169,27 @@ class CarState(CarStateBase):
         # sig_address, frequency
         ("CAM_LANEINFO", 2),
         ("CAM_LKAS", 16),
+        ("CRZ_CTRL",50), 
+        ("CRZ_INFO",50)
       ]
 
+      for addr in range(361,367):
+        msg = f"RADAR_{addr}"
+        messages += [
+        (msg, 10)
+      ]
+        
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 2)
+
 
 
   @staticmethod
   def get_body_can_parser(CP):
     # this function generates lists for signal, messages and initial values
-    signals = []
-    checks = []
+    messages = []
     # get real driver torque if we are using a torque interceptor
     if CP.enableTorqueInterceptor:
-      signals += [
-        ("TI_TORQUE_SENSOR", "TI_FEEDBACK", 0),
-        ("CHKSUM", "TI_FEEDBACK", 0),
-        ("VERSION_NUMBER", "TI_FEEDBACK", 0),
-        ("STATE", "TI_FEEDBACK", 0),
-        ("VIOL", "TI_FEEDBACK", 0),
-        ("ERROR", "TI_FEEDBACK", 0),
-        ("RAMP_DOWN", "TI_FEEDBACK", 0),
-      ]
-
-      checks += [
+      messages += [
         ("TI_FEEDBACK", 50),
       ]
 
