@@ -66,7 +66,7 @@ static int mazda_rx_hook(CANPacket_t *to_push) {
   if (((GET_ADDR(to_push) == TI_STEER_TORQUE)) &&
       ((GET_BYTE(to_push, 0) == GET_BYTE(to_push, 1)))) {
     torque_interceptor_detected = 1;
-    valid &= addr_safety_check(to_push, &mazda_ti_rx_checks, NULL, NULL, NULL);
+    valid &= addr_safety_check(to_push, &mazda_ti_rx_checks, NULL, NULL, NULL, NULL);
   }
 
   if (valid && (GET_BUS(to_push) == MAZDA_MAIN)) {
