@@ -28,7 +28,7 @@ class RadarInterface(RadarInterfaceBase):
     self.updated_messages = set()
     self.track_id = 0
 
-    self.radar_off_can = CP.radarOffCan
+    self.radar_off_can = CP.radarUnavailable
     self.rcp = get_radar_can_parser(CP)
 
   def update(self, can_strings):
