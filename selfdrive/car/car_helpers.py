@@ -203,6 +203,6 @@ def get_car(logcan, sendcan, experimental_long_allowed, num_pandas=1):
 def get_ti():
   print("get_ti, entering get_params")
   CarInterface = global_ti.saved_CarInterface
-  car_params = CarInterface.get_params(global_ti.saved_candidate, global_ti.saved_finger)
+  car_params = CarInterface.get_params(global_ti.saved_candidate, global_ti.saved_finger, list(), False, False)
 
   return car_params
