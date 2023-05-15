@@ -15,3 +15,5 @@ if [ -z "$PASSIVE" ]; then
 fi
 
 export STAGING_ROOT="/data/safe_staging"
+export API_HOST="https://mypilot.com.cn/myPilot"
+export ATHENA_HOST="wss://mypilot.com.cn"
