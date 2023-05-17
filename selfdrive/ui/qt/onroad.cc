@@ -288,7 +288,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   // update DM icons at 2Hz
   if (sm.frame % (UI_FREQ / 2) == 0) {
     setProperty("dmActive", sm["driverMonitoringState"].getDriverMonitoringState().getIsActiveMode());
-    setProperty("rightHandDM", sm["driverMonitoringState"].getDriverMonitoringState().getIsRHD());
+    setProperty("rightHandDM", ! sm["driverMonitoringState"].getDriverMonitoringState().getIsRHD());
   }
 
   // DM icon transition
