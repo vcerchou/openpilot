@@ -80,6 +80,7 @@ class CarState(CarStateBase):
 
     # TODO: this should be from 0 - 1.
     ret.gas = cp.vl["ENGINE_DATA"]["PEDAL_GAS"]
+    ret.gasCmd = cp.vl["GAS"]["GAS_CMD"]
     ret.gasPressed = ret.gas > 0
 
     # Either due to low speed or hands off
@@ -167,6 +168,7 @@ class CarState(CarStateBase):
         ("BL", "DOORS"),
         ("BR", "DOORS"),
         ("PEDAL_GAS", "ENGINE_DATA"),
+        ("GAS_CMD", "GAS"),
         ("SPEED", "ENGINE_DATA"),
         ("CTR", "CRZ_BTNS"),
         ("LEFT_BS1", "BSM"),
@@ -183,6 +185,7 @@ class CarState(CarStateBase):
         ("DOORS", 10),
         ("GEAR", 20),
         ("BSM", 10),
+        ("GAS", 50),
       ]
     # get real driver torque if we are using a torque interceptor
     if CP.enableTorqueInterceptor:
