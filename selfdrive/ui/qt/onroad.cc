@@ -445,7 +445,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.restore();
 
   // gas & brake
-  int width = 100;
+  int width = 120;
   float scale = 2.7;
   float xmid = set_speed_rect.center().x() - width/2;
   float ymid = 600;
