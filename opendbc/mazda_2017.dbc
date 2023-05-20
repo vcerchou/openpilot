@@ -524,8 +524,6 @@ BO_ 540 CRZ_CTRL: 8 XXX
  SG_ NEW_SIGNAL_5 : 42|6@0+ (1,0) [0|3] "" XXX
  SG_ NEW_SIGNAL_6 : 49|3@1+ (1,0) [0|3] "" XXX
 
-VAL_ 540 DISTANCE_SETTING 0 "disabled" 1 "4bar" 2 "3bar" 3 "2bar" 4 "1bar" ;
-
 BO_ 539 CRZ_INFO: 8 XXX
  SG_ CTR1 : 55|8@0+ (1,0) [0|255] "" XXX
  SG_ ACC_ACTIVE : 33|1@0+ (1,0) [0|1] "" XXX
@@ -753,5 +751,6 @@ CM_ SG_ 552 MORE_GEAR "";
 CM_ SG_ 552 GEAR "0 Shifting, 1 P, 2 R, 3 N, 4 D";
 CM_ SG_ 552 GEAR_BOX "0 P, 14 R, 1 though 6 D for speeds, 15 Shift";
 CM_ SG_ 540 HANDS_ON_STEER_WARN "0 no warning, b warning";
+CM_ SG_ 540 DISTANCE_SETTING "Radar distance 0: disabled, 1: 4 bars, 2: 3 bars, 3: 2 bars, 4: 1 bar";
 CM_ SG_ 1143 REAR_CT_ALERT "Rear Cross Traffic Alert";
 VAL_ 552 GEAR 1 "P" 2 "R" 3 "N" 4 "D" ;

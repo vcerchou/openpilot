@@ -229,7 +229,9 @@ struct CarState {
     speedOffset @3 :Float32;
     standstill @4 :Bool;
     nonAdaptive @5 :Bool;
-    setDistance @6 :SetDistance;
+<<<<<<< HEAD
+=======
+    setDistance @7 :SetDistance;
 
     enum SetDistance {
       unknown @0;
@@ -238,6 +240,7 @@ struct CarState {
       aggresive @3;
       auto @4;
     }
+>>>>>>> parent of e9e973001 (Revert "fix距离控制")
   }
 
   enum GearShifter {

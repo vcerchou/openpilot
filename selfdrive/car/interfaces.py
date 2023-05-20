@@ -15,7 +15,6 @@ from selfdrive.controls.lib.drive_helpers import V_CRUISE_MAX, get_friction
 from selfdrive.controls.lib.events import Events
 from selfdrive.controls.lib.vehicle_model import VehicleModel
 
-SetDistance = car.CarState.CruiseState.SetDistance
 ButtonType = car.CarState.ButtonEvent.Type
 GearShifter = car.CarState.GearShifter
 EventName = car.CarEvent.EventName
@@ -419,16 +418,6 @@ class CarStateBase(ABC):
     }
     return d.get(gear.upper(), GearShifter.unknown)
 
-  @staticmethod
-  def parse_set_distance(val_str: str) -> car.CarState.CruiseState.SetDistance:
-    d: Dict[str, car.CarState.CruiseState.SetDistance] = {
-        '1BAR': SetDistance.aggresive, 
-        '2BAR': SetDistance.normal, 
-        '3BAR': SetDistance.chill,
-        '4BAR': SetDistance.auto,
-    }
-    return d.get(val_str, SetDistance.normal)  
-    
   @staticmethod
   def get_cam_can_parser(CP):
     return None
