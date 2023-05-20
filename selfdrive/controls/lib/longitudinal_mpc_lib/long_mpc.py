@@ -60,15 +60,19 @@ MAX_ACCEL = 2.0
 COMFORT_BRAKE = 2.5
 STOP_DISTANCE = 6.0
 
-def T_FOLLOW(set_distance=SetDistance.normal):
+def get_T_FOLLOW(set_distance=SetDistance.normal):
   if set_distance == SetDistance.aggresive:
-    return 0.9
+    return 1.1
   elif set_distance == SetDistance.normal:
     return 1.45
   elif set_distance == SetDistance.chill:
-    return 2.3
+    return 1.96
+  elif set_distance == SetDistance.auto:
+    return 2.44
   else:
     return 1.45
+
+T_FOLLOW = get_T_FOLLOW()
 
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
@@ -107,8 +111,7 @@ def gen_long_model():
   prev_a = SX.sym('prev_a')
   lead_t_follow = SX.sym('lead_t_follow')
   lead_danger_factor = SX.sym('lead_danger_factor')
-  t_follow = SX.sym('t_follow')
-  model.p = vertcat(a_min, a_max, x_obstacle, prev_a, lead_t_follow, lead_danger_factor, t_follow)
+  model.p = vertcat(a_min, a_max, x_obstacle, prev_a, lead_t_follow, lead_danger_factor)
 
   # dynamics model
   f_expl = vertcat(v_ego, a_ego, j_ego)
@@ -144,12 +147,11 @@ def gen_long_ocp():
   prev_a = ocp.model.p[3]
   lead_t_follow = ocp.model.p[4]
   lead_danger_factor = ocp.model.p[5]
-  T_FOLLOW = ocp.model.p[6]
 
   ocp.cost.yref = np.zeros((COST_DIM, ))
   ocp.cost.yref_e = np.zeros((COST_E_DIM, ))
 
-  desired_dist_comfort = get_safe_obstacle_distance(v_ego, lead_t_follow, T_FOLLOW)
+  desired_dist_comfort = get_safe_obstacle_distance(v_ego, lead_t_follow)
 
   # The main cost in normal operation is how close you are to the "desired" distance
   # from an obstacle at every timestep. This obstacle can be a lead car
@@ -322,7 +324,7 @@ class LongitudinalMpc:
     self.max_a = max_a
 
   def update(self, radarstate, v_cruise, x, v, a, j):
-    T_FOLLOW = T_FOLLOW(SetDistance)
+    T_FOLLOW = get_T_FOLLOW(SetDistance)
     v_ego = self.x0[1]
     self.status = radarstate.leadOne.status or radarstate.leadTwo.status
 
