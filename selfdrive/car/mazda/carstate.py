@@ -11,6 +11,7 @@ class CarState(CarStateBase):
 
     can_define = CANDefine(DBC[CP.carFingerprint]["pt"])
     self.shifter_values = can_define.dv["GEAR"]["GEAR"]
+    self.set_distance_values = can_define.dv["CRZ_CTRL"]["DISTANCE_SETTING"]
 
     self.crz_btns_counter = 0
     self.acc_active_last = False
@@ -119,6 +120,10 @@ class CarState(CarStateBase):
     self.cam_lkas = cp_cam.vl["CAM_LKAS"]
     self.cam_laneinfo = cp_cam.vl["CAM_LANEINFO"]
     ret.steerFaultPermanent = cp_cam.vl["CAM_LKAS"]["ERR_BIT_1"] == 1
+
+    # set_distance
+    distance_val = int(cp_cam.vl["CRZ_CTRL"]["DISTANCE_SETTING"])
+    ret.cruiseState.setDistance = self.parse_set_distance(self.set_distance_values.get(distance_val, None))
 
     self.cp_cam = cp_cam
     self.cp = cp

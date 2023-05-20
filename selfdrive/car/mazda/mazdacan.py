@@ -1,7 +1,19 @@
 import copy
 
 from selfdrive.car.mazda.values import GEN1, Buttons
+from cereal import car
 
+SetDistance = car.CarState.CruiseState.SetDistance
+
+def compute_set_distance(state):
+  if state == SetDistance.aggresive:
+    return 4
+  elif state == SetDistance.normal:
+    return 3
+  elif state == SetDistance.chill:
+    return 2     
+  else:
+    return 1
 
 def create_steering_control(packer, car_fingerprint, frame, apply_steer, lkas):
 
@@ -131,7 +143,7 @@ def create_button_cmd(packer, car_fingerprint, counter, button):
 
     return packer.make_can_msg("CRZ_BTNS", 0, values)
 
-def create_radar_command(packer, car_fingerprint, frame, CC, CS):
+def create_radar_command(packer, car_fingerprint, frame, CC, CS, set_distance):
   accel = 0
   ret = []
 
@@ -156,7 +168,7 @@ def create_radar_command(packer, car_fingerprint, frame, CC, CS):
     values_21C = {
         "CRZ_ACTIVE"       : int(CC.longActive),
         "CRZ_AVAILABLE"    : int(CS.cp_cam.vl["CRZ_CTRL"]["CRZ_AVAILABLE"]),
-        "DISTANCE_SETTING" : int(CS.cp_cam.vl["CRZ_CTRL"]["DISTANCE_SETTING"]),
+        "DISTANCE_SETTING" : compute_set_distance(set_distance), #int(CS.cp_cam.vl["CRZ_CTRL"]["DISTANCE_SETTING"]),
         "ACC_ACTIVE_2"     : int(CC.longActive),
         "DISABLE_TIMER_1"  : 0,
         "DISABLE_TIMER_2"  : 0,
