@@ -229,7 +229,7 @@ struct CarState {
     speedOffset @3 :Float32;
     standstill @4 :Bool;
     nonAdaptive @5 :Bool;
-    setDistance @7 :SetDistance;
+    setDistance @6 :SetDistance;
 
     enum SetDistance {
       unknown @0;
