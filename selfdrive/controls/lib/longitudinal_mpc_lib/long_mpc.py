@@ -72,7 +72,7 @@ def get_desired_tf(set_distance=SetDistance.normal):
     return T_FOLLOW_NORMAL
   elif set_distance == SetDistance.chill:
     return T_FOLLOW_CHILL
-  elif set_distance == SetDistance.experimental:
+  elif set_distance == SetDistance.auto:
     return T_FOLLOW_DANGER
   else:
     return T_FOLLOW_NORMAL
