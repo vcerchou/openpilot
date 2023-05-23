@@ -168,7 +168,7 @@ def create_radar_command(packer, car_fingerprint, frame, CC, CS, set_distance):
     values_21C = {
         "CRZ_ACTIVE"       : int(CC.longActive),
         "CRZ_AVAILABLE"    : int(CS.cp_cam.vl["CRZ_CTRL"]["CRZ_AVAILABLE"]),
-        "DISTANCE_SETTING" : compute_set_distance(set_distance), #int(CS.cp_cam.vl["CRZ_CTRL"]["DISTANCE_SETTING"]),
+        "DISTANCE_SETTING" : int(compute_set_distance(set_distance)), 
         "ACC_ACTIVE_2"     : int(CC.longActive),
         "DISABLE_TIMER_1"  : 0,
         "DISABLE_TIMER_2"  : 0,
