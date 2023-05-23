@@ -254,22 +254,13 @@ class LongitudinalMpc:
     self.x0 = np.zeros(X_DIM)
     self.set_weights()
 
-  # make sure the multipliers are simulated for reliability
-  # test them using test/test_longitudinal.py
-  def get_cost_multipliers(self):
-    tfs = [T_FOLLOW_AGGRO, T_FOLLOW_NORMAL, T_FOLLOW_CHILL]
-    a_change_tf = interp(self.desired_tf, tfs, [0.9, 1., 1.1])
-    j_ego_tf = interp(self.desired_tf, tfs, [1., 1., 1.])
-    d_zone_tf = interp(self.desired_tf, tfs, [1., 0.9, 0.8])
-    return (a_change_tf, j_ego_tf, d_zone_tf)
 
   def set_cost_weights(self, cost_weights, constraint_cost_weights):
-    cost_mult = self.get_cost_multipliers()
     W = np.asfortranarray(np.diag(cost_weights))
     for i in range(N):
       # TODO don't hardcode A_CHANGE_COST idx
       # reduce the cost on (a-a_prev) later in the horizon.
-      W[4,4] = cost_weights[4]* cost_mult[0] * np.interp(T_IDXS[i], [0.0, 1.0, 2.0], [1.0, 1.0, 0.0])
+      W[4,4] = cost_weights[4] * np.interp(T_IDXS[i], [0.0, 1.0, 2.0], [1.0, 1.0, 0.0])
       self.solver.cost_set(i, 'W', W)
     # Setting the slice without the copy make the array not contiguous,
     # causing issues with the C interface.
