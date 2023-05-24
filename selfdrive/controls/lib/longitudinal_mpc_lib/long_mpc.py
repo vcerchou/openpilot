@@ -4,7 +4,7 @@ import numpy as np
 
 from cereal import car
 from common.realtime import sec_since_boot
-from common.numpy_fast import clip, interp
+from common.numpy_fast import clip
 from system.swaglog import cloudlog
 # WARNING: imports outside of constants will not trigger a rebuild
 from selfdrive.modeld.constants import index_function
@@ -59,33 +59,29 @@ MIN_ACCEL = -3.5
 MAX_ACCEL = 2.0
 COMFORT_BRAKE = 2.5
 STOP_DISTANCE = 6.0
-T_FOLLOW_CHILL = 2.44
-T_FOLLOW_NORMAL = 1.96
-T_FOLLOW_AGGRO = 1.45
-T_FOLLOW_DANGER = 1.1
 
-
-def get_desired_tf(set_distance=SetDistance.normal):
+def get_T_FOLLOW(set_distance=SetDistance.normal):
   if set_distance == SetDistance.aggresive:
-    return T_FOLLOW_AGGRO
+    return 1.1
   elif set_distance == SetDistance.normal:
-    return T_FOLLOW_NORMAL
+    return 1.45
   elif set_distance == SetDistance.chill:
-    return T_FOLLOW_CHILL
+    return 1.96
   elif set_distance == SetDistance.auto:
-    return T_FOLLOW_DANGER
+    return 2.44
   else:
-    return T_FOLLOW_NORMAL
-    
+    return 1.45
+
+T_FOLLOW = get_T_FOLLOW()
 
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
 
-def get_safe_obstacle_distance(v_ego, desired_tf):
-  return (v_ego**2) / (2 * COMFORT_BRAKE) + desired_tf * v_ego + STOP_DISTANCE - 1.25 + desired_tf
+def get_safe_obstacle_distance(v_ego, t_follow=T_FOLLOW):
+  return (v_ego**2) / (2 * COMFORT_BRAKE) + t_follow * v_ego + STOP_DISTANCE
 
-def desired_follow_distance(v_ego, v_lead, desired_tf = get_desired_tf()):
-  return get_safe_obstacle_distance(v_ego, desired_tf) - get_stopped_equivalence_factor(v_lead)
+def desired_follow_distance(v_ego, v_lead, t_follow=T_FOLLOW):
+  return get_safe_obstacle_distance(v_ego, t_follow) - get_stopped_equivalence_factor(v_lead)
 
 
 def gen_long_model():
@@ -181,7 +177,7 @@ def gen_long_ocp():
 
   x0 = np.zeros(X_DIM)
   ocp.constraints.x0 = x0
-  ocp.parameter_values = np.array([-1.2, 1.2, 0.0, 0.0, T_FOLLOW_CHILL, LEAD_DANGER_FACTOR])
+  ocp.parameter_values = np.array([-1.2, 1.2, 0.0, 0.0, T_FOLLOW, LEAD_DANGER_FACTOR])
 
   # We put all constraint cost weights to 0 and only set them at runtime
   cost_weights = np.zeros(CONSTR_DIM)
@@ -252,7 +248,6 @@ class LongitudinalMpc:
     self.time_integrator = 0.0
     self.x0 = np.zeros(X_DIM)
     self.set_weights()
-
 
   def set_cost_weights(self, cost_weights, constraint_cost_weights):
     W = np.asfortranarray(np.diag(cost_weights))
@@ -329,7 +324,7 @@ class LongitudinalMpc:
     self.max_a = max_a
 
   def update(self, radarstate, v_cruise, x, v, a, j):
-    self.desired_tf = get_desired_tf(car.carstate.cruiseState.setDistance)
+    T_FOLLOW = get_T_FOLLOW(SetDistance)
     v_ego = self.x0[1]
     self.status = radarstate.leadOne.status or radarstate.leadTwo.status
 
@@ -356,7 +351,7 @@ class LongitudinalMpc:
       v_cruise_clipped = np.clip(v_cruise * np.ones(N+1),
                                  v_lower,
                                  v_upper)
-      cruise_obstacle = np.cumsum(T_DIFFS * v_cruise_clipped) + get_safe_obstacle_distance(v_cruise_clipped, self.desired_tf)
+      cruise_obstacle = np.cumsum(T_DIFFS * v_cruise_clipped) + get_safe_obstacle_distance(v_cruise_clipped, T_FOLLOW)
       x_obstacles = np.column_stack([lead_0_obstacle, lead_1_obstacle, cruise_obstacle])
       self.source = SOURCES[np.argmin(x_obstacles[0])]
 
@@ -390,7 +385,7 @@ class LongitudinalMpc:
 
     self.params[:,2] = np.min(x_obstacles, axis=1)
     self.params[:,3] = np.copy(self.prev_a)
-    self.params[:,4] = self.desired_tf
+    self.params[:,4] = T_FOLLOW
 
     self.run()
     if (np.any(lead_xv_0[FCW_IDXS,0] - self.x_sol[FCW_IDXS,0] < CRASH_DISTANCE) and
@@ -402,9 +397,9 @@ class LongitudinalMpc:
     # Check if it got within lead comfort range
     # TODO This should be done cleaner
     if self.mode == 'blended':
-      if any((lead_0_obstacle - get_safe_obstacle_distance(self.x_sol[:,1], self.desired_tf))- self.x_sol[:,0] < 0.0):
+      if any((lead_0_obstacle - get_safe_obstacle_distance(self.x_sol[:,1], T_FOLLOW))- self.x_sol[:,0] < 0.0):
         self.source = 'lead0'
-      if any((lead_1_obstacle - get_safe_obstacle_distance(self.x_sol[:,1], self.desired_tf))- self.x_sol[:,0] < 0.0) and \
+      if any((lead_1_obstacle - get_safe_obstacle_distance(self.x_sol[:,1], T_FOLLOW))- self.x_sol[:,0] < 0.0) and \
          (lead_1_obstacle[0] - lead_0_obstacle[0]):
         self.source = 'lead1'
 
