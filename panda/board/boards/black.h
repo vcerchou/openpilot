@@ -57,6 +57,26 @@ void black_set_usb_load_switch(bool enabled) {
   set_gpio_output(GPIOB, 1, !enabled);
 }
 
+void black_set_usb_power_mode(uint8_t mode) {
+  bool valid = false;
+  switch (mode) {
+    case USB_POWER_CLIENT:
+      black_set_usb_load_switch(false);
+      valid = true;
+      break;
+    case USB_POWER_CDP:
+      black_set_usb_load_switch(true);
+      valid = true;
+      break;
+    default:
+      puts("Invalid USB power mode\n");
+      break;
+  }
+  if (valid) {
+    usb_power_mode = mode;
+  }
+}
+
 void black_set_gps_mode(uint8_t mode) {
   switch (mode) {
     case GPS_DISABLED:
@@ -107,6 +127,12 @@ void black_set_can_mode(uint8_t mode){
   }
 }
 
+void black_usb_power_mode_tick(uint32_t uptime){
+  UNUSED(uptime);
+  // Not applicable
+}
+
+
 bool black_check_ignition(void){
   // ignition is checked through harness
   return harness_check_ignition();
@@ -151,6 +177,9 @@ void black_init(void) {
   // Enable CAN transceivers
   black_enable_can_transceivers(true);
 
+  // Set right power mode
+  black_set_usb_power_mode(USB_POWER_CDP);
+  
   // Disable LEDs
   black_set_led(LED_RED, false);
   black_set_led(LED_GREEN, false);
@@ -200,6 +229,7 @@ const board board_black = {
   .set_led = black_set_led,
   .set_gps_mode = black_set_gps_mode,
   .set_can_mode = black_set_can_mode,
+  .set_usb_power_mode = black_set_usb_power_mode,
   .check_ignition = black_check_ignition,
   .read_current = unused_read_current,
   .set_fan_enabled = unused_set_fan_enabled,
@@ -207,4 +237,5 @@ const board board_black = {
   .set_phone_power = unused_set_phone_power,
   .set_siren = unused_set_siren,
   .read_som_gpio = unused_read_som_gpio
+  .usb_power_mode_tick = black_usb_power_mode_tick,
 };
