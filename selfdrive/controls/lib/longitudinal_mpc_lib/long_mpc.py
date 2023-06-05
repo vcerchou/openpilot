@@ -78,6 +78,20 @@ def get_desired_tf(set_distance=SetDistance.normal):
     return T_FOLLOW_NORMAL
     
 
+def get_T_FOLLOW(set_distance=SetDistance.normal):
+  if set_distance == SetDistance.aggresive:
+    return 1.1
+  elif set_distance == SetDistance.normal:
+    return 1.45
+  elif set_distance == SetDistance.chill:
+    return 1.96
+  elif set_distance == SetDistance.auto:
+    return 2.44
+  else:
+    return 1.45
+
+T_FOLLOW = get_T_FOLLOW()
+
 def get_stopped_equivalence_factor(v_lead):
   return (v_lead**2) / (2 * COMFORT_BRAKE)
 
