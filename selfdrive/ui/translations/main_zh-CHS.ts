@@ -1077,7 +1077,7 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>openpilot longitudinal control may come in a future update.</source>
-        <translation type="unfinished"></translation>
+        <translation>openpilot 纵向控制可能会在未来的更新中出现。</translation>
     </message>
     <message>
         <source>Enable experimental longitudinal control to allow Experimental mode.</source>
@@ -1085,39 +1085,39 @@ This may take up to a minute.</source>
     </message>
     <message>
         <source>openpilot Longitudinal Control (Alpha)</source>
-        <translation type="unfinished"></translation>
+        <translation>openpilot 纵向控制(Alpha)。</translation>
     </message>
     <message>
         <source>WARNING: openpilot longitudinal control is in alpha for this car and will disable Automatic Emergency Braking (AEB).</source>
-        <translation type="unfinished"></translation>
+        <translation>警告: openpilot 纵向控制对于这辆车处于 alpha 状态，将禁用自动紧急制动 (AEB)。</translation>
     </message>
     <message>
         <source>On this car, openpilot defaults to the car&apos;s built-in ACC instead of openpilot&apos;s longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha.</source>
-        <translation type="unfinished"></translation>
+        <translation>在这辆车上，openpilot 默认使用汽车内置的ACC，而不是 openpilot 的纵向控制。 启用它以切换到 openpilot 纵向控制。 启用 openpilot 纵向控制 alpha 时，建议启用实验模式。</translation>
     </message>
     <message>
         <source>Aggressive</source>
-        <translation type="unfinished"></translation>
+        <translation>积极</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>标准</translation>
     </message>
     <message>
         <source>Relaxed</source>
-        <translation type="unfinished"></translation>
+        <translation>舒适</translation>
     </message>
     <message>
         <source>Driving Personality</source>
-        <translation type="unfinished"></translation>
+        <translation>驾驶风格</translation>
     </message>
     <message>
         <source>Standard is recommended. In aggressive mode, openpilot will follow lead cars closer and be more aggressive with the gas and brake. In relaxed mode openpilot will stay further away from lead cars.</source>
-        <translation type="unfinished"></translation>
+        <translation>推荐使用标准模式。在积极模式中，openpilot 会更靠近前車並在加速和剎车方面更积极。在舒适模式中，openpilot 会与前车保持较远的距离。</translation>
     </message>
     <message>
         <source>An alpha version of openpilot longitudinal control can be tested, along with Experimental mode, on non-release branches.</source>
-        <translation type="unfinished"></translation>
+        <translation>可以在非发布分支上测试 openpilot 纵向控制的 alpha 版本以及实验模式。</translation>
     </message>
 </context>
 <context>
@@ -1159,23 +1159,23 @@ This may take up to a minute.</source>
     <name>WiFiPromptWidget</name>
     <message>
         <source>Setup Wi-Fi</source>
-        <translation type="unfinished"></translation>
+        <translation>设置 Wi-Fi</translation>
     </message>
     <message>
         <source>Connect to Wi-Fi to upload driving data and help improve openpilot</source>
-        <translation type="unfinished"></translation>
+        <translation>连接Wi-Fi上传行车数据，帮助改进openpilot</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>打开设置</translation>
     </message>
     <message>
         <source>Uploading training data</source>
-        <translation type="unfinished"></translation>
+        <translation>上传训练数据</translation>
     </message>
     <message>
         <source>Your data is used to train driving models and help improve openpilot</source>
-        <translation type="unfinished"></translation>
+        <translation>您的数据用于训练驾驶模型并帮助改进 openpilot</translation>
     </message>
 </context>
 <context>
