@@ -404,7 +404,7 @@
     </message>
     <message>
         <source>Waiting for route</source>
-        <translation type="unfinished"></translation>
+        <translation>等待路线</translation>
     </message>
 </context>
 <context>
@@ -489,7 +489,7 @@
     </message>
     <message>
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
-        <translation> 警报</translation>
+        <translation> 设备温度过高。 启动前系统冷却。 当前内部组件温度：%1</translation>
     </message>
 </context>
 <context>

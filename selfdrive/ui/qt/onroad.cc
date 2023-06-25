@@ -123,6 +123,23 @@ void OnroadAlerts::updateAlert(const Alert &a) {
   }
 }
 
+QString OnroadAlerts::translateAlertText(const QString &text) {
+  QString translated;
+  if (!text.isEmpty()) {
+    auto arg_pos = text.indexOf('|');
+    if (arg_pos == -1) {
+      translated = tr(text.toUtf8().data());
+   } else {
+      translated = tr(text.left(arg_pos).toUtf8().data());
+      auto args = text.mid(arg_pos + 1).split(',');
+      for (int i = 0; i < args.size(); ++i) {
+        translated = translated.replace(QString("%%1").arg(i + 1), args[i]);
+      }
+    }
+  }
+  return translated;
+}
+
 void OnroadAlerts::paintEvent(QPaintEvent *event) {
   if (alert.size == cereal::ControlsState::AlertSize::NONE) {
     return;
@@ -160,6 +177,8 @@ void OnroadAlerts::paintEvent(QPaintEvent *event) {
   p.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
   // text
+  QString text1 = translateAlertText(alert.text1);
+  QString text2 = translateAlertText(alert.text2);
   const QPoint c = r.center();
   p.setPen(QColor(0xff, 0xff, 0xff));
   p.setRenderHint(QPainter::TextAntialiasing);
