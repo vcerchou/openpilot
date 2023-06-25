@@ -404,7 +404,7 @@
     </message>
     <message>
         <source>Waiting for route</source>
-        <translation type="unfinished"></translation>
+        <translation>等待路线</translation>
     </message>
 </context>
 <context>
