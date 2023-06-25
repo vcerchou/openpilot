@@ -504,6 +504,7 @@
     </message>
 </context>
 <context>
+<<<<<<< HEAD
     <name>OnroadAlerts</name>
     <message>
         <source>%1</source>
@@ -1012,6 +1013,8 @@ Gear</source>
     </message>
 </context>
 <context>
+=======
+>>>>>>> parent of ee099fb94 (部分汉化3)
     <name>PairingPopup</name>
     <message>
         <source>Pair your device to your comma account</source>
