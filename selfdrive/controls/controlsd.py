@@ -38,6 +38,11 @@ SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
 IGNORE_PROCESSES = {"loggerd", "encoderd", "statsd"}
 
+CAMERA_PACKETS = ["roadCameraState", "driverCameraState", "wideRoadCameraState"]
+CONTROL_PACKETS = ['deviceState', 'pandaStates', 'peripheralState', 'modelV2', 'liveCalibration',
+                   'driverMonitoringState', 'longitudinalPlan', 'lateralPlan', 'liveLocationKalman',
+                   'managerState', 'liveParameters', 'radarState', 'liveTorqueParameters', 'testJoystick']
+
 ThermalStatus = log.DeviceState.ThermalStatus
 State = log.ControlsState.OpenpilotState
 PandaType = log.PandaState.PandaType
@@ -67,7 +72,6 @@ class Controls:
                                    'carControl', 'carEvents', 'carParams'])
 
     self.sensor_packets = ["accelerometer", "gyroscope"]
-    self.camera_packets = ["roadCameraState", "driverCameraState", "wideRoadCameraState"]
 
     can_timeout = None if os.environ.get('NO_CAN_TIMEOUT', False) else 20
     self.can_sock = messaging.sub_sock('can', timeout=can_timeout)
@@ -78,11 +82,9 @@ class Controls:
     ignore = self.sensor_packets + ['testJoystick']
     if SIMULATION:
       ignore += ['driverCameraState', 'managerState']
-    self.sm = messaging.SubMaster(['deviceState', 'pandaStates', 'peripheralState', 'modelV2', 'liveCalibration',
-                                   'driverMonitoringState', 'longitudinalPlan', 'lateralPlan', 'liveLocationKalman',
-                                   'managerState', 'liveParameters', 'radarState', 'liveTorqueParameters',
-                                   'testJoystick'] + self.camera_packets + self.sensor_packets,
-                                  ignore_alive=ignore, ignore_avg_freq=['radarState', 'testJoystick'])
+
+      self.sm = messaging.SubMaster(CONTROL_PACKETS + CAMERA_PACKETS,
+                                    ignore_alive=ignore, ignore_avg_freq=['radarState', 'testJoystick'])
 
     if CI is None:
       # wait for one pandaState and one CAN packet
@@ -346,9 +348,9 @@ class Controls:
       self.not_running_prev = not_running
     else:
       if not SIMULATION and not self.rk.lagging:
-        if not self.sm.all_alive(self.camera_packets):
+        if not self.sm.all_alive(CAMERA_PACKETS):
           self.events.add(EventName.cameraMalfunction)
-        elif not self.sm.all_freq_ok(self.camera_packets):
+        elif not self.sm.all_freq_ok(CAMERA_PACKETS):
           self.events.add(EventName.cameraFrameRate)
     if not REPLAY and self.rk.lagging:
       self.events.add(EventName.controlsdLagging)

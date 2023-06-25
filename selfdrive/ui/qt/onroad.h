@@ -25,7 +25,8 @@ public:
 
 protected:
   void paintEvent(QPaintEvent*) override;
-
+  QString translateAlertText(const QString &text);
+  
 private:
   QColor bg;
   Alert alert = {};
