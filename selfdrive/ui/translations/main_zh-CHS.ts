@@ -446,6 +446,7 @@
     <message>
         <source>Unable to download updates %1</source>
         <translation> 无法下载更新%1</translation>
+    </message>   
     <message>
         <source>Invalid date and time settings, system won&apos;t start. Connect to internet to set time.</source>
         <translation> 日期和时间设置无效，系统将无法启动。 连接到互联网以设置时间。</translation>
