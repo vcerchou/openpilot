@@ -122,6 +122,8 @@ class CarState(CarStateBase):
     self.cp_cam = cp_cam
     self.cp = cp
 
+    ret.engineRPM = cp.vl["ENGINE_DATA"]['RPM']
+
     return ret
 
   @staticmethod
@@ -168,6 +170,7 @@ class CarState(CarStateBase):
         ("BR", "DOORS"),
         ("PEDAL_GAS", "ENGINE_DATA"),
         ("SPEED", "ENGINE_DATA"),
+        ("RPM", "ENGINE_DATA"),
         ("CTR", "CRZ_BTNS"),
         ("LEFT_BS_STATUS", "BSM"),
         ("RIGHT_BS_STATUS", "BSM"),

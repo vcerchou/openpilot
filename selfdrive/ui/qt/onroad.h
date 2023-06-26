@@ -61,6 +61,7 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(bool hideDM MEMBER hideDM);
   Q_PROPERTY(bool rightHandDM MEMBER rightHandDM);
   Q_PROPERTY(int status MEMBER status);
+  Q_PROPERTY(float enginerpm MEMBER enginerpm);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -87,7 +88,7 @@ private:
   bool v_ego_cluster_seen = false;
   int status = STATUS_DISENGAGED;
   std::unique_ptr<PubMaster> pm;
-
+  float enginerpm; 
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
 
