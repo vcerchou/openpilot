@@ -293,6 +293,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
   float engine_rpm = sm["carState"].getCarState().getEngineRPM();
   setProperty("enginerpm", engine_rpm);
+  const auto leadOne = sm["radarState"].getRadarState().getLeadOne();
+  setProperty("lead_d_rel", leadOne.getDRel());
 
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -308,6 +310,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
 
+  int rh = 5;
+  int ry = y;
+  
   // Header gradient
   QLinearGradient bg(0, header_h - (header_h / 2.5), 0, header_h);
   bg.setColorAt(0, QColor::fromRgbF(0, 0, 0, 0.45));
@@ -445,7 +450,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   my_max_rect.moveTop(my_set_speed_rect.top() + 127);
   p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
 
-  // Draw steer degrees
+  // Draw enginerpm
   if (buttonColorSpeed) {
     if ((speedLimit > 0 && status != STATUS_DISENGAGED && status != STATUS_OVERRIDE) || true) {
       p.setPen(interpColor(
@@ -464,6 +469,31 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   my_speed_rect.moveCenter({my_set_speed_rect.center().x(), 0});
   my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
   p.drawText(my_speed_rect, Qt::AlignCenter, engineRPMStr);
+
+  // Add Relative Distance to Primary Lead Car
+  // Unit: Meters
+  if (true) {
+    char val_str[16];
+    char units_str[8];
+    QColor valueColor = QColor(255, 255, 255, 255);
+
+    if (lead_status) {
+      // Orange if close, Red if very close
+      if (lead_d_rel < 5) {
+        valueColor = QColor(255, 0, 0, 255);
+      } else if (lead_d_rel < 15) {
+        valueColor = QColor(255, 188, 0, 255);
+      }
+      snprintf(val_str, sizeof(val_str), "%d", (int)lead_d_rel);
+    } else {
+      snprintf(val_str, sizeof(val_str), "-");
+    }
+
+    snprintf(units_str, sizeof(units_str), "m");
+
+    rh += drawText(p, x, ry, val_str, "REL DIST", units_str, valueColor);
+    ry = y + rh;
+  }
   // End winnie
 
   // EU (Vienna style) sign
