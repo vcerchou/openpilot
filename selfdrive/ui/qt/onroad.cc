@@ -311,9 +311,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
-
-  int rh = 5;
-  int ry = y;
   
   // Header gradient
   QLinearGradient bg(0, header_h - (header_h / 2.5), 0, header_h);
@@ -472,30 +469,6 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
   p.drawText(my_speed_rect, Qt::AlignCenter, engineRPMStr);
 
-  // Add Relative Distance to Primary Lead Car
-  // Unit: Meters
-  if (true) {
-    char val_str[16];
-    char units_str[8];
-    QColor valueColor = QColor(255, 255, 255, 255);
-
-    if (lead_status) {
-      // Orange if close, Red if very close
-      if (lead_d_rel < 5) {
-        valueColor = QColor(255, 0, 0, 255);
-      } else if (lead_d_rel < 15) {
-        valueColor = QColor(255, 188, 0, 255);
-      }
-      snprintf(val_str, sizeof(val_str), "%d", (int)lead_d_rel);
-    } else {
-      snprintf(val_str, sizeof(val_str), "-");
-    }
-
-    snprintf(units_str, sizeof(units_str), "m");
-
-    rh += drawText(p, x, ry, val_str, "REL DIST", units_str, valueColor);
-    ry = y + rh;
-  }
   // End winnie
 
   // EU (Vienna style) sign
