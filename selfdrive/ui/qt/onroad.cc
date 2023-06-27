@@ -422,23 +422,13 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   }
 
   // Begin winnie
-  QString engineRPMStr = QString::number(std::nearbyint(enginerpm));
-  // char steerDegStr[16];
-  // snprintf(steerDegStr, sizeof(steerDegStr), "%.2f", steerdeg);
-  // Draw outer box + border to contain set speed and speed limit
-  int my_default_rect_width = 344;
-  int my_rect_width = my_default_rect_width;
-  // if (is_metric || has_eu_speed_limit) my_rect_width = 200;
-  // if (has_us_speed_limit && speedLimitStr.size() >= 3) my_rect_width = 223;
-
+  QString engineRPMStr = buttonColorSpeed? QString::number(std::nearbyint(enginerpm)) : "OFF";
+  int my_rect_width = 344;
   int my_rect_height = 204;
-  // if (has_us_speed_limit) my_rect_height = 402;
-  // else if (has_eu_speed_limit) my_rect_height = 392;
-
   int my_top_radius = 32;
-  int my_bottom_radius = has_eu_speed_limit ? 100 : 32;
+  int my_bottom_radius = 32;
 
-  QRect my_set_speed_rect(60 + my_default_rect_width / 2 - my_rect_width / 2, 450, my_rect_width, my_rect_height);
+  QRect my_set_speed_rect(60 + my_rect_width / 2 - my_rect_width / 2, 450, my_rect_width, my_rect_height);
   p.setPen(QPen(whiteColor(75), 6));
   p.setBrush(blackColor(166));
   drawRoundedRect(p, my_set_speed_rect, my_top_radius, my_top_radius, my_bottom_radius, my_bottom_radius);
@@ -456,11 +446,11 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
 
   // Draw steer degrees
-  if (is_cruise_set) {
-    if (speedLimit > 0 && status != STATUS_DISENGAGED && status != STATUS_OVERRIDE) {
+  if (buttonColorSpeed) {
+    if ((speedLimit > 0 && status != STATUS_DISENGAGED && status != STATUS_OVERRIDE) || true) {
       p.setPen(interpColor(
-        setSpeed,
-        {speedLimit + 5, speedLimit + 15, speedLimit + 25},
+        enginerpm,
+        {1500, 2100, 3000},
         {whiteColor(), QColor(0xff, 0x95, 0x00, 0xff), QColor(0xff, 0x00, 0x00, 0xff)}
       ));
     } else {
