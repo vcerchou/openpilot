@@ -295,7 +295,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("enginerpm", engine_rpm);
   const auto leadOne = sm["radarState"].getRadarState().getLeadOne();
   setProperty("lead_d_rel", leadOne.getDRel());
-
+  setProperty("lead_status", leadOne.getStatus());
+  setProperty("buttonColorSpeed", engine_rpm > 0);
+  
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 

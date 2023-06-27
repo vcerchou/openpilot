@@ -63,6 +63,9 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(int status MEMBER status);
   Q_PROPERTY(float enginerpm MEMBER enginerpm);
   Q_PROPERTY(float lead_d_rel MEMBER lead_d_rel);
+  Q_PROPERTY(int lead_status MEMBER lead_status);
+  Q_PROPERTY(bool buttonColorSpeed MEMBER buttonColorSpeed);
+
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
   void updateState(const UIState &s);
@@ -92,6 +95,8 @@ private:
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
   float lead_d_rel = 0;
+  int lead_status;
+  bool buttonColorSpeed = false;
   
 protected:
   void paintGL() override;
