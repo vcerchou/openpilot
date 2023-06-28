@@ -73,6 +73,7 @@ public:
 private:
   void drawIcon(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity);
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
+  void drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color);
 
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
@@ -110,6 +111,8 @@ protected:
   inline QColor redColor(int alpha = 255) { return QColor(201, 34, 49, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(255, 255, 255, alpha); }
   inline QColor blackColor(int alpha = 255) { return QColor(0, 0, 0, alpha); }
+  inline QColor orangeColor(int alpha = 255) { return QColor(255, 149, 0, alpha); }
+  inline QColor pinkColor(int alpha = 255) { return QColor(255, 191, 191, alpha); }
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
@@ -131,6 +134,7 @@ private:
   QColor bg = bg_colors[STATUS_DISENGAGED];
   QWidget *map = nullptr;
   QHBoxLayout* split;
+
 
 private slots:
   void offroadTransition(bool offroad);
