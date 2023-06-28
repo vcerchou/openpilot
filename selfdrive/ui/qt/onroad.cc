@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QMouseEvent>
+#include <QString>
 
 #include "common/timing.h"
 #include "selfdrive/ui/qt/util.h"
@@ -442,6 +443,14 @@ void AnnotatedCameraWidget::drawIcon(QPainter &p, int x, int y, QPixmap &img, QB
   p.setOpacity(1.0);
 }
 
+void AnnotatedCameraWidget::drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color) {
+  p.setOpacity(1.0);
+  QRect real_rect = p.fontMetrics().boundingRect(text);
+  real_rect.moveCenter({x, y - real_rect.height() / 2});
+  p.setPen(color);
+  p.drawText(real_rect.x(), real_rect.bottom(), text);
+}
+
 void AnnotatedCameraWidget::initializeGL() {
   CameraWidget::initializeGL();
   qInfo() << "OpenGL version:" << QString((const char*)glGetString(GL_VERSION));
@@ -603,6 +612,36 @@ void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState
   QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
   painter.setBrush(redColor(fillAlpha));
   painter.drawPolygon(chevron, std::size(chevron));
+
+  // lead car radar distance and speed
+  QString l_dist, l_speed;
+  QColor d_color, v_color = whiteColor(150);
+
+  if (d_rel < 5) {
+    d_color = redColor(150);
+  } else if (d_rel < 15) {
+    d_color = orangeColor(150);
+  } else {
+    d_color = whiteColor(150);
+  }
+  l_dist.sprintf("%.1f m", d_rel);
+
+  if (v_rel < -4.4704) {
+    v_color = redColor(150);
+  } else if (v_rel < 0) {
+    v_color = orangeColor(150);
+  } else {
+    v_color = pinkColor(150);
+  }
+  if (speedUnit == "mph") {
+    l_speed.sprintf("%.0f mph", speed + v_rel * 2.236936); // mph
+  } else {
+    l_speed.sprintf("%.0f km/h", speed + v_rel * 3.6); // kph
+  }
+  painter.setFont(InterFont(35, QFont::Bold));
+  drawTextColor(painter, x, y + sz / 1.5f + 10, is_cruise_set ? "∧" : "", blackColor(200));
+  drawTextColor(painter, x, y + sz / 1.5f + 70.0, l_dist, d_color);
+  drawTextColor(painter, x, y + sz / 1.5f + 120.0, l_speed, v_color);
 
   painter.restore();
 }
