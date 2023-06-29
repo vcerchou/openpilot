@@ -330,7 +330,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   QString speedStr = QString::number(std::nearbyint(speed));
   QString setSpeedStr = is_cruise_set ? QString::number(std::nearbyint(setSpeed)) : "–";
 
-  int x,y,w,h = 0;
+  int x,y = 0;
   QColor icon_bg = blackColor(100);
   
   // Draw outer box + border to contain set speed and speed limit
