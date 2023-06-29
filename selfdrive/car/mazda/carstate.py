@@ -49,8 +49,8 @@ class CarState(CarStateBase):
                                                                       cp.vl["BLINK_INFO"]["RIGHT_BLINK"] == 1)
 
     if self.CP.enableBsm:
-      ret.leftBlindspot = cp.vl["BSM"]["LEFT_BS_STATUS"] != 0
-      ret.rightBlindspot = cp.vl["BSM"]["RIGHT_BS_STATUS"] != 0
+      ret.leftBlindspot = cp.vl["BSM_TEST"]["LEFT_BSM"] == 1
+      ret.rightBlindspot = cp.vl["BSM_TEST"]["RIGHT_BSM"] == 1
       
     if self.CP.enableTorqueInterceptor:
       ret.steeringTorque = cp_body.vl["TI_FEEDBACK"]["TI_TORQUE_SENSOR"]
@@ -204,11 +204,11 @@ class CarState(CarStateBase):
 
     if CP.enableBsm:
       signals += [
-        ("LEFT_BS_STATUS", "BSM"),
-        ("RIGHT_BS_STATUS", "BSM"),
+        ("LEFT_BSM", "BSM_TEST"),
+        ("RIGHT_BSM", "BSM_TEST"),
       ]
 
-      checks.append(("BSM", 10))
+      checks.append(("BSM_TEST", 10))
 
     return CANParser(DBC[CP.carFingerprint]["pt"], signals, checks, 0)
 

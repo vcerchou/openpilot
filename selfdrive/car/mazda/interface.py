@@ -35,7 +35,7 @@ class CarInterface(CarInterfaceBase):
     ret.steerLimitTimer = 0.8
     tire_stiffness_factor = 0.70   # not optimized yet
 
-    ret.enableBsm = 0x477 in fingerprint[0]
+    ret.enableBsm = 0x47b in fingerprint[0]
     
     CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
