@@ -246,6 +246,9 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
 
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
+   // crwusiz add
+  bsd_l_img = loadPixmap("../assets/img_bsd_l.png", {img_size, img_size});
+  bsd_r_img = loadPixmap("../assets/img_bsd_r.png", {img_size, img_size});
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -298,6 +301,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("lead_d_rel", leadOne.getDRel());
   setProperty("lead_status", leadOne.getStatus());
   setProperty("buttonColorSpeed", engine_rpm > 0);
+  // BSM
+  setProperty("left_blindspot", ce.getLeftBlindspot());
+  setProperty("right_blindspot", ce.getRightBlindspot());
   
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -470,6 +476,16 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
   p.drawText(my_speed_rect, Qt::AlignCenter, engineRPMStr);
 
+  //BSM
+  // bsd_l icon (bottom 2 left)
+  x = (btn_size / 2) + (bdr_s * 2);
+  y = rect().bottom() - (footer_h / 2) - (btn_size) - 10;
+  drawIcon(p, x, y, bsd_l_img, icon_bg, left_blindspot ? 0.65 : 0.2);
+
+  // bsd_r icon (bottom 2 right)
+  x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
+  drawIcon(p, x, y, bsd_r_img, icon_bg, right_blindspot ? 0.65 : 0.2);
+
   // End winnie
 
   // EU (Vienna style) sign
@@ -576,6 +592,11 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(scene.lane_line_probs[i], 0.0, 0.7)));
     painter.drawPolygon(scene.lane_line_vertices[i]);
   }
+
+  //BSM TODO: Fix empty spaces when curiving back on itself
+  painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
+  if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
+  if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
 
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
