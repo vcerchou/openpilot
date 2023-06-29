@@ -329,7 +329,8 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   QString speedLimitStr = (speedLimit > 1) ? QString::number(std::nearbyint(speedLimit)) : "–";
   QString speedStr = QString::number(std::nearbyint(speed));
   QString setSpeedStr = is_cruise_set ? QString::number(std::nearbyint(setSpeed)) : "–";
-
+  QColor icon_bg = blackColor(100);
+  
   // Draw outer box + border to contain set speed and speed limit
   int default_rect_width = 172;
   int rect_width = default_rect_width;
@@ -594,10 +595,10 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.drawPolygon(scene.lane_line_vertices[i]);
   }
 
-  //BSM TODO: Fix empty spaces when curiving back on itself
-  painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
-  if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
-  if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
+  // //BSM TODO: Fix empty spaces when curiving back on itself
+  // painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
+  // if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
+  // if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
 
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {

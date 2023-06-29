@@ -101,6 +101,7 @@ private:
   float lead_d_rel = 0;
   int lead_status;
   bool buttonColorSpeed = false;
+  bool left_blindspot, right_blindspot = false;
   
 protected:
   void paintGL() override;
