@@ -22,8 +22,10 @@ class CarInterface(CarInterfaceBase):
     ret.openpilotLongitudinalControl = True
     ret.longitudinalTuning.kpBP = [0., 5., 30.]
     ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
-    ret.longitudinalTuning.kiBP = [0., 35.]
-    ret.longitudinalTuning.kiV = [0.18, 0.12]
+    # ret.longitudinalTuning.kiBP = [0., 35.]
+    # ret.longitudinalTuning.kiV = [0.18, 0.12]
+    ret.longitudinalTuning.kiBP = [0.,   5.6,  6.7,  8.3,  11.1,  19.4,   30.,  33., 40.]
+    ret.longitudinalTuning.kiV = [.098, .126, .152, .164, .1826,  .1874,   .15,  .09, .01]
     #ret.longitudinalTuning.deadzoneBP = [0.0, 30.0]
     #ret.longitudinalTuning.deadzoneV = [0.0, 0.03]
     #ret.longitudinalActuatorDelayLowerBound = 0.5
@@ -33,6 +35,8 @@ class CarInterface(CarInterfaceBase):
     ret.steerLimitTimer = 0.8
     tire_stiffness_factor = 0.70   # not optimized yet
 
+    ret.enableBsm = 0x477 in fingerprint[0]
+    
     CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     if candidate in (CAR.CX5, CAR.CX5_2022):
