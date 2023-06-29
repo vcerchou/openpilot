@@ -65,6 +65,8 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float lead_d_rel MEMBER lead_d_rel);
   Q_PROPERTY(int lead_status MEMBER lead_status);
   Q_PROPERTY(bool buttonColorSpeed MEMBER buttonColorSpeed);
+  Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
+  Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -77,6 +79,7 @@ private:
 
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
+  QPixmap bsd_l_img, bsd_r_img;
   float speed;
   QString speedUnit;
   float setSpeed;
@@ -98,6 +101,7 @@ private:
   float lead_d_rel = 0;
   int lead_status;
   bool buttonColorSpeed = false;
+  bool left_blindspot, right_blindspot = false;
   
 protected:
   void paintGL() override;
