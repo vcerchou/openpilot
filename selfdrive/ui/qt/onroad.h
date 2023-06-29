@@ -79,6 +79,7 @@ private:
 
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
+  QPixmap bsd_l_img, bsd_r_img;
   float speed;
   QString speedUnit;
   float setSpeed;
