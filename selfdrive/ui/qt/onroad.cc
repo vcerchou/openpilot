@@ -264,6 +264,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   main_layout->addWidget(map_settings_btn, 0, Qt::AlignBottom | Qt::AlignRight);
 
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
+  steer_img = loadPixmap("../assets/img_steering_wheel.png", {img_size, img_size});
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -274,6 +275,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   const bool nav_alive = sm.alive("navInstruction") && sm["navInstruction"].getValid();
 
   const auto cs = sm["controlsState"].getControlsState();
+  const auto ce = sm["carState"].getCarState();
 
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
@@ -309,6 +311,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("speedUnit", s.scene.is_metric ? tr("km/h") : tr("mph"));
   setProperty("hideBottomIcons", (cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE));
   setProperty("status", s.status);
+
+  //AngleDeg
+  setProperty("steerAngle", ce.getSteeringAngleDeg());
 
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -403,6 +408,37 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.drawText(sign_rect.adjusted(0, 85, 0, 0), Qt::AlignTop | Qt::AlignHCenter, speedLimitStr);
   }
 
+  int x,y = 0;
+  QColor icon_bg = blackColor(100);
+  
+  // steer img (bottom 1 right)
+  x = (btn_size / 2) + (UI_BORDER_SIZE * 2) + (btn_size);
+  y = rect().bottom() - (UI_HEADER_HEIGHT / 2.3);
+  drawIconRotate(p, x, y, steer_img, icon_bg, 0.8, steerAngle);
+
+  QString sa_str, sa_direction;
+  QColor sa_color = limeColor(200);
+  if (std::fabs(steerAngle) > 90) {
+    sa_color = redColor(200);
+  } else if (std::fabs(steerAngle) > 30) {
+    sa_color = orangeColor(200);
+  }
+
+  if (steerAngle > 0) {
+    sa_direction.sprintf("◀");
+  } else if (steerAngle < 0) {
+    sa_direction.sprintf("▶");
+  } else {
+    sa_direction.sprintf("●");
+  }
+
+  sa_str.sprintf("%.0f °", steerAngle);
+  p.setFont(InterFont(32, QFont::Bold));
+  drawTextColor(p, x - 30, y + 95, sa_str, sa_color);
+  drawTextColor(p, x + 30, y + 95, sa_direction, whiteColor(200));
+
+  // End winnie
+  
   // EU (Vienna style) sign
   if (has_eu_speed_limit) {
     p.setPen(Qt::NoPen);
@@ -440,6 +476,22 @@ void AnnotatedCameraWidget::drawIcon(QPainter &p, int x, int y, QPixmap &img, QB
   p.drawEllipse(x - btn_size / 2, y - btn_size / 2, btn_size, btn_size);
   p.setOpacity(opacity);
   p.drawPixmap(x - img.size().width() / 2, y - img.size().height() / 2, img);
+  p.setOpacity(1.0);
+}
+
+void AnnotatedCameraWidget::drawIconRotate(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity, float angle) {
+  p.setOpacity(1.0);
+  p.setPen(Qt::NoPen);
+  p.setBrush(bg);
+  p.drawEllipse(x - btn_size / 2, y - btn_size / 2, btn_size, btn_size);
+  p.setOpacity(opacity);
+  p.save();
+  p.translate(x, y);
+  p.rotate(-angle);
+  QRect r = img.rect();
+  r.moveCenter(QPoint(0,0));
+  p.drawPixmap(r, img);
+  p.restore();
   p.setOpacity(1.0);
 }
 
