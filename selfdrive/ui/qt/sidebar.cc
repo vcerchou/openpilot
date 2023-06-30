@@ -78,6 +78,7 @@ void Sidebar::updateState(const UIState &s) {
   setProperty("netType", network_type[deviceState.getNetworkType()]);
   int strength = (int)deviceState.getNetworkStrength();
   setProperty("netStrength", strength > 0 ? strength + 1 : 0);
+  setProperty("wifiAddr", deviceState.getWifiIpAddress().cStr());
 
   ItemStatus connectStatus;
   auto last_ping = deviceState.getLastAthenaPingTime();
@@ -131,10 +132,15 @@ void Sidebar::paintEvent(QPaintEvent *event) {
 
   p.setFont(InterFont(35));
   p.setPen(QColor(0xff, 0xff, 0xff));
-  const QRect r = QRect(50, 247, 100, 50);
-  p.drawText(r, Qt::AlignCenter, net_type);
+  const QRect r2 = QRect(0, 267, event->rect().width(), 50);
+
+  if (net_type == network_type[cereal::DeviceState::NetworkType::WIFI])
+    p.drawText(r2, Qt::AlignCenter, wifi_addr);
+  else
+    p.drawText(r2, Qt::AlignCenter, net_type);
 
   // metrics
+  configFont(p, "Inter", 35, "Regular");
   drawMetric(p, temp_status.first, temp_status.second, 338);
   drawMetric(p, panda_status.first, panda_status.second, 496);
   drawMetric(p, connect_status.first, connect_status.second, 654);
