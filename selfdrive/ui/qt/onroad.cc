@@ -249,6 +249,8 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
    // crwusiz add
   bsd_l_img = loadPixmap("../assets/img_bsd_l.png", {img_size, img_size});
   bsd_r_img = loadPixmap("../assets/img_bsd_r.png", {img_size, img_size});
+
+  steer_img = loadPixmap("../assets/img_steering_wheel.png", {img_size, img_size});
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -305,7 +307,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   // BSM
   setProperty("left_blindspot", ce.getLeftBlindspot());
   setProperty("right_blindspot", ce.getRightBlindspot());
-  
+  //AngleDeg
+  setProperty("steerAngle", ce.getSteeringAngleDeg());
+
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -491,6 +495,32 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
   drawIcon(p, x, y, bsd_r_img, icon_bg, right_blindspot ? 0.65 : 0.2);
 
+  // steer img (bottom 1 right)
+  x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
+  y = rect().bottom() - (footer_h / 2);
+  drawIconRotate(p, x, y, steer_img, icon_bg, 0.8, steerAngle);
+
+  QString sa_str, sa_direction;
+  QColor sa_color = limeColor(200);
+  if (std::fabs(steerAngle) > 90) {
+    sa_color = redColor(200);
+  } else if (std::fabs(steerAngle) > 30) {
+    sa_color = orangeColor(200);
+  }
+
+  if (steerAngle > 0) {
+    sa_direction.sprintf("◀");
+  } else if (steerAngle < 0) {
+    sa_direction.sprintf("▶");
+  } else {
+    sa_direction.sprintf("●");
+  }
+
+  sa_str.sprintf("%.0f °", steerAngle);
+  configFont(p, "Inter", 30, "Bold");
+  drawTextColor(p, x - 30, y + 95, sa_str, sa_color);
+  drawTextColor(p, x + 30, y + 95, sa_direction, whiteColor(200));
+
   // End winnie
 
   // EU (Vienna style) sign
@@ -546,6 +576,22 @@ void AnnotatedCameraWidget::drawIcon(QPainter &p, int x, int y, QPixmap &img, QB
   p.drawEllipse(x - btn_size / 2, y - btn_size / 2, btn_size, btn_size);
   p.setOpacity(opacity);
   p.drawPixmap(x - img.size().width() / 2, y - img.size().height() / 2, img);
+  p.setOpacity(1.0);
+}
+
+void AnnotatedCameraWidget::drawIconRotate(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity, float angle) {
+  p.setOpacity(1.0);
+  p.setPen(Qt::NoPen);
+  p.setBrush(bg);
+  p.drawEllipse(x - btn_size / 2, y - btn_size / 2, btn_size, btn_size);
+  p.setOpacity(opacity);
+  p.save();
+  p.translate(x, y);
+  p.rotate(-angle);
+  QRect r = img.rect();
+  r.moveCenter(QPoint(0,0));
+  p.drawPixmap(r, img);
+  p.restore();
   p.setOpacity(1.0);
 }
 

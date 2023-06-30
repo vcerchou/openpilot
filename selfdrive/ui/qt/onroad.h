@@ -67,6 +67,7 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(bool buttonColorSpeed MEMBER buttonColorSpeed);
   Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
   Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
+  Q_PROPERTY(float steerAngle MEMBER steerAngle);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -79,6 +80,7 @@ private:
 
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
+  QPixmap steer_img;
   QPixmap bsd_l_img, bsd_r_img;
   float speed;
   QString speedUnit;
@@ -102,7 +104,8 @@ private:
   int lead_status;
   bool buttonColorSpeed = false;
   bool left_blindspot, right_blindspot = false;
-  
+  float steerAngle = 0;
+
 protected:
   void paintGL() override;
   void initializeGL() override;
@@ -112,11 +115,13 @@ protected:
   void drawLead(QPainter &painter, const cereal::RadarState::LeadData::Reader &lead_data, const QPointF &vd);
   void drawHud(QPainter &p);
   void drawDriverState(QPainter &painter, const UIState *s);
+  void drawIconRotate(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity, float angle);
   inline QColor redColor(int alpha = 255) { return QColor(201, 34, 49, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(255, 255, 255, alpha); }
   inline QColor blackColor(int alpha = 255) { return QColor(0, 0, 0, alpha); }
   inline QColor orangeColor(int alpha = 255) { return QColor(255, 149, 0, alpha); }
   inline QColor pinkColor(int alpha = 255) { return QColor(255, 191, 191, alpha); }
+  inline QColor limeColor(int alpha = 255) { return QColor(120, 255, 120, alpha); }
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
