@@ -440,18 +440,19 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   QString engineRPMStr = buttonColorSpeed? QString::number(std::nearbyint(enginerpm)) : "OFF";
   int my_rect_width = 344;
   int my_rect_height = 204;
+
   int my_top_radius = 32;
   int my_bottom_radius = 32;
 
-  QRect my_set_speed_rect(60 + my_rect_width / 2 - my_rect_width / 2, 450, my_rect_width, my_rect_height);
+  QRect my_set_speed_rect(60, (has_us_speed_limit || has_eu_speed_limit)? 500 : 450, my_rect_width, my_rect_height);
   p.setPen(QPen(whiteColor(75), 6));
   p.setBrush(blackColor(166));
   drawRoundedRect(p, my_set_speed_rect, my_top_radius, my_top_radius, my_bottom_radius, my_bottom_radius);
 
-  // Draw ENGINE RPM
+  // Draw colored ENGINE RPM
   p.setPen(interpColor(
     enginerpm,
-    {3000, 3001, 4800},
+    {1500, 2100, 3000},
     {QColor(0x80, 0xd8, 0xa6, 0xff), QColor(0xff, 0xe4, 0xbf, 0xff), QColor(0xff, 0xbf, 0xbf, 0xff)}
   ));
   configFont(p, "Inter", 40, "SemiBold");
@@ -460,7 +461,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   my_max_rect.moveTop(my_set_speed_rect.top() + 127);
   p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
 
-  // Draw enginerpm
+  // Draw rpm
   if (buttonColorSpeed) {
     if ((speedLimit > 0 && status != STATUS_DISENGAGED && status != STATUS_OVERRIDE) || true) {
       p.setPen(interpColor(
