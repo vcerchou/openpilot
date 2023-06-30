@@ -448,7 +448,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   int my_top_radius = 32;
   int my_bottom_radius = 32;
 
-  QRect my_set_speed_rect(60, (has_us_speed_limit || has_eu_speed_limit)? 500 : 450, my_rect_width, my_rect_height);
+  QRect my_set_speed_rect(60, (has_us_speed_limit || has_eu_speed_limit)? 550 : 500, my_rect_width, my_rect_height);
   p.setPen(QPen(whiteColor(75), 6));
   p.setBrush(blackColor(166));
   drawRoundedRect(p, my_set_speed_rect, my_top_radius, my_top_radius, my_bottom_radius, my_bottom_radius);
