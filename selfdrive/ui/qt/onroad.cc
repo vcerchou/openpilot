@@ -442,8 +442,8 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   // Begin winnie
   QString engineRPMStr = buttonColorSpeed? QString::number(std::nearbyint(enginerpm)) : "OFF";
-  int my_rect_width = 324;
-  int my_rect_height = 184;
+  int my_rect_width = 280;
+  int my_rect_height = 140;
 
   int my_top_radius = 32;
   int my_bottom_radius = 32;
@@ -479,7 +479,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   } else {
     p.setPen(QColor(0x72, 0x72, 0x72, 0xff));
   }
-  configFont(p, "Inter", 90, "Bold");
+  configFont(p, "Inter", 50, "Bold");
   QRect my_speed_rect = getTextRect(p, Qt::AlignCenter, engineRPMStr);
   my_speed_rect.moveCenter({my_set_speed_rect.center().x(), 0});
   my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
