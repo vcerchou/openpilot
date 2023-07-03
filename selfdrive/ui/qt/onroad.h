@@ -78,6 +78,13 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(int status MEMBER status);
 
   Q_PROPERTY(float steerAngle MEMBER steerAngle);
+  Q_PROPERTY(bool gps_state MEMBER gps_state);
+  Q_PROPERTY(int gpsSatelliteCount MEMBER gpsSatelliteCount);
+  Q_PROPERTY(float gpsBearing MEMBER gpsBearing);
+  Q_PROPERTY(float gpsVerticalAccuracy MEMBER gpsVerticalAccuracy);
+  Q_PROPERTY(float gpsAltitude MEMBER gpsAltitude);
+  Q_PROPERTY(float gpsAccuracy MEMBER gpsAccuracy);
+
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -94,6 +101,7 @@ private:
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
   QPixmap steer_img;
+  QPixmap gps_img, direction_img;
 
   float speed;
   QString speedUnit;
@@ -114,6 +122,9 @@ private:
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
   float steerAngle = 0;
+  bool gps_state = false;
+  int gpsSatelliteCount = 0;
+  float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
 
 protected:
   void paintGL() override;
