@@ -60,7 +60,7 @@ class RouteEngine:
       except FileNotFoundError:
         cloudlog.exception("Failed to generate mapbox token due to missing private key. Ensure device is registered.")
         self.mapbox_token = ""
-      self.mapbox_host = "https://maps.comma.ai"
+      self.mapbox_host = "https://api.mapbox.com"
 
   def update(self):
     self.sm.update(0)
@@ -130,7 +130,7 @@ class RouteEngine:
       lang = lang.replace('main_', '')
 
     params = {
-      'access_token': self.mapbox_token,
+      'access_token': "pk.eyJ1IjoiZ29kenFoIiwiYSI6ImNrdmJzcHdhcGFxYnIycG56MDhqaTl6eWMifQ.-HU94mfF8jFLAMA08m8L2A",
       'annotations': 'maxspeed',
       'geometries': 'geojson',
       'overview': 'full',
