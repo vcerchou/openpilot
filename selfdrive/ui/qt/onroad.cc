@@ -462,7 +462,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   configFont(p, "Inter", 35, "SemiBold");
   QRect my_max_rect = getTextRect(p, Qt::AlignCenter, tr("ENGINE RPM"));
   my_max_rect.moveCenter({my_set_speed_rect.center().x(), 0});
-  my_max_rect.moveTop(my_set_speed_rect.top() + 127);
+  my_max_rect.moveTop(my_set_speed_rect.top() + 117);
   p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
 
   // Draw rpm
@@ -479,7 +479,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   } else {
     p.setPen(QColor(0x72, 0x72, 0x72, 0xff));
   }
-  configFont(p, "Inter", 50, "Bold");
+  configFont(p, "Inter", 70, "Bold");
   QRect my_speed_rect = getTextRect(p, Qt::AlignCenter, engineRPMStr);
   my_speed_rect.moveCenter({my_set_speed_rect.center().x(), 0});
   my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
