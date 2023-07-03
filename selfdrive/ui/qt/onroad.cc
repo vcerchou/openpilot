@@ -462,7 +462,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   configFont(p, "Inter", 35, "SemiBold");
   QRect my_max_rect = getTextRect(p, Qt::AlignCenter, tr("ENGINE RPM"));
   my_max_rect.moveCenter({my_set_speed_rect.center().x(), 0});
-  my_max_rect.moveTop(my_set_speed_rect.top() + 117);
+  my_max_rect.moveTop(my_set_speed_rect.top() + 100);
   p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
 
   // Draw rpm
