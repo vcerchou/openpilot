@@ -68,6 +68,12 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
   Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
   Q_PROPERTY(float steerAngle MEMBER steerAngle);
+  Q_PROPERTY(bool gps_state MEMBER gps_state);
+  Q_PROPERTY(int gpsSatelliteCount MEMBER gpsSatelliteCount);
+  Q_PROPERTY(float gpsBearing MEMBER gpsBearing);
+  Q_PROPERTY(float gpsVerticalAccuracy MEMBER gpsVerticalAccuracy);
+  Q_PROPERTY(float gpsAltitude MEMBER gpsAltitude);
+  Q_PROPERTY(float gpsAccuracy MEMBER gpsAccuracy);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -82,6 +88,7 @@ private:
   QPixmap dm_img;
   QPixmap steer_img;
   QPixmap bsd_l_img, bsd_r_img;
+  QPixmap gps_img, direction_img;
   float speed;
   QString speedUnit;
   float setSpeed;
@@ -105,6 +112,9 @@ private:
   bool buttonColorSpeed = false;
   bool left_blindspot, right_blindspot = false;
   float steerAngle = 0;
+  bool gps_state = false;
+  int gpsSatelliteCount = 0;
+  float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
 
 protected:
   void paintGL() override;

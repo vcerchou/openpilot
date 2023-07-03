@@ -251,6 +251,8 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   bsd_r_img = loadPixmap("../assets/img_bsd_r.png", {img_size, img_size});
 
   steer_img = loadPixmap("../assets/img_steering_wheel.png", {img_size, img_size});
+  gps_img = loadPixmap("../assets/img_gps.png", {img_size, img_size});
+  direction_img = loadPixmap("../assets/img_direction.png", {img_size, img_size});
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -262,6 +264,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
   const auto cs = sm["controlsState"].getControlsState();
   const auto ce = sm["carState"].getCarState();
+  const auto ge = sm["gpsLocationExternal"].getGpsLocationExternal();
   
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
@@ -309,6 +312,13 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("right_blindspot", ce.getRightBlindspot());
   //AngleDeg
   setProperty("steerAngle", ce.getSteeringAngleDeg());
+  //GPS
+  setProperty("gps_state", sm["liveLocationKalman"].getLiveLocationKalman().getGpsOK());
+  setProperty("gpsBearing", ge.getBearingDeg());
+  setProperty("gpsVerticalAccuracy", ge.getVerticalAccuracy());
+  setProperty("gpsAltitude", ge.getAltitude());
+  setProperty("gpsAccuracy", ge.getAccuracy());
+  setProperty("gpsSatelliteCount", s.scene.satelliteCount);
 
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -520,6 +530,36 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   configFont(p, "Inter", 30, "Bold");
   drawTextColor(p, x - 30, y + 95, sa_str, sa_color);
   drawTextColor(p, x + 30, y + 95, sa_direction, whiteColor(200));
+
+  //gps
+  // N direction icon (upper right 4)
+  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 3.1);
+  y = (btn_size / 2) + (bdr_s * 4);
+  drawIconRotate(p, x, y, direction_img, icon_bg, gps_state ? 0.8 : 0.2, gpsBearing);
+
+  // gps icon (upper right 3)
+  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 2.1);
+  drawIcon(p, x, y, gps_img, icon_bg, gps_state ? 0.8 : 0.2);
+
+  // upper gps info
+  if (gpsVerticalAccuracy == 0 || gpsVerticalAccuracy > 100)
+    gpsAltitude = 999.9;
+
+  if (gpsAccuracy > 100)
+    gpsAccuracy = 99.9;
+  else if (gpsAccuracy == 0)
+    gpsAccuracy = 0;
+
+  QString infoGps;
+  infoGps.sprintf("GPS [ Alt(%.1f) Acc(%.1f) Sat(%d) ]",
+    gpsAltitude, gpsAccuracy, gpsSatelliteCount
+  );
+
+  x = rect().right() - (btn_size * 1.8);
+  y = (bdr_s * 3);
+
+  configFont(p, "Inter", 30, "Regular");
+  drawTextColor(p, x, y, infoGps, whiteColor(200));
 
   // End winnie
 
