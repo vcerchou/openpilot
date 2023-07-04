@@ -309,6 +309,20 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("hideBottomIcons", (cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE));
   setProperty("status", s.status);
 
+  //AngleDeg
+  setProperty("steerAngle", ce.getSteeringAngleDeg());
+  //GPS
+  setProperty("gps_state", sm["liveLocationKalman"].getLiveLocationKalman().getGpsOK());
+  setProperty("gpsBearing", ge.getBearingDeg());
+  setProperty("gpsVerticalAccuracy", ge.getVerticalAccuracy());
+  setProperty("gpsAltitude", ge.getAltitude());
+  setProperty("gpsAccuracy", ge.getAccuracy());
+  setProperty("gpsSatelliteCount", s.scene.satelliteCount);
+
+  // BSM
+  setProperty("left_blindspot", ce.getLeftBlindspot());
+  setProperty("right_blindspot", ce.getRightBlindspot());
+  
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -482,6 +496,13 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(scene.lane_line_probs[i], 0.0, 0.7)));
     painter.drawPolygon(scene.lane_line_vertices[i]);
   }
+
+
+  //BSM TODO: Fix empty spaces when curiving back on itself
+  painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
+  if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
+  if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
+
 
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
