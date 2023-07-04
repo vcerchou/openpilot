@@ -451,60 +451,6 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   }
 
   // Begin winnie
-  QString engineRPMStr = buttonColorSpeed? QString::number(std::nearbyint(enginerpm)) : "OFF";
-  int my_rect_width = 280;
-  int my_rect_height = 140;
-
-  int my_top_radius = 32;
-  int my_bottom_radius = 32;
-
-  QRect my_set_speed_rect(60, (has_us_speed_limit || has_eu_speed_limit)? 430 : 380, my_rect_width, my_rect_height);
-  p.setPen(QPen(whiteColor(75), 6));
-  p.setBrush(blackColor(166));
-  drawRoundedRect(p, my_set_speed_rect, my_top_radius, my_top_radius, my_bottom_radius, my_bottom_radius);
-
-  // Draw colored ENGINE RPM
-  p.setPen(interpColor(
-    enginerpm,
-    {1500, 2100, 3000},
-    {QColor(0x80, 0xd8, 0xa6, 0xff), QColor(0xff, 0xe4, 0xbf, 0xff), QColor(0xff, 0xbf, 0xbf, 0xff)}
-  ));
-  configFont(p, "Inter", 35, "SemiBold");
-  QRect my_max_rect = getTextRect(p, Qt::AlignCenter, tr("ENGINE RPM"));
-  my_max_rect.moveCenter({my_set_speed_rect.center().x(), 0});
-  my_max_rect.moveTop(my_set_speed_rect.top() + 100);
-  p.drawText(my_max_rect, Qt::AlignCenter, tr("ENGINE RPM"));
-
-  // Draw rpm
-  if (buttonColorSpeed) {
-    if ((speedLimit > 0 && status != STATUS_DISENGAGED && status != STATUS_OVERRIDE) || true) {
-      p.setPen(interpColor(
-        enginerpm,
-        {1500, 2100, 3000},
-        {whiteColor(), QColor(0xff, 0x95, 0x00, 0xff), QColor(0xff, 0x00, 0x00, 0xff)}
-      ));
-    } else {
-      p.setPen(whiteColor());
-    }
-  } else {
-    p.setPen(QColor(0x72, 0x72, 0x72, 0xff));
-  }
-  configFont(p, "Inter", 70, "Bold");
-  QRect my_speed_rect = getTextRect(p, Qt::AlignCenter, engineRPMStr);
-  my_speed_rect.moveCenter({my_set_speed_rect.center().x(), 0});
-  my_speed_rect.moveTop(my_set_speed_rect.top() + 7);
-  p.drawText(my_speed_rect, Qt::AlignCenter, engineRPMStr);
-
-  //BSM
-  // bsd_l icon (bottom 2 left)
-  x = (btn_size / 2) + (bdr_s * 2);
-  y = rect().bottom() - (footer_h / 2) - (btn_size) - 10;
-  drawIcon(p, x, y, bsd_l_img, icon_bg, left_blindspot ? 0.65 : 0.2);
-
-  // bsd_r icon (bottom 2 right)
-  x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
-  drawIcon(p, x, y, bsd_r_img, icon_bg, right_blindspot ? 0.65 : 0.2);
-
   // steer img (bottom 1 right)
   x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
   y = rect().bottom() - (footer_h / 2);
