@@ -84,7 +84,8 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float gpsVerticalAccuracy MEMBER gpsVerticalAccuracy);
   Q_PROPERTY(float gpsAltitude MEMBER gpsAltitude);
   Q_PROPERTY(float gpsAccuracy MEMBER gpsAccuracy);
-
+  Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
+  Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -125,6 +126,7 @@ private:
   bool gps_state = false;
   int gpsSatelliteCount = 0;
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
+  bool left_blindspot, right_blindspot = false;
 
 protected:
   void paintGL() override;
