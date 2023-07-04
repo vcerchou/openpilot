@@ -66,6 +66,8 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(int status MEMBER status);
 
   Q_PROPERTY(float steerAngle MEMBER steerAngle);
+  Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
+  Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -79,7 +81,7 @@ private:
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
   QPixmap steer_img;
-
+  QPixmap gps_img, direction_img;
   float speed;
   QString speedUnit;
   float setSpeed;
@@ -99,6 +101,7 @@ private:
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
   float steerAngle = 0;
+  bool left_blindspot, right_blindspot = false;
 
 protected:
   void paintGL() override;
