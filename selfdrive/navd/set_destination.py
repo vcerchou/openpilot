@@ -25,7 +25,8 @@ if __name__ == "__main__":
     params.put("NavDestination", json.dumps(dest))
 
     waypoints = [
-      (110.7961083984375, 32.63177381227431),
+      # (110.7961083984375, 32.63177381227431),
+      (110.69993784822455,32.64445861763176),
     ]
     params.put("NavDestinationWaypoints", json.dumps(waypoints))
 
