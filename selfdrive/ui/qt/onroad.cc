@@ -430,7 +430,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   // steer img (bottom 1 right)
   x = (btn_size / 2) + (bdr_s * 2) + (btn_size);
-  y = rect().bottom() - (footer_h / 2);
+  y = rect().bottom() - (footer_h / 1.5);
   drawIconRotate(p, x, y, steer_img, icon_bg, 0.8, steerAngle);
 
   QString sa_str, sa_direction;
@@ -456,12 +456,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   //gps
   // N direction icon (upper right 4)
-  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 3.1);
-  y = (btn_size / 2) + (bdr_s * 4);
+  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 2.1);
+  y = (btn_size / 2) + (bdr_s * 1);
   drawIconRotate(p, x, y, direction_img, icon_bg, gps_state ? 0.8 : 0.2, gpsBearing);
 
   // gps icon (upper right 3)
-  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 2.1);
+  x = rect().right() - (btn_size / 2) - (bdr_s * 2) - (btn_size * 1.1);
   drawIcon(p, x, y, gps_img, icon_bg, gps_state ? 0.8 : 0.2);
 
   // upper gps info
@@ -478,10 +478,10 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     gpsAltitude, gpsAccuracy, gpsSatelliteCount
   );
 
-  x = rect().right() - (btn_size * 1.8);
-  y = (bdr_s * 3);
+  x = rect().right() - (btn_size * 2.5);
+  y = (bdr_s * 1);
 
-  configFont(p, "Inter", 30, "Regular");
+  configFont(p, "Inter", 35, "Regular");
   drawTextColor(p, x, y, infoGps, whiteColor(200));
 
   // End winnie
