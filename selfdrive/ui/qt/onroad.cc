@@ -246,9 +246,6 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   main_layout->addWidget(experimental_btn, 0, Qt::AlignTop | Qt::AlignRight);
 
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
-   // crwusiz add
-  bsd_l_img = loadPixmap("../assets/img_bsd_l.png", {img_size, img_size});
-  bsd_r_img = loadPixmap("../assets/img_bsd_r.png", {img_size, img_size});
 
   steer_img = loadPixmap("../assets/img_steering_wheel.png", {img_size, img_size});
   gps_img = loadPixmap("../assets/img_gps.png", {img_size, img_size});
@@ -630,10 +627,10 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.drawPolygon(scene.lane_line_vertices[i]);
   }
 
-  // //BSM TODO: Fix empty spaces when curiving back on itself
-  // painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
-  // if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
-  // if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
+  //BSM TODO: Fix empty spaces when curiving back on itself
+  painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
+  if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
+  if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
 
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
