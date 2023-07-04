@@ -87,7 +87,6 @@ private:
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
   QPixmap steer_img;
-  QPixmap bsd_l_img, bsd_r_img;
   QPixmap gps_img, direction_img;
   float speed;
   QString speedUnit;
