@@ -7,7 +7,11 @@ from common.params import Params
 if __name__ == "__main__":
     params = Params()
 
-    # set from google maps url
+    # 从params.json文件中读取waypoints
+    with open('openpilot/system/maps/params.json', 'r') as f:
+        data = json.load(f)
+        waypoints = json.loads(data.get("NavDestinationWaypoints", "[]"))
+
     if len(sys.argv) > 1:
         coords = sys.argv[1].split("/@")[-1].split("/")[0].split(",")
         dest = {
@@ -17,29 +21,14 @@ if __name__ == "__main__":
         params.put("NavDestination", json.dumps(dest))
         params.remove("NavDestinationWaypoints")
     else:
-        print("Setting to My Home")
+        print("Setting to Taco Bell")
         dest = {
-            "latitude": 32.63177381227431,
-            "longitude": 110.7961083984375,
+            "latitude": 32.71160109904473,
+            "longitude": -117.12556569985693,
         }
         params.put("NavDestination", json.dumps(dest))
 
-        choice = input("Enter 1 to set default waypoints or 2 to enter custom waypoints: ")
-
-        if choice == "1":
-            waypoints = [
-                (110.7961083984375, 32.63177381227431),
-            ]
-        elif choice == "2":
-            custom_waypoints = input("Enter custom waypoints (latitude,longitude): ")
-            waypoints = [tuple(map(float, waypoint.split(","))) for waypoint in custom_waypoints.split()]
-        else:
-            print("Invalid choice. Setting default waypoints.")
-            waypoints = [
-                (110.7961083984375, 32.63177381227431),
-            ]
-
         params.put("NavDestinationWaypoints", json.dumps(waypoints))
 
-        print(dest)
-        print(waypoints)
+    print(dest)
+    print(waypoints)
