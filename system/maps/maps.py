@@ -11,7 +11,6 @@ def index():
         longitude = float(request.form['longitude'])
         waypoints = [(longitude, latitude)]
 
-        # 向set_destination.py写入waypoints
         dest = {
             "latitude": latitude,
             "longitude": longitude
@@ -23,12 +22,14 @@ def index():
         with open('params.json', 'w') as f:
             json.dump(params, f)
 
-        # 运行set_destination.py
         subprocess.run(['python3', 'openpilot/selfdrive/navd/set_destination.py'], check=True)
 
-        return 'Waypoints设置成功！'
+        return 'Waypoints done'
 
     return render_template('index.html')
 
+def main():
+  app.run(host="0.0.0.0", port=6000)
+
 if __name__ == '__main__':
-    app.run(port=6000)
+  main()
