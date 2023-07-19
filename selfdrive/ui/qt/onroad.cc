@@ -279,6 +279,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   const auto cs = sm["controlsState"].getControlsState();
   const auto ce = sm["carState"].getCarState();
   const auto ge = sm["gpsLocationExternal"].getGpsLocationExternal();
+  const auto lp = sm["liveParameters"].getLiveParameters();
+  const auto tp = sm["liveTorqueParameters"].getLiveTorqueParameters();
   
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
@@ -328,6 +330,13 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   // BSM
   setProperty("left_blindspot", ce.getLeftBlindspot());
   setProperty("right_blindspot", ce.getRightBlindspot());
+
+  //
+  setProperty("steerRatio", lp.getSteerRatio());
+  setProperty("latAccelFactor", cs.getLateralControlState().getTorqueState().getLatAccelFactor());
+  setProperty("friction", cs.getLateralControlState().getTorqueState().getFriction());
+  setProperty("latAccelFactorRaw", tp.getLatAccelFactorRaw());
+  setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
   
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -450,6 +459,20 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.setFont(InterFont(32, QFont::Bold));
   drawTextColor(p, x - 30, y + 95, sa_str, sa_color);
   drawTextColor(p, x + 30, y + 95, sa_direction, whiteColor(200));
+
+  // bottom info
+  QString infoText;
+  infoText.sprintf("SR[%.2f] [ (%.2f,%.2f) / (%.2f,%.2f) ]",
+    steerRatio,
+    latAccelFactor, friction,
+    latAccelFactorRaw, frictionRaw
+  );
+
+  x = rect().left() + btn_size * 1.5;
+  y = rect().height();
+
+  p.setFont(InterFont(30));
+  drawTextColor(p, x, y, infoText, whiteColor(200));
 
   //gps
   // N direction icon (upper right 4)
