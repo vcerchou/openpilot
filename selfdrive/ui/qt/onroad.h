@@ -96,6 +96,7 @@ private:
   QPixmap dm_img;
   QPixmap steer_img;
   QPixmap gps_img, direction_img;
+  QPixmap lane_change_left_img, lane_change_right_img;
   float speed;
   QString speedUnit;
   float setSpeed;
@@ -130,6 +131,7 @@ protected:
   void drawLead(QPainter &painter, const cereal::RadarState::LeadData::Reader &lead_data, const QPointF &vd);
   void drawHud(QPainter &p);
   void drawDriverState(QPainter &painter, const UIState *s);
+  void drawLaneChangeIndicator(QPainter &painter, const UIState *s);
   void drawIconRotate(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity, float angle);
   inline QColor redColor(int alpha = 255) { return QColor(201, 34, 49, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(255, 255, 255, alpha); }
