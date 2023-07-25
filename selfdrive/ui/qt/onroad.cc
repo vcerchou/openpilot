@@ -278,6 +278,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   direction_img = loadPixmap("../assets/img_direction.png", {img_size, img_size});
   lane_change_left_img = loadPixmap("../assets/lane_change_left.png");
   lane_change_right_img = loadPixmap("../assets/lane_change_right.png");
+  brake_img = loadPixmap("../assets/img_brake_disc.png", {img_size, img_size});
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -348,7 +349,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("friction", cs.getLateralControlState().getTorqueState().getFriction());
   setProperty("latAccelFactorRaw", tp.getLatAccelFactorRaw());
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
-  
+  setProperty("brake_state", ce.getBrakeLights());
+
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -508,6 +510,11 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   configFont(p, "Inter", 35, "Regular");
   drawTextColor(p, x, y, infoGps, whiteColor(200));
+
+  // brake icon (bottom right 1)
+  x = rect().right() - (btn_size / 2) - (bdr_s * 1.5);
+  y = rect().bottom() - (footer_h / 2) + (bdr_s * 1.3);
+  drawIcon(p, x, y, brake_img, icon_bg, brake_state ? 0.8 : 0.2);
 
   // End winnie
   

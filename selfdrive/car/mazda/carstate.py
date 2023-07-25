@@ -74,7 +74,8 @@ class CarState(CarStateBase):
     # TODO: this should be from 0 - 1.
     ret.brakePressed = cp.vl["PEDALS"]["BRAKE_ON"] == 1
     ret.brake = cp.vl["BRAKE"]["BRAKE_PRESSURE"]
-
+    ret.brakeLights = bool(ret.brakePressed)
+    
     ret.seatbeltUnlatched = cp.vl["SEATBELT"]["DRIVER_SEATBELT"] == 0
     ret.doorOpen = any([cp.vl["DOORS"]["FL"], cp.vl["DOORS"]["FR"],
                         cp.vl["DOORS"]["BL"], cp.vl["DOORS"]["BR"]])
