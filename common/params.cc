@@ -206,6 +206,16 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"Version", PERSISTENT},
     {"VisionRadarToggle", PERSISTENT},
     {"WheeledBody", PERSISTENT},
+
+    //map
+    {"ApiCache_NavDestinations", PERSISTENT},
+    {"EnableAmap", PERSISTENT},
+    {"EnableGmap", PERSISTENT},
+    {"GmapKey", PERSISTENT},
+    {"AmapKey1", PERSISTENT},
+    {"AmapKey2", PERSISTENT},
+    {"CustomMapboxTokenPk", PERSISTENT},
+    {"CustomMapboxTokenSk", PERSISTENT},
 };
 
 } // namespace
