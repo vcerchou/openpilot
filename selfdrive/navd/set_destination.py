@@ -30,4 +30,5 @@ if __name__ == "__main__":
     params.put("NavDestinationWaypoints", json.dumps(waypoints))
 
     print(dest)
+
     print(waypoints)
