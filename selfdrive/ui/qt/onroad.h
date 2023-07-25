@@ -81,6 +81,7 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float friction MEMBER friction);
   Q_PROPERTY(float latAccelFactorRaw MEMBER latAccelFactorRaw);
   Q_PROPERTY(float frictionRaw MEMBER frictionRaw);
+  Q_PROPERTY(bool brake_state MEMBER brake_state);
 
 
 public:
@@ -95,6 +96,7 @@ private:
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
   QPixmap steer_img;
+  QPixmap brake_img;
   QPixmap gps_img, direction_img;
   QPixmap lane_change_left_img, lane_change_right_img;
   float speed;
@@ -121,6 +123,7 @@ private:
   int gpsSatelliteCount = 0;
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
   float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
+  bool brake_state = false;
 
 protected:
   void paintGL() override;
