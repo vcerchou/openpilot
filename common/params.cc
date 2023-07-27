@@ -204,6 +204,8 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"Version", PERSISTENT},
     {"VisionRadarToggle", PERSISTENT},
 
+    //Add
+    {"AutoLaneChangeEnabled", PERSISTENT},
     //map
     {"ApiCache_NavDestinations", PERSISTENT},
     {"EnableAmap", PERSISTENT},

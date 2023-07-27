@@ -58,6 +58,12 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       "../assets/offroad/icon_warning.png",
     },
     {
+      "AutoLaneChangeEnabled",
+      tr("Enable AutoLaneChange"),
+      tr("Operation of the turn signal at 60㎞/h speed will result in a short change of the vehicle"),
+      "../assets/offroad/icon_lca.png",
+    },
+    {
       "RecordFront",
       tr("Record and Upload Driver Camera"),
       tr("Upload data from the driver facing camera and help improve the driver monitoring algorithm."),
