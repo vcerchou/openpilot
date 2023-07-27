@@ -21,7 +21,7 @@ class CarInterface(CarInterfaceBase):
 
     ret.openpilotLongitudinalControl = True
     ret.longitudinalTuning.kpBP = [0., 5., 35.]
-    ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
+    ret.longitudinalTuning.kpV = [1.0, 0.6, 0.3]
     ret.longitudinalTuning.kiBP = [0., 5., 20., 30.]
     ret.longitudinalTuning.kiV = [0.36, 0.23, 0.17, 0.1]
     ret.longitudinalTuning.deadzoneBP = [0.0, 30.0]
