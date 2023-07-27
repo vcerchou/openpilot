@@ -42,6 +42,9 @@ class LatControlTorque(LatControl):
     if not active:
       output_torque = 0.0
       pid_log.active = False
+      pid_log.latAccelFactor = self.torque_params.latAccelFactor
+      pid_log.latAccelOffset = self.torque_params.latAccelOffset
+      pid_log.friction = self.torque_params.friction
     else:
       if self.use_steering_angle:
         actual_curvature = -VM.calc_curvature(math.radians(CS.steeringAngleDeg - params.angleOffsetDeg), CS.vEgo, params.roll)
@@ -87,5 +90,9 @@ class LatControlTorque(LatControl):
       pid_log.desiredLateralAccel = desired_lateral_accel
       pid_log.saturated = self._check_saturation(self.steer_max - abs(output_torque) < 1e-3, CS, steer_limited)
 
+    pid_log.latAccelFactor = self.torque_params.latAccelFactor
+    pid_log.latAccelOffset = self.torque_params.latAccelOffset
+    pid_log.friction = self.torque_params.friction
+    
     # TODO left is positive in this convention
     return -output_torque, 0.0, pid_log
