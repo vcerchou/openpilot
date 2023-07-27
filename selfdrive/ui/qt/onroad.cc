@@ -513,7 +513,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   // brake icon (bottom right 1)
   x = rect().right() - (btn_size / 2) - (bdr_s * 1.5);
-  y = rect().bottom() - (footer_h / 2) + (bdr_s * 1.2);
+  y = rect().bottom() - (footer_h / 2) + (bdr_s * 1);
   drawIcon(p, x, y, brake_img, icon_bg, brake_state ? 0.8 : 0.2);
 
   // End winnie
