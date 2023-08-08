@@ -455,7 +455,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   
   // steer img (bottom 1 right)
   x = (btn_size / 2) + (UI_BORDER_SIZE * 2) + (btn_size);
-  y = rect().bottom() - (UI_HEADER_HEIGHT / 2.3);
+  y = rect().bottom() - (UI_HEADER_HEIGHT / 1.5);
   drawIconRotate(p, x, y, steer_img, icon_bg, 0.8, steerAngle);
 
   QString sa_str, sa_direction;
