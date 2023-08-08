@@ -495,7 +495,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   //gps
   // N direction icon (upper right 4)
-  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 1.8);
+  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 2);
   y = (btn_size / 2) + (UI_BORDER_SIZE * 1);
   drawIconRotate(p, x, y, direction_img, icon_bg, gps_state ? 0.8 : 0.2, gpsBearing);
 
@@ -517,7 +517,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     gpsAltitude, gpsAccuracy, gpsSatelliteCount
   );
 
-  x = rect().right() - (btn_size * 2);
+  x = rect().right() - (btn_size * 1);
   y = (UI_BORDER_SIZE * 1);
 
   p.setFont(InterFont(35));
