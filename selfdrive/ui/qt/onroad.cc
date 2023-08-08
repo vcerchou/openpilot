@@ -487,7 +487,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     latAccelFactorRaw, frictionRaw
   );
 
-  x = rect().left() + btn_size * 1.5;
+  x = rect().left() + btn_size * 2.2;
   y = rect().height();
 
   p.setFont(InterFont(30));
