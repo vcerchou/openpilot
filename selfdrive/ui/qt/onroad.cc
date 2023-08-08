@@ -487,7 +487,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     latAccelFactorRaw, frictionRaw
   );
 
-  x = rect().left() + btn_size * 2.2;
+  x = rect().left() + btn_size * 1.5;
   y = rect().height();
 
   p.setFont(InterFont(30));
@@ -517,7 +517,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     gpsAltitude, gpsAccuracy, gpsSatelliteCount
   );
 
-  x = rect().right() - (btn_size * 1);
+  x = rect().right() - (btn_size * 1.5);
   y = (UI_BORDER_SIZE * 1);
 
   p.setFont(InterFont(35));
