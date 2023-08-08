@@ -455,7 +455,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   
   // steer img (bottom 1 right)
   x = (btn_size / 2) + (UI_BORDER_SIZE * 2) + (btn_size);
-  y = rect().bottom() - (UI_HEADER_HEIGHT / 2.3);
+  y = rect().bottom() - (UI_HEADER_HEIGHT / 3.5);
   drawIconRotate(p, x, y, steer_img, icon_bg, 0.8, steerAngle);
 
   QString sa_str, sa_direction;
@@ -495,12 +495,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   //gps
   // N direction icon (upper right 4)
-  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 2.1);
+  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 2);
   y = (btn_size / 2) + (UI_BORDER_SIZE * 1);
   drawIconRotate(p, x, y, direction_img, icon_bg, gps_state ? 0.8 : 0.2, gpsBearing);
 
   // gps icon (upper right 3)
-  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 1.1);
+  x = rect().right() - (btn_size / 2) - (UI_BORDER_SIZE * 2) - (btn_size * 0.9);
   drawIcon(p, x, y, gps_img, icon_bg, gps_state ? 0.8 : 0.2);
 
   // upper gps info
@@ -517,7 +517,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     gpsAltitude, gpsAccuracy, gpsSatelliteCount
   );
 
-  x = rect().right() - (btn_size * 2.5);
+  x = rect().right() - (btn_size * 1.5);
   y = (UI_BORDER_SIZE * 1);
 
   p.setFont(InterFont(35));
