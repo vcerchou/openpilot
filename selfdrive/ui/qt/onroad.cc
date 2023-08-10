@@ -300,7 +300,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   const auto ge = sm["gpsLocationExternal"].getGpsLocationExternal();
   const auto lp = sm["liveParameters"].getLiveParameters();
   const auto tp = sm["liveTorqueParameters"].getLiveTorqueParameters();
-  
+  const auto ds = sm["deviceState"].getDeviceState();
+
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
   float set_speed = cs_alive ? v_cruise : SET_SPEED_NA;
@@ -356,7 +357,14 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("friction", cs.getLateralControlState().getTorqueState().getFriction());
   setProperty("latAccelFactorRaw", tp.getLatAccelFactorRaw());
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
-  
+
+  // tici
+  setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
+  setProperty("cpuTemp", ds.getCpuTempC()[0]);
+  setProperty("ambientTemp", ds.getAmbientTempC());
+  setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
+  setProperty("storageUsage", ds.getStorageUsage());
+
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -372,11 +380,21 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
     map_settings_btn->setVisible(!hideBottomIcons);
     main_layout->setAlignment(map_settings_btn, (rightHandDM ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignBottom);
   }
+
+  // opkr
+  auto lead_one = sm["radarState"].getRadarState().getLeadOne();
+  float drel = lead_one.getDRel();
+  float vrel = lead_one.getVRel();
+  bool leadstat = lead_one.getStatus();
+
+  setProperty("lead_stat", leadstat);
+  setProperty("dist_rel", drel);
+  setProperty("vel_rel", vrel);
 }
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
-
+  
   // Header gradient
   QLinearGradient bg(0, UI_HEADER_HEIGHT - (UI_HEADER_HEIGHT / 2.5), 0, UI_HEADER_HEIGHT);
   bg.setColorAt(0, QColor::fromRgbF(0, 0, 0, 0.45));
@@ -522,6 +540,175 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   p.setFont(InterFont(35));
   drawTextColor(p, x, y, infoGps, whiteColor(200));
+
+  // left panel
+
+  p.setOpacity(1.0);
+  int j_num = 100;
+  int width_l = 180;
+  int sp_xl = rect().left() + UI_BORDER_SIZE + width_l / 2 - 10;
+  int sp_yl = UI_BORDER_SIZE + 255;
+  int num_l = 0;
+
+  // lead drel
+  num_l = num_l + 1;
+  p.setPen(whiteColor(200));
+  debugText(p, sp_xl, sp_yl, QString("REL DIST"), 150, 27);
+  if (lead_stat) {
+    if (dist_rel < 5) {
+      p.setPen(redColor(200));
+    } else if (int(dist_rel) < 15) {
+      p.setPen(orangeColor(200));
+    }
+    if (dist_rel < 10) {
+      debugText(p, sp_xl, sp_yl+60, QString::number(dist_rel, 'f', 1), 150, 57);
+    } else {
+      debugText(p, sp_xl, sp_yl+60, QString::number(dist_rel, 'f', 0), 150, 57);
+    }
+  }
+  p.translate(sp_xl + 90, sp_yl + 20);
+  p.rotate(-90);
+  p.setPen(whiteColor(200));
+  p.setFont(InterFont(27, QFont::DemiBold));
+  p.drawText(-20, 0, "m");
+  p.resetMatrix();
+
+  // lead spd
+  num_l = num_l + 1;
+  sp_yl = sp_yl + j_num;
+  p.setPen(whiteColor(200));
+  debugText(p, sp_xl, sp_yl, QString("REL SPED"), 150, 27);
+  if (int(vel_rel) < -5) {
+    p.setPen(redColor(200));
+  } else if (int(vel_rel) < 0) {
+    p.setPen(orangeColor(200));
+  }
+  if (lead_stat) {
+    debugText(p, sp_xl, sp_yl+60, QString::number(vel_rel * (is_metric ? 3.6 : 2.2369363), 'f', 0), 150, 57);
+  } else {
+    debugText(p, sp_xl, sp_yl+60, "-", 150, 57);
+  }
+  p.translate(sp_xl + 90, sp_yl + 20);
+  p.rotate(-90);
+  p.setPen(whiteColor(200));
+  p.setFont(InterFont(27, QFont::DemiBold));
+  if (is_metric) {p.drawText(-50, 0, "km/h");} else {p.drawText(-50, 0, "mi/h");}
+  p.resetMatrix();
+
+  // steer angle
+  num_l = num_l + 1;
+  sp_yl = sp_yl + j_num;
+  p.setPen(whiteColor(200));
+  debugText(p, sp_xl, sp_yl, QString("STER ANG"), 150, 27);
+  p.setPen(greenColor(200));
+  if ((int(steerAngle) < -50) || (int(steerAngle) > 50)) {
+    p.setPen(redColor(200));
+  } else if ((int(steerAngle) < -30) || (int(steerAngle) > 30)) {
+    p.setPen(orangeColor(200));
+  }
+  if (steerAngle > -10 && steerAngle < 10) {
+    debugText(p, sp_xl, sp_yl+60, QString::number(steerAngle, 'f', 1), 150, 57);
+  } else {
+    debugText(p, sp_xl, sp_yl+60, QString::number(steerAngle, 'f', 0), 150, 57);
+  }
+  p.translate(sp_xl + 90, sp_yl + 20);
+  p.rotate(-90);
+  p.setPen(whiteColor(200));
+  p.setFont(InterFont(27, QFont::DemiBold));
+  p.drawText(-10, 0, "°");
+  p.resetMatrix();
+  // steer ratio
+  num_l = num_l + 1;
+  sp_yl = sp_yl + j_num;
+  debugText(p, sp_xl, sp_yl, QString("SteerRatio"), 150, 27);
+  debugText(p, sp_xl, sp_yl+60, QString::number(steerRatio, 'f', 2), 150, 57);
+
+  QRect left_panel(rect().left() + UI_BORDER_SIZE, UI_BORDER_SIZE + 215, width_l, 104*num_l);
+  p.setPen(QPen(QColor(255, 255, 255, 80), 6));
+  p.drawRoundedRect(left_panel, 20, 20);
+  // left panel end
+
+  // debug info(right panel)
+  int width_r = 180;
+  int sp_xr = rect().right() - UI_BORDER_SIZE - width_r / 2 - 10;
+  int sp_yr = UI_BORDER_SIZE + 235;
+  int num_r = 0;
+
+  // cpu temp
+  num_r = num_r + 1;
+  p.setPen(whiteColor(200));
+  debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
+  if (cpuTemp > 85) {
+    p.setPen(redColor(200));
+  } else if (cpuTemp > 75) {
+    p.setPen(orangeColor(200));
+  }
+  debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
+  p.translate(sp_xr + 90, sp_yr + 20);
+  p.rotate(-90);
+  p.setFont(InterFont(27, QFont::DemiBold));
+  p.setPen(whiteColor(200));
+  p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
+  p.resetMatrix();
+
+  // sys temp
+  num_r = num_r + 1;
+  sp_yr = sp_yr + j_num;
+  p.setPen(whiteColor(200));
+  debugText(p, sp_xr, sp_yr, QString("AMB TEMP"), 150, 27);
+  if (ambientTemp > 70) {
+    p.setPen(redColor(200));
+  } else if (ambientTemp > 60) {
+    p.setPen(orangeColor(200));
+  } 
+  debugText(p, sp_xr, sp_yr+60, QString::number(ambientTemp, 'f', 0) + "°C", 150, 57);
+  p.translate(sp_xr + 90, sp_yr + 20);
+  p.rotate(-90);
+  p.setFont(InterFont(27, QFont::DemiBold));
+  p.setPen(whiteColor(200));
+  p.drawText(-50, 0, QString::number(fanSpeedRpm, 'f', 0));
+  p.resetMatrix();
+
+  // Ublox GPS accuracy
+  if (gpsAccuracy != 0.00) {
+    num_r = num_r + 1;
+    sp_yr = sp_yr + j_num;
+    p.setPen(whiteColor(200));
+    debugText(p, sp_xr, sp_yr, QString("GPS PREC"), 150, 27);
+    if (gpsAccuracy > 1.3) {
+      p.setPen(redColor(200));
+    } else if (gpsAccuracy > 0.85) {
+      p.setPen(orangeColor(200));
+    }
+    if (gpsAccuracy > 99 || gpsAccuracy == 0) {
+      debugText(p, sp_xr, sp_yr+60, "None", 150, 57);
+    } else if (gpsAccuracy > 9.99) {
+      debugText(p, sp_xr, sp_yr+60, QString::number(gpsAccuracy, 'f', 1), 150, 57);
+    } else {
+      debugText(p, sp_xr, sp_yr+60, QString::number(gpsAccuracy, 'f', 2), 150, 57);
+    }
+    p.translate(sp_xr + 90, sp_yr + 20);
+    p.rotate(-90);
+    p.setFont(InterFont(27, QFont::DemiBold));
+    p.setPen(whiteColor(200));
+    p.drawText(-35, 0, QString::number(gpsSatelliteCount, 'f', 0));
+    p.resetMatrix();
+    // altitude
+    num_r = num_r + 1;
+    sp_yr = sp_yr + j_num;
+    p.setPen(whiteColor(200));
+    debugText(p, sp_xr, sp_yr, QString("ST USAGE"), 150, 27);
+    debugText(p, sp_xr, sp_yr+60, QString::number(storageUsage, 'f', 0) + "%", 150, 57);
+    p.translate(sp_xr + 90, sp_yr + 20);
+    p.rotate(-90);
+    p.setFont(InterFont(27, QFont::DemiBold));
+    p.drawText(-45, 0, QString::number(gpsAltitude, 'f', 0) + "m");
+    p.resetMatrix();
+  }
+    QRect right_panel(rect().right() - UI_BORDER_SIZE - width_r, UI_BORDER_SIZE + 195, width_r, 104*num_r+25);  
+    p.setPen(QPen(QColor(255, 255, 255, 80), 6));
+    p.drawRoundedRect(right_panel, 20, 20);
+    // right panel end
 
   // End winnie
   
@@ -789,6 +976,21 @@ void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState
   drawTextColor(painter, x, y + sz / 1.5f + 120.0, l_speed, v_color);
 
   painter.restore();
+}
+
+void AnnotatedCameraWidget::debugText(QPainter &p, int x, int y, const QString &text, int alpha, int fontsize, bool bold) {
+  if (bold) {
+  	p.setFont(InterFont(fontsize, QFont::Bold));
+  } else {
+  	p.setFont(InterFont(fontsize, QFont::DemiBold));
+  }
+  QFontMetrics fm(p.font());
+  QRect init_rect = fm.boundingRect(text);
+  QRect real_rect = fm.boundingRect(init_rect, 0, text);
+  real_rect.moveCenter({x, y - real_rect.height() / 2});
+
+  //p.setPen(QColor(0xff, 0xff, 0xff, alpha));
+  p.drawText(real_rect.x(), real_rect.bottom(), text);
 }
 
 void AnnotatedCameraWidget::paintGL() {
