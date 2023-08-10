@@ -66,6 +66,7 @@ private:
 class AnnotatedCameraWidget : public CameraWidget {
   Q_OBJECT
 
+
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
   void updateState(const UIState &s);
@@ -74,6 +75,8 @@ public:
 
 private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
+  void drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color);
+  void debugText(QPainter &p, int x, int y, const QString &text, int alpha = 255, int fontsize = 30, bool bold = false);
 
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
@@ -99,6 +102,17 @@ private:
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
 
+  float steerAngle, steerRatio = 0;
+  bool gps_state = false;
+  int gpsSatelliteCount = 0;
+  float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
+  float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
+  float maxTempC = 0;
+  int fanSpeed = 0;
+  bool lead_stat = false;
+  float dist_rel = 0;
+  float vel_rel = 0;
+  
 protected:
   void paintGL() override;
   void initializeGL() override;
@@ -111,6 +125,13 @@ protected:
   inline QColor redColor(int alpha = 255) { return QColor(201, 34, 49, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(255, 255, 255, alpha); }
   inline QColor blackColor(int alpha = 255) { return QColor(0, 0, 0, alpha); }
+
+  inline QColor orangeColor(int alpha = 255) { return QColor(255, 149, 0, alpha); }
+  inline QColor pinkColor(int alpha = 255) { return QColor(255, 191, 191, alpha); }
+  inline QColor limeColor(int alpha = 255) { return QColor(120, 255, 120, alpha); }
+  inline QColor greenColor(int alpha = 255) { return QColor(0, 255, 0, alpha); }
+  inline QColor yellowColor(int alpha = 255) { return QColor(218, 202, 37, alpha); }
+
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
