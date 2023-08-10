@@ -95,6 +95,15 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float latAccelFactorRaw MEMBER latAccelFactorRaw);
   Q_PROPERTY(float frictionRaw MEMBER frictionRaw);
 
+  Q_PROPERTY(bool lead_stat MEMBER lead_stat);
+  Q_PROPERTY(float dist_rel MEMBER dist_rel);
+  Q_PROPERTY(float vel_rel MEMBER vel_rel);
+
+  Q_PROPERTY(int cpuPerc MEMBER cpuPerc);
+  Q_PROPERTY(int fanSpeedRpm MEMBER fanSpeedRpm);
+  Q_PROPERTY(int storageUsage MEMBER storageUsage);
+  Q_PROPERTY(float cpuTemp MEMBER cpuTemp);
+  Q_PROPERTY(float ambientTemp MEMBER ambientTemp);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -106,6 +115,7 @@ private:
   void drawIcon(QPainter &p, int x, int y, QPixmap &img, QBrush bg, float opacity);
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
   void drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color);
+  void debugText(QPainter &p, int x, int y, const QString &text, int alpha = 255, int fontsize = 30, bool bold = false);
 
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
@@ -137,7 +147,16 @@ private:
   int gpsSatelliteCount = 0;
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
   float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
+  bool lead_stat = false;
+  float dist_rel = 0;
+  float vel_rel = 0;
   
+  int cpuPerc = 0;
+  float cpuTemp = 0;
+  float ambientTemp = 0;
+  int fanSpeedRpm = 0;
+  int storageUsage = 0;
+
 protected:
   void paintGL() override;
   void initializeGL() override;
@@ -154,6 +173,8 @@ protected:
   inline QColor orangeColor(int alpha = 255) { return QColor(255, 149, 0, alpha); }
   inline QColor pinkColor(int alpha = 255) { return QColor(255, 191, 191, alpha); }
   inline QColor limeColor(int alpha = 255) { return QColor(120, 255, 120, alpha); }
+  inline QColor greenColor(int alpha = 255) { return QColor(0, 255, 0, alpha); }
+  inline QColor yellowColor(int alpha = 255) { return QColor(218, 202, 37, alpha); }
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
