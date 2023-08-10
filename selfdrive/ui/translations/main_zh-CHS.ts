@@ -1613,6 +1613,10 @@
         <translation>驾驶风格</translation>
     </message>
     <message>
+        <source>Enable AutoLaneChange</source>
+        <translation>启用自动变道</translation>
+    </message>
+    <message>
         <source>Standard is recommended. In aggressive mode, openpilot will follow lead cars closer and be more aggressive with the gas and brake. In relaxed mode openpilot will stay further away from lead cars.</source>
         <translation>推荐使用标准模式。在积极模式中，openpilot 会更靠近前車並在加速和剎车方面更积极。在舒适模式中，openpilot 会与前车保持较远的距离。</translation>
     </message>
