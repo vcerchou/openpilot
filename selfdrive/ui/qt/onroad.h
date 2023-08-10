@@ -99,6 +99,11 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float dist_rel MEMBER dist_rel);
   Q_PROPERTY(float vel_rel MEMBER vel_rel);
 
+  Q_PROPERTY(int cpuPerc MEMBER cpuPerc);
+  Q_PROPERTY(int fanSpeedRpm MEMBER fanSpeedRpm);
+  Q_PROPERTY(int storageUsage MEMBER storageUsage);
+  Q_PROPERTY(float cpuTemp MEMBER cpuTemp);
+  Q_PROPERTY(float ambientTemp MEMBER ambientTemp);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -146,6 +151,11 @@ private:
   float dist_rel = 0;
   float vel_rel = 0;
   
+  int cpuPerc = 0;
+  float cpuTemp = 0;
+  float ambientTemp = 0;
+  int fanSpeedRpm = 0;
+  int storageUsage = 0;
 
 protected:
   void paintGL() override;

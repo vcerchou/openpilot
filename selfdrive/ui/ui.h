@@ -123,17 +123,8 @@ typedef struct UIScene {
   mat3 view_from_calib = DEFAULT_CALIBRATION;
   mat3 view_from_wide_calib = DEFAULT_CALIBRATION;
   cereal::PandaState::PandaType pandaType;
-  cereal::DeviceState::Reader deviceState;
-  cereal::PeripheralState::Reader peripheralState;
   int satelliteCount;
 
-  int cpuPerc;
-  float cpuTemp;
-  float ambientTemp;
-  int fanSpeedRpm;
-  int storageUsage;
-  int fanSpeed;
-  
   // modelV2
   float lane_line_probs[4];
   float road_edge_stds[2];
