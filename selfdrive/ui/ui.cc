@@ -212,6 +212,20 @@ static void update_state(UIState *s) {
     scene.light_sensor = std::max(100.0f - scale * cam_state.getExposureValPercent(), 0.0f);
   }
   scene.started = sm["deviceState"].getDeviceState().getStarted() && scene.ignition;
+  
+  if (sm.updated("deviceState")) {
+    scene.deviceState = sm["deviceState"].getDeviceState();
+    scene.cpuPerc = scene.deviceState.getCpuUsagePercent()[0];
+    scene.cpuTemp = scene.deviceState.getCpuTempC()[0];
+    scene.ambientTemp = scene.deviceState.getAmbientTempC();
+    scene.fanSpeed = scene.deviceState.getFanSpeedPercentDesired();
+    scene.storageUsage = scene.deviceState.getStorageUsage();
+  }
+  
+  if (sm.updated("peripheralState")) {
+    scene.peripheralState = sm["peripheralState"].getPeripheralState();
+    scene.fanSpeedRpm = scene.peripheralState.getFanSpeedRpm();
+  }
 }
 
 void ui_update_params(UIState *s) {

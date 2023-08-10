@@ -300,7 +300,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   const auto ge = sm["gpsLocationExternal"].getGpsLocationExternal();
   const auto lp = sm["liveParameters"].getLiveParameters();
   const auto tp = sm["liveTorqueParameters"].getLiveTorqueParameters();
-  const auto ds = sm["deviceState"].getDeviceState();
 
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
@@ -358,13 +357,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("latAccelFactorRaw", tp.getLatAccelFactorRaw());
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
 
-  // tici
-  setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
-  setProperty("cpuTemp", ds.getCpuTempC()[0]);
-  setProperty("ambientTemp", ds.getAmbientTempC());
-  setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
-  setProperty("storageUsage", ds.getStorageUsage());
-
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -394,6 +386,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
+  UIState *s = uiState();
   
   // Header gradient
   QLinearGradient bg(0, UI_HEADER_HEIGHT - (UI_HEADER_HEIGHT / 2.5), 0, UI_HEADER_HEIGHT);
@@ -638,17 +631,17 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   num_r = num_r + 1;
   p.setPen(whiteColor(200));
   debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
-  if (cpuTemp > 85) {
+  if (s->scene.cpuTemp > 85) {
     p.setPen(redColor(200));
-  } else if (cpuTemp > 75) {
+  } else if (s->scene.cpuTemp > 75) {
     p.setPen(orangeColor(200));
   }
-  debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
+  debugText(p, sp_xr, sp_yr+60, QString::number(s->scene.cpuTemp, 'f', 0) + "°C", 150, 57);
   p.translate(sp_xr + 90, sp_yr + 20);
   p.rotate(-90);
   p.setFont(InterFont(27, QFont::DemiBold));
   p.setPen(whiteColor(200));
-  p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
+  p.drawText(-40, 0, QString::number(s->scene.cpuPerc, 'f', 0) + "%");
   p.resetMatrix();
 
   // sys temp
@@ -656,17 +649,17 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   sp_yr = sp_yr + j_num;
   p.setPen(whiteColor(200));
   debugText(p, sp_xr, sp_yr, QString("AMB TEMP"), 150, 27);
-  if (ambientTemp > 70) {
+  if (s->scene.ambientTemp> 70) {
     p.setPen(redColor(200));
-  } else if (ambientTemp > 60) {
+  } else if (s->scene.ambientTemp> 60) {
     p.setPen(orangeColor(200));
   } 
-  debugText(p, sp_xr, sp_yr+60, QString::number(ambientTemp, 'f', 0) + "°C", 150, 57);
+  debugText(p, sp_xr, sp_yr+60, QString::number(s->scene.ambientTemp, 'f', 0) + "°C", 150, 57);
   p.translate(sp_xr + 90, sp_yr + 20);
   p.rotate(-90);
   p.setFont(InterFont(27, QFont::DemiBold));
   p.setPen(whiteColor(200));
-  p.drawText(-50, 0, QString::number(fanSpeedRpm, 'f', 0));
+  p.drawText(-50, 0, QString::number(s->scene.fanSpeedRpm, 'f', 0));
   p.resetMatrix();
 
   // Ublox GPS accuracy
@@ -698,7 +691,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     sp_yr = sp_yr + j_num;
     p.setPen(whiteColor(200));
     debugText(p, sp_xr, sp_yr, QString("ST USAGE"), 150, 27);
-    debugText(p, sp_xr, sp_yr+60, QString::number(storageUsage, 'f', 0) + "%", 150, 57);
+    debugText(p, sp_xr, sp_yr+60, QString::number(s->scene.storageUsage, 'f', 0) + "%", 150, 57);
     p.translate(sp_xr + 90, sp_yr + 20);
     p.rotate(-90);
     p.setFont(InterFont(27, QFont::DemiBold));
