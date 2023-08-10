@@ -229,6 +229,12 @@ void UIState::updateStatus() {
     } else {
       status = controls_state.getEnabled() ? STATUS_ENGAGED : STATUS_DISENGAGED;
     }
+  if (sm->updated("ubloxGnss")) {
+    auto data = (*sm)["ubloxGnss"].getUbloxGnss();
+    if (data.which() == cereal::UbloxGnss::MEASUREMENT_REPORT) {
+      scene.satelliteCount = data.getMeasurementReport().getNumMeas();
+    }
+    }
   }
 
   // Handle onroad/offroad transition
@@ -246,7 +252,7 @@ UIState::UIState(QObject *parent) : QObject(parent) {
   sm = std::make_unique<SubMaster, const std::initializer_list<const char *>>({
     "modelV2", "controlsState", "liveCalibration", "radarState", "deviceState", "roadCameraState",
     "pandaStates", "carParams", "driverMonitoringState", "carState", "liveLocationKalman", "driverStateV2",
-    "wideRoadCameraState", "managerState", "navInstruction", "navRoute", "uiPlan",
+    "wideRoadCameraState", "managerState", "navInstruction", "navRoute", "uiPlan", "liveParameters", "liveTorqueParameters","gpsLocationExternal" ,"ubloxGnss",
   });
 
   Params params;
