@@ -359,8 +359,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
 
   // tici
-  setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
-  setProperty("cpuTemp", ds.getCpuTempC()[0]);
+  // setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
+  // setProperty("cpuTemp", ds.getCpuTempC()[0]);
   setProperty("ambientTemp", ds.getAmbientTempC());
   setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
   setProperty("storageUsage", ds.getStorageUsage());
@@ -634,22 +634,22 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   int sp_yr = UI_BORDER_SIZE + 235;
   int num_r = 0;
 
-  // cpu temp
-  num_r = num_r + 1;
-  p.setPen(whiteColor(200));
-  debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
-  if (cpuTemp > 85) {
-    p.setPen(redColor(200));
-  } else if (cpuTemp > 75) {
-    p.setPen(orangeColor(200));
-  }
-  debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
-  p.translate(sp_xr + 90, sp_yr + 20);
-  p.rotate(-90);
-  p.setFont(InterFont(27, QFont::DemiBold));
-  p.setPen(whiteColor(200));
-  p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
-  p.resetMatrix();
+  // // cpu temp
+  // num_r = num_r + 1;
+  // p.setPen(whiteColor(200));
+  // debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
+  // if (cpuTemp > 85) {
+  //   p.setPen(redColor(200));
+  // } else if (cpuTemp > 75) {
+  //   p.setPen(orangeColor(200));
+  // }
+  // debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
+  // p.translate(sp_xr + 90, sp_yr + 20);
+  // p.rotate(-90);
+  // p.setFont(InterFont(27, QFont::DemiBold));
+  // p.setPen(whiteColor(200));
+  // p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
+  // p.resetMatrix();
 
   // sys temp
   num_r = num_r + 1;
