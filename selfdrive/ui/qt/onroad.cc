@@ -302,15 +302,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   const auto tp = sm["liveTorqueParameters"].getLiveTorqueParameters();
   const auto ds = sm["deviceState"].getDeviceState();
 
-  auto lead_one = sm["radarState"].getRadarState().getLeadOne();
-  float drel = lead_one.getDRel();
-  float vrel = lead_one.getVRel();
-  bool leadstat = lead_one.getStatus();
-
-  setProperty("lead_stat", leadstat);
-  setProperty("dist_rel", drel);
-  setProperty("vel_rel", vrel);
-
   // Handle older routes where vCruiseCluster is not set
   float v_cruise =  cs.getVCruiseCluster() == 0.0 ? cs.getVCruise() : cs.getVCruiseCluster();
   float set_speed = cs_alive ? v_cruise : SET_SPEED_NA;
@@ -368,8 +359,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
 
   // tici
-  setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
-  setProperty("cpuTemp", ds.getCpuTempC()[0]);
+  // setProperty("cpuPerc", ds.getCpuUsagePercent()[0]);
+  // setProperty("cpuTemp", ds.getCpuTempC()[0]);
   setProperty("ambientTemp", ds.getAmbientTempC());
   setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
   setProperty("storageUsage", ds.getStorageUsage());
@@ -389,6 +380,16 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
     map_settings_btn->setVisible(!hideBottomIcons);
     main_layout->setAlignment(map_settings_btn, (rightHandDM ? Qt::AlignLeft : Qt::AlignRight) | Qt::AlignBottom);
   }
+
+  // opkr
+  auto lead_one = sm["radarState"].getRadarState().getLeadOne();
+  float drel = lead_one.getDRel();
+  float vrel = lead_one.getVRel();
+  bool leadstat = lead_one.getStatus();
+
+  setProperty("lead_stat", leadstat);
+  setProperty("dist_rel", drel);
+  setProperty("vel_rel", vrel);
 }
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
@@ -633,22 +634,22 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   int sp_yr = UI_BORDER_SIZE + 235;
   int num_r = 0;
 
-  // cpu temp
-  num_r = num_r + 1;
-  p.setPen(whiteColor(200));
-  debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
-  if (cpuTemp > 85) {
-    p.setPen(redColor(200));
-  } else if (cpuTemp > 75) {
-    p.setPen(orangeColor(200));
-  }
-  debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
-  p.translate(sp_xr + 90, sp_yr + 20);
-  p.rotate(-90);
-  p.setFont(InterFont(27, QFont::DemiBold));
-  p.setPen(whiteColor(200));
-  p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
-  p.resetMatrix();
+  // // cpu temp
+  // num_r = num_r + 1;
+  // p.setPen(whiteColor(200));
+  // debugText(p, sp_xr, sp_yr, QString("CPU TEMP"), 150, 27);
+  // if (cpuTemp > 85) {
+  //   p.setPen(redColor(200));
+  // } else if (cpuTemp > 75) {
+  //   p.setPen(orangeColor(200));
+  // }
+  // debugText(p, sp_xr, sp_yr+60, QString::number(cpuTemp, 'f', 0) + "°C", 150, 57);
+  // p.translate(sp_xr + 90, sp_yr + 20);
+  // p.rotate(-90);
+  // p.setFont(InterFont(27, QFont::DemiBold));
+  // p.setPen(whiteColor(200));
+  // p.drawText(-40, 0, QString::number(cpuPerc, 'f', 0) + "%");
+  // p.resetMatrix();
 
   // sys temp
   num_r = num_r + 1;
@@ -704,6 +705,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.drawText(-45, 0, QString::number(gpsAltitude, 'f', 0) + "m");
     p.resetMatrix();
   }
+    QRect right_panel(rect().right() - UI_BORDER_SIZE - width_r, UI_BORDER_SIZE + 195, width_r, 104*num_r+25);  
+    p.setPen(QPen(QColor(255, 255, 255, 80), 6));
+    p.drawRoundedRect(right_panel, 20, 20);
     // right panel end
 
   // End winnie
