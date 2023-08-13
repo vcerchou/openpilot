@@ -479,7 +479,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   // right panel
 
   // debug info(right panel)
-  //p.setOpacity(1.0);
+  p.setOpacity(0.4);
   int j_num = 100;
   int width_r = 180;
   int sp_xr = rect().right() - UI_BORDER_SIZE - width_r / 2 - 10;
@@ -488,13 +488,13 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   // lead drel
   num_r = num_r + 1;
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   debugText(p, sp_xr, sp_yr, QString("REL DIST"), 150, 27);
   if (lead_stat) {
     if (dist_rel < 5) {
-      p.setPen(redColor(200));
+      p.setPen(redColor(50));
     } else if (int(dist_rel) < 15) {
-      p.setPen(orangeColor(200));
+      p.setPen(orangeColor(50));
     }
     if (dist_rel < 10) {
       debugText(p, sp_xr, sp_yr+60, QString::number(dist_rel, 'f', 1), 150, 57);
@@ -504,7 +504,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   }
   p.translate(sp_xr + 90, sp_yr + 20);
   p.rotate(-90);
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   p.setFont(InterFont(27, QFont::DemiBold));
   p.drawText(-20, 0, "m");
   p.resetMatrix();
@@ -512,12 +512,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   // lead spd
   num_r = num_r + 1;
   sp_yr = sp_yr + j_num;
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   debugText(p, sp_xr, sp_yr, QString("REL SPED"), 150, 27);
   if (int(vel_rel) < -5) {
-    p.setPen(redColor(200));
+    p.setPen(redColor(50));
   } else if (int(vel_rel) < 0) {
-    p.setPen(orangeColor(200));
+    p.setPen(orangeColor(50));
   }
   if (lead_stat) {
     debugText(p, sp_xr, sp_yr+60, QString::number(vel_rel * (is_metric ? 3.6 : 2.2369363), 'f', 0), 150, 57);
@@ -526,7 +526,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   }
   p.translate(sp_xr + 90, sp_yr + 20);
   p.rotate(-90);
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   p.setFont(InterFont(27, QFont::DemiBold));
   if (is_metric) {p.drawText(-50, 0, "km/h");} else {p.drawText(-50, 0, "mi/h");}
   p.resetMatrix();
@@ -534,13 +534,13 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   // steer angle
   num_r = num_r + 1;
   sp_yr = sp_yr + j_num;
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   debugText(p, sp_xr, sp_yr, QString("STER ANG"), 150, 27);
-  p.setPen(greenColor(200));
+  p.setPen(greenColor(50));
   if ((int(steerAngle) < -50) || (int(steerAngle) > 50)) {
-    p.setPen(redColor(200));
+    p.setPen(redColor(50));
   } else if ((int(steerAngle) < -30) || (int(steerAngle) > 30)) {
-    p.setPen(orangeColor(200));
+    p.setPen(orangeColor(50));
   }
   if (steerAngle > -10 && steerAngle < 10) {
     debugText(p, sp_xr, sp_yr+60, QString::number(steerAngle, 'f', 1), 150, 57);
@@ -549,7 +549,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   }
   p.translate(sp_xr + 90, sp_yr + 20);
   p.rotate(-90);
-  p.setPen(whiteColor(200));
+  p.setPen(whiteColor(50));
   p.setFont(InterFont(27, QFont::DemiBold));
   p.drawText(-10, 0, "°");
   p.resetMatrix();
@@ -558,12 +558,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   if (gpsAccuracy != 0.00) {
     num_r = num_r + 1;
     sp_yr = sp_yr + j_num;
-    p.setPen(whiteColor(200));
+    p.setPen(whiteColor(50));
     debugText(p, sp_xr, sp_yr, QString("GPS PREC"), 150, 27);
     if (gpsAccuracy > 1.3) {
-      p.setPen(redColor(200));
+      p.setPen(redColor(50));
     } else if (gpsAccuracy > 0.85) {
-      p.setPen(orangeColor(200));
+      p.setPen(orangeColor(50));
     }
     if (gpsAccuracy > 99 || gpsAccuracy == 0) {
       debugText(p, sp_xr, sp_yr+60, "None", 150, 57);
@@ -575,13 +575,13 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.translate(sp_xr + 90, sp_yr + 20);
     p.rotate(-90);
     p.setFont(InterFont(27, QFont::DemiBold));
-    p.setPen(whiteColor(200));
+    p.setPen(whiteColor(50));
     p.drawText(-35, 0, QString::number(gpsSatelliteCount, 'f', 0));
     p.resetMatrix();
     // altitude
     num_r = num_r + 1;
     sp_yr = sp_yr + j_num;
-    p.setPen(whiteColor(200));
+    p.setPen(whiteColor(50));
     debugText(p, sp_xr, sp_yr, QString("ST USAGE"), 150, 27);
     debugText(p, sp_xr, sp_yr+60, QString::number(ambientTemp, 'f', 0) + "°C", 150, 57);
     p.translate(sp_xr + 90, sp_yr + 20);
