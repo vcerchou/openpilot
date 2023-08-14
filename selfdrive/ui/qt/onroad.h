@@ -80,6 +80,7 @@ class AnnotatedCameraWidget : public CameraWidget {
 
 
   Q_PROPERTY(float steerAngle MEMBER steerAngle);
+  Q_PROPERTY(float steerRatio MEMBER steerRatio);
   Q_PROPERTY(bool gps_state MEMBER gps_state);
   Q_PROPERTY(int gpsSatelliteCount MEMBER gpsSatelliteCount);
   Q_PROPERTY(float gpsBearing MEMBER gpsBearing);
