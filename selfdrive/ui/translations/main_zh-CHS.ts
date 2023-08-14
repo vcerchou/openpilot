@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>Unable to download updates%1</source>
-        <translation> 无法下载更新%1</translation>
+        <translation>无法下载更新%1</translation>
     </message>
     <message>
         <source>Invalid date and time settings, system won&apos;t start. Connect to internet to set time.</source>
@@ -490,6 +490,11 @@
     <message>
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
         <translation> 警报</translation>
+    </message>
+    <message>
+        <source>Unable to download updates
+%1</source>
+        <translation>无法下载更新%1</translation>
     </message>
 </context>
 <context>
@@ -886,10 +891,6 @@
         <translation> 倒档</translation>
     </message>
     <message>
-        <source>Reverse Gear</source>
-        <translation> 倒档</translation>
-    </message>
-    <message>
         <source>Risk of Collision</source>
         <translation> 碰撞风险</translation>
     </message>
@@ -1012,6 +1013,23 @@
     <message>
         <source>openpilot Unavailable</source>
         <translation> openpilot 不可用</translation>
+    </message>
+    <message>
+        <source>Reverse
+Gear</source>
+        <translation>倒档</translation>
+    </message>
+    <message>
+        <source>Waiting for controls to start</source>
+        <translation>等待开始控制</translation>
+    </message>
+    <message>
+        <source>Controls Unresponsive</source>
+        <translation>控件无响应</translation>
+    </message>
+    <message>
+        <source>Reboot Device</source>
+        <translation>重启设备</translation>
     </message>
 </context>
 <context>
@@ -1158,7 +1176,8 @@
         <translation>按确认删除所有内容和设置。 按取消恢复启动。</translation>
     </message>
     <message>
-        <source>Resetting device...This may take up to a minute.</source>
+        <source>Resetting device...
+This may take up to a minute.</source>
         <translation>正在重置设备...这可能需要一分钟的时间。</translation>
     </message>
 </context>
@@ -1643,6 +1662,10 @@
     <message>
         <source>The driving visualization will transition to the road-facing wide-angle camera at low speeds to better show some turns. The Experimental mode logo will also be shown in the top right corner.When a navigation destination is set and the driving model is using it as input, the driving path on the map will turn green.</source>
         <translation>驾驶可视化将在低速时过渡到面向道路的广角摄像头，以更好地显示一些转弯。 实验模式标志也会显示在右上角。当设置了导航目的地并且驾驶模型使用它作为输入时，地图上的驾驶路径将变成绿色。</translation>
+    </message>
+    <message>
+        <source>Operation of the turn signal at 60㎞/h speed will result in a short change of the vehicle</source>
+        <translation>以 60 ㎞/h 的速度操作转向灯将导致车辆短暂变化</translation>
     </message>
 </context>
 <context>
