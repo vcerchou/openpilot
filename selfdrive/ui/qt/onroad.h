@@ -101,7 +101,7 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(float vel_rel MEMBER vel_rel);
 
   Q_PROPERTY(int fanSpeed MEMBER fanSpeed);
-  Q_PROPERTY(float ambientTemp MEMBER ambientTemp);
+  Q_PROPERTY(float maxTempC MEMBER maxTempC);
 
 
 public:
@@ -151,7 +151,7 @@ private:
   float dist_rel = 0;
   float vel_rel = 0;
   
-  float ambientTemp = 0;
+  float maxTempC = 0;
   int fanSpeed = 0;
 
 protected:

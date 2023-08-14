@@ -355,7 +355,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("frictionRaw", tp.getFrictionCoefficientRaw());
   
   // tici
-  setProperty("ambientTemp", ds.getAmbientTempC());
+  setProperty("maxTempC", ds.getMaxTempC());
   setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
 
   // update engageability/experimental mode button
@@ -591,8 +591,8 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     num_r = num_r + 1;
     sp_yr = sp_yr + j_num;
     p.setPen(whiteColor(50));
-    debugText(p, sp_xr, sp_yr, QString("ST USAGE"), 150, 27);
-    debugText(p, sp_xr, sp_yr+60, QString::number(ambientTemp, 'f', 0) + "°C", 150, 57);
+    debugText(p, sp_xr, sp_yr, QString("C3 TEMP"), 150, 27);
+    debugText(p, sp_xr, sp_yr+60, QString::number(maxTempC, 'f', 0) + "°C", 150, 57);
     p.translate(sp_xr + 90, sp_yr + 20);
     p.rotate(-90);
     p.setFont(InterFont(27, QFont::DemiBold));
