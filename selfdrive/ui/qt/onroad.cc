@@ -591,7 +591,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.resetMatrix();
   }
     QRect right_panel(rect().right() - UI_BORDER_SIZE - width_r, UI_BORDER_SIZE + 195, width_r, 104*num_r+25);  
-    p.setPen(QPen(QColor(255, 255, 255, 20), 6));
+    p.setPen(QPen(QColor(0, 255, 0, 20), 6));
     p.drawRoundedRect(right_panel, 20, 20);
 
     // right panel end
