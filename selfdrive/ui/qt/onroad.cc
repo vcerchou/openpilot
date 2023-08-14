@@ -479,7 +479,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   // right panel
 
   // debug info(right panel)
-  p.setOpacity(0.4);
+  p.setOpacity(1.0);
   int j_num = 100;
   int width_r = 180;
   int sp_xr = rect().right() - UI_BORDER_SIZE - width_r / 2 - 10;
@@ -488,7 +488,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
   // lead drel
   num_r = num_r + 1;
-  p.setPen(whiteColor(50));
+  p.setPen(whiteColor(400));
   debugText(p, sp_xr, sp_yr, QString("REL DIST"), 150, 27);
   if (lead_stat) {
     if (dist_rel < 5) {
@@ -558,10 +558,6 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   sp_yr = sp_yr + j_num;
   debugText(p, sp_xr, sp_yr, QString("SteerRatio"), 150, 27);
   debugText(p, sp_xr, sp_yr+60, QString::number(steerRatio, 'f', 2), 150, 57);
-
-  QRect left_panel(rect().left() + UI_BORDER_SIZE, UI_BORDER_SIZE + 215, width_r, 104*num_r);
-  p.setPen(QPen(QColor(255, 255, 255, 80), 6));
-  p.drawRoundedRect(left_panel, 20, 20);
 
   // Ublox GPS accuracy
   if (gpsAccuracy != 0.00) {
