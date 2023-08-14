@@ -479,7 +479,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   // right panel
 
   // debug info(right panel)
-  p.setOpacity(1.0);
+  //p.setOpacity(1.0);
   int j_num = 100;
   int width_r = 180;
   int sp_xr = rect().right() - UI_BORDER_SIZE - width_r / 2 - 10;
@@ -591,7 +591,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.resetMatrix();
   }
     QRect right_panel(rect().right() - UI_BORDER_SIZE - width_r, UI_BORDER_SIZE + 195, width_r, 104*num_r+25);  
-    p.setPen(QPen(QColor(0, 255, 0, 20), 6));
+    //p.setPen(QPen(QColor(0, 255, 0, 20), 6));
     p.drawRoundedRect(right_panel, 20, 20);
 
     // right panel end
