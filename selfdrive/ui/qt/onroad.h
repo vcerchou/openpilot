@@ -7,6 +7,7 @@
 #include "common/util.h"
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/widgets/cameraview.h"
+#include "selfdrive/ui/qt/screenrecorder/screenrecorder.h"
 
 
 const int btn_size = 192;
@@ -153,6 +154,11 @@ private:
   
   float maxTempC = 0;
   int fanSpeed = 0;
+  
+  // Screen recorder
+  ScreenRecorder* recorder;
+  std::shared_ptr<QTimer> record_timer;
+  QPoint startPos;
 
 protected:
   void paintGL() override;

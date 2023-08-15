@@ -282,6 +282,18 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   main_layout->addWidget(map_settings_btn, 0, Qt::AlignBottom | Qt::AlignRight);
 
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
+
+  // Screen recorder
+  recorder = new ScreenRecorder(this);
+  main_layout->addWidget(recorder, 0, Qt::AlignTop | Qt::AlignLeft);
+  const int refresh_rate = 1000/UI_FREQ;
+  record_timer = std::make_shared<QTimer>();
+  QObject::connect(record_timer.get(), &QTimer::timeout, [=]() {
+    if (recorder) {
+      recorder->publicUpdateScreen();
+    }
+  });
+  record_timer->start(refresh_rate); 
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -594,8 +606,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     //p.setPen(QPen(QColor(0, 255, 0, 20), 6));
     //p.drawRoundedRect(right_panel, 20, 20);
 
-    // right panel end
-
+    // right panel end 
   // End winnie
   
   // EU (Vienna style) sign
