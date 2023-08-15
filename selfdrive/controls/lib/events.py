@@ -264,11 +264,20 @@ def torque_nn_load_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 6.0)
   else:
-    return Alert(
-      "NN torque controller loaded",
-      model_name,
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 6.0)
+    if 'b\'' in model_name:
+      car, eps = model_name.split('b\'')
+      eps = 'b\'' + eps
+      return Alert(
+        f"NN torque: {car}",
+        f"eps: {eps}",
+        AlertStatus.userPrompt, AlertSize.mid,
+        Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 6.0)
+    else:
+      return Alert(
+        "NN torque controller loaded",
+        model_name,
+        AlertStatus.userPrompt, AlertSize.mid,
+        Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 6.0)
 
 # *** debug alerts ***
 
