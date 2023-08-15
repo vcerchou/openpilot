@@ -448,8 +448,10 @@
         <translation> 连接到互联网以检查更新。 openpilot 在连接到互联网检查更新之前不会自动启动。</translation>
     </message>
     <message>
-        <source>Unable to download updates%1</source>
-        <translation>无法下载更新%1</translation>
+        <source>Unable to download updates
+%1</source>
+        <translation>无法下载更新
+%1</translation>
     </message>
     <message>
         <source>Invalid date and time settings, system won&apos;t start. Connect to internet to set time.</source>
