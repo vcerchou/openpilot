@@ -7,7 +7,7 @@
 #include "common/util.h"
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/widgets/cameraview.h"
-
+#include "selfdrive/ui/qt/screenrecorder/screenrecorder.h"
 
 const int btn_size = 192;
 const int img_size = (btn_size / 4) * 3;
@@ -153,7 +153,7 @@ private:
   
   float maxTempC = 0;
   int fanSpeed = 0;
-
+  
 protected:
   void paintGL() override;
   void initializeGL() override;
@@ -176,6 +176,11 @@ protected:
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
+  // neokii
+private:
+  ScreenRecoder* recorder;
+  std::shared_ptr<QTimer> record_timer;
+  QPoint startPos;
 };
 
 // container for all onroad widgets
