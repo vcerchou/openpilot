@@ -9,9 +9,9 @@ base_libs = [common, messaging, cereal, visionipc, transformations, 'zmq',
 if arch == 'larch64':
   base_libs.append('EGL')
 
-maps = arch in ['larch64', 'x86_64']
+maps = arch in ['larch64', 'aarch64', 'x86_64']
 
-if maps and arch == 'x86_64':
+if maps and arch != 'larch64':
   rpath = [Dir(f"#third_party/mapbox-gl-native-qt/{arch}").srcnode().abspath]
   qt_env["RPATH"] += rpath
 
@@ -60,8 +60,15 @@ qt_env.Program("qt/spinner", ["qt/spinner.cc"], LIBS=qt_libs)
 qt_src = ["main.cc", "qt/sidebar.cc", "qt/onroad.cc", "qt/body.cc",
           "qt/window.cc", "qt/home.cc", "qt/offroad/settings.cc",
           "qt/offroad/software_settings.cc", "qt/offroad/onboarding.cc",
-          "qt/offroad/driverview.cc", "qt/offroad/experimental_mode.cc"]
-qt_env.Program("_ui", qt_src + [asset_obj], LIBS=qt_libs)
+          "qt/offroad/driverview.cc", "qt/offroad/experimental_mode.cc",
+        "qt/screenrecorder/screenrecorder.cc",
+        'qt/screenrecorder/omx_encoder.cc',]
+
+qt_env['CPPPATH'] += ["qt/screenrecorder/openmax/include/"]
+
+ui_libs = ['OmxCore', 'gsl', 'CB', 'avformat', 'avcodec', 'swscale', 'avutil', 'yuv', 'pthread']
+
+qt_env.Program("_ui", qt_src + [asset_obj], LIBS=qt_libs + ui_libs)
 if GetOption('test'):
   qt_src.remove("main.cc")  # replaced by test_runner
   qt_env.Program('tests/test_translations', [asset_obj, 'tests/test_runner.cc', 'tests/test_translations.cc'] + qt_src, LIBS=qt_libs)
@@ -131,5 +138,5 @@ if GetOption('extras'):
     assert f[0].get_size() < 300*1e3
 
 # build watch3
-if arch in ['x86_64', 'Darwin'] or GetOption('extras'):
+if arch in ['x86_64', 'aarch64', 'Darwin'] or GetOption('extras'):
   qt_env.Program("watch3", ["watch3.cc"], LIBS=qt_libs + ['common', 'json11', 'zmq', 'visionipc', 'messaging'])
