@@ -295,6 +295,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
 	recorder = new ScreenRecoder(this);
 	main_layout->addWidget(recorder, 0, Qt::AlignBottom | Qt::AlignRight);
+        main_layout->setContentsMargins(0, 0, 20, 0); 
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
