@@ -153,11 +153,6 @@ private:
   
   float maxTempC = 0;
   int fanSpeed = 0;
-
-  // Screen recorder
-  ScreenRecorder* recorder;
-  std::shared_ptr<QTimer> record_timer;
-  QPoint startPos;
   
 protected:
   void paintGL() override;
@@ -181,6 +176,11 @@ protected:
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
+  // neokii
+private:
+  ScreenRecoder* recorder;
+  std::shared_ptr<QTimer> record_timer;
+  QPoint startPos;
 };
 
 // container for all onroad widgets
