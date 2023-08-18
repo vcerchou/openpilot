@@ -492,9 +492,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   debugText(p, sp_xr, sp_yr, QString("REL DIST"), 150, 27);
   if (lead_stat) {
     if (dist_rel < 5) {
-      p.setPen(redColor(50));
+      p.setPen(redColor(200));
     } else if (int(dist_rel) < 15) {
-      p.setPen(orangeColor(50));
+      p.setPen(orangeColor(200));
     }
     if (dist_rel < 10) {
       debugText(p, sp_xr, sp_yr+60, QString::number(dist_rel, 'f', 1), 150, 57);
