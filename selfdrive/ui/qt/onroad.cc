@@ -4,6 +4,8 @@
 
 #include <QDebug>
 #include <QMouseEvent>
+#include <sstream>
+#include <QString>
 
 #include "common/timing.h"
 #include "selfdrive/ui/qt/util.h"
@@ -358,6 +360,12 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("maxTempC", ds.getMaxTempC());
   setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
 
+  //stop time
+  setProperty("standStillTimer", s.scene.stand_still_timer);
+  setProperty("standStill", ce.getStandStill());
+  setProperty("standstillElapsedTime", sm["lateralPlan"].getLateralPlan().getStandstillElapsed());
+  setProperty("engageable", cs.getEngageable() || cs.getEnabled());
+  
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -616,8 +624,40 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   drawText(p, rect().center().x(), 210, speedStr);
   p.setFont(InterFont(66));
   drawText(p, rect().center().x(), 290, speedUnit, 200);
-
+  if (engageable) {
+    // Stand Still Timer
+    if (standStillTimer && standStill) {
+      drawStandstillTimer(p, rect().right() - 650, 30 + 160 + 250);
+    }
+  }
   p.restore();
+}
+
+void AnnotatedCameraWidget::drawStandstillTimerText(QPainter &p, int x, int y, const char* label, const char* value, QColor &color1, QColor &color2) {
+  p.setFont(InterFont(125, QFont::DemiBold));
+  drawTextColor(p, x, y, QString(label), color1);
+
+  p.setFont(InterFont(150, QFont::DemiBold));
+  drawTextColor(p, x, y + 150, QString(value), color2);
+}
+
+void AnnotatedCameraWidget::drawStandstillTimer(QPainter &p, int x, int y) {
+  char lab_str[16];
+  char val_str[16];
+  int minute = 0;
+  int second = 0;
+  QColor labelColor = QColor(255, 175, 3, 240);
+  QColor valueColor = QColor(255, 255, 255, 240);
+
+  minute = (int)(standstillElapsedTime / 60);
+  second = (int)((standstillElapsedTime) - (minute * 60));
+
+  if (standStill) {
+    snprintf(lab_str, sizeof(lab_str), "STOP");
+    snprintf(val_str, sizeof(val_str), "%01d:%02d", minute, second);
+  }
+
+  drawStandstillTimerText(p, x, y, lab_str, val_str, labelColor, valueColor);
 }
 
 void AnnotatedCameraWidget::drawText(QPainter &p, int x, int y, const QString &text, int alpha) {

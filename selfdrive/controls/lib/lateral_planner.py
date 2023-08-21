@@ -50,6 +50,9 @@ class LateralPlanner:
     self.lat_mpc = LateralMpc()
     self.reset_mpc(np.zeros(4))
 
+    self.standstill_elapsed = 0.0
+    self.stand_still = False
+
   def reset_mpc(self, x0=np.zeros(4)):
     self.x0 = x0
     self.lat_mpc.reset(x0=self.x0)
@@ -58,6 +61,7 @@ class LateralPlanner:
     # clip speed , lateral planning is not possible at 0 speed
     measured_curvature = sm['controlsState'].curvature
     v_ego_car = sm['carState'].vEgo
+    self.stand_still = sm['carState'].standStill
 
     # Parse model predictions
     md = sm['modelV2']
@@ -144,5 +148,11 @@ class LateralPlanner:
     lateralPlan.useLaneLines = False
     lateralPlan.laneChangeState = self.DH.lane_change_state
     lateralPlan.laneChangeDirection = self.DH.lane_change_direction
+    
+    if self.stand_still:
+      self.standstill_elapsed += DT_MDL
+    else:
+      self.standstill_elapsed = 0.0
+    plan_send.lateralPlan.standstillElapsed = int(self.standstill_elapsed)
 
     pm.send('lateralPlan', plan_send)

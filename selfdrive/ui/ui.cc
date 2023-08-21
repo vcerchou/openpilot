@@ -218,6 +218,7 @@ void ui_update_params(UIState *s) {
   auto params = Params();
   s->scene.is_metric = params.getBool("IsMetric");
   s->scene.map_on_left = params.getBool("NavSettingLeftSide");
+  s->scene.stand_still_timer = Params().getBool("StandStillTimer");
 }
 
 void UIState::updateStatus() {
@@ -252,7 +253,7 @@ UIState::UIState(QObject *parent) : QObject(parent) {
   sm = std::make_unique<SubMaster, const std::initializer_list<const char *>>({
     "modelV2", "controlsState", "liveCalibration", "radarState", "deviceState", "roadCameraState",
     "pandaStates", "carParams", "driverMonitoringState", "carState", "liveLocationKalman", "driverStateV2",
-    "wideRoadCameraState", "managerState", "navInstruction", "navRoute", "uiPlan", "liveParameters", "liveTorqueParameters","gpsLocationExternal" ,"ubloxGnss",
+    "wideRoadCameraState", "managerState", "navInstruction", "navRoute", "uiPlan", "liveParameters", "liveTorqueParameters","gpsLocationExternal" ,"ubloxGnss", "lateralPlan",
   });
 
   Params params;
