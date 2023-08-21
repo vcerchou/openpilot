@@ -103,6 +103,10 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(int fanSpeed MEMBER fanSpeed);
   Q_PROPERTY(float maxTempC MEMBER maxTempC);
 
+  Q_PROPERTY(bool standStillTimer MEMBER standStillTimer);
+  Q_PROPERTY(bool standStill MEMBER standStill);
+  Q_PROPERTY(int standstillElapsedTime MEMBER standstillElapsedTime);
+  Q_PROPERTY(bool engageable MEMBER engageable);
 
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
@@ -115,6 +119,8 @@ private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
   void drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color);
   void debugText(QPainter &p, int x, int y, const QString &text, int alpha = 255, int fontsize = 30, bool bold = false);
+  void drawStandstillTimerText(QPainter &p, int x, int y, const char* label, const char* value, QColor &color1, QColor &color2);
+  void drawStandstillTimer(QPainter &p, int x, int y);
 
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
@@ -154,6 +160,11 @@ private:
   float maxTempC = 0;
   int fanSpeed = 0;
 
+  bool standStillTimer;
+  bool standStill;
+  int standstillElapsedTime;
+  bool engageable = false;
+  
 protected:
   void paintGL() override;
   void initializeGL() override;
