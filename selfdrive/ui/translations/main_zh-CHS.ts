@@ -493,11 +493,6 @@
         <source>Device temperature too high. System cooling down before starting. Current internal component temperature: %1</source>
         <translation> 警报</translation>
     </message>
-    <message>
-        <source>Unable to download updates
-%1</source>
-        <translation>无法下载更新%1</translation>
-    </message>
 </context>
 <context>
     <name>OffroadHome</name>
