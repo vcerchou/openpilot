@@ -209,7 +209,6 @@ std::unordered_map<std::string, uint32_t> keys = {
 
     //Add
     {"AutoLaneChangeEnabled", PERSISTENT},
-    {"StandStillTimer", PERSISTENT},
     
     //map
     {"ApiCache_NavDestinations", PERSISTENT},

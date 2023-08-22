@@ -103,7 +103,6 @@ class AnnotatedCameraWidget : public CameraWidget {
   Q_PROPERTY(int fanSpeed MEMBER fanSpeed);
   Q_PROPERTY(float maxTempC MEMBER maxTempC);
 
-  Q_PROPERTY(bool standStillTimer MEMBER standStillTimer);
   Q_PROPERTY(bool standStill MEMBER standStill);
   Q_PROPERTY(int standstillElapsedTime MEMBER standstillElapsedTime);
   Q_PROPERTY(bool engageable MEMBER engageable);
@@ -160,7 +159,6 @@ private:
   float maxTempC = 0;
   int fanSpeed = 0;
 
-  bool standStillTimer;
   bool standStill;
   int standstillElapsedTime;
   bool engageable = false;

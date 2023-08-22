@@ -153,6 +153,6 @@ class LateralPlanner:
       self.standstill_elapsed += DT_MDL
     else:
       self.standstill_elapsed = 0.0
-    plan_send.lateralPlan.standstillElapsed = int(self.standstill_elapsed)
+    lateralPlan.standstillElapsed = int(self.standstill_elapsed)
 
     pm.send('lateralPlan', plan_send)

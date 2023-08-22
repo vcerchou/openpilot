@@ -361,7 +361,6 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("fanSpeed", ds.getFanSpeedPercentDesired());
 
   //stop time
-  setProperty("standStillTimer", s.scene.stand_still_timer);
   setProperty("standStill", ce.getStandStill());
   setProperty("standstillElapsedTime", sm["lateralPlan"].getLateralPlan().getStandstillElapsed());
   setProperty("engageable", cs.getEngageable() || cs.getEnabled());
@@ -626,7 +625,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   drawText(p, rect().center().x(), 290, speedUnit, 200);
   if (engageable) {
     // Stand Still Timer
-    if (standStillTimer && standStill) {
+    if (standStill) {
       drawStandstillTimer(p, rect().right() - 650, 30 + 160 + 250);
     }
   }
