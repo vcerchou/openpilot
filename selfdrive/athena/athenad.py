@@ -46,7 +46,7 @@ from system.version import get_commit, get_origin, get_short_branch, get_version
 # missing in pysocket
 TCP_USER_TIMEOUT = 18
 
-ATHENA_HOST = os.getenv('ATHENA_HOST', 'wss://athena.comma.ai')
+ATHENA_HOST = os.getenv('ATHENA_HOST', 'wss://127.0.0.1')
 HANDLER_THREADS = int(os.getenv('HANDLER_THREADS', "4"))
 LOCAL_PORT_WHITELIST = {8022}
 
