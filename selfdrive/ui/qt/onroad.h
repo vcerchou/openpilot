@@ -181,6 +181,7 @@ protected:
   inline QColor limeColor(int alpha = 255) { return QColor(120, 255, 120, alpha); }
   inline QColor greenColor(int alpha = 255) { return QColor(0, 255, 0, alpha); }
   inline QColor yellowColor(int alpha = 255) { return QColor(218, 202, 37, alpha); }
+  inline QColor ochreColor(int alpha = 255) { return QColor(218, 111, 37, alpha); }
 
 
   double prev_draw_t = 0;

@@ -394,7 +394,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
-  
+  UIState *s = uiState();
   // Header gradient
   QLinearGradient bg(0, UI_HEADER_HEIGHT - (UI_HEADER_HEIGHT / 2.5), 0, UI_HEADER_HEIGHT);
   bg.setColorAt(0, QColor::fromRgbF(0, 0, 0, 0.45));
@@ -603,6 +603,17 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
     // right panel end
 
+  // opkr standstill
+  if (standStill) {
+    int minute = 0;
+    int second = 0;
+    minute = int(standstillElapsedTime / 60);
+    second = int(standstillElapsedTime) - (minute * 60);
+    p.setPen(ochreColor(220));
+    debugText(p, s->scene.mapbox_running?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, s->scene.mapbox_running?90:135);
+    p.setPen(whiteColor(220));
+    debugText(p, s->scene.mapbox_running?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), s->scene.mapbox_running?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, s->scene.mapbox_running?95:140);
+  }
   // End winnie
   
   // EU (Vienna style) sign
@@ -623,40 +634,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   drawText(p, rect().center().x(), 210, speedStr);
   p.setFont(InterFont(66));
   drawText(p, rect().center().x(), 290, speedUnit, 200);
-  if (engageable) {
-    // Stand Still Timer
-    if (standStill) {
-      drawStandstillTimer(p, rect().right() - 650, 30 + 160 + 250);
-    }
-  }
   p.restore();
-}
-
-void AnnotatedCameraWidget::drawStandstillTimerText(QPainter &p, int x, int y, const char* label, const char* value, QColor &color1, QColor &color2) {
-  p.setFont(InterFont(125, QFont::DemiBold));
-  drawTextColor(p, x, y, QString(label), color1);
-
-  p.setFont(InterFont(150, QFont::DemiBold));
-  drawTextColor(p, x, y + 150, QString(value), color2);
-}
-
-void AnnotatedCameraWidget::drawStandstillTimer(QPainter &p, int x, int y) {
-  char lab_str[16];
-  char val_str[16];
-  int minute = 0;
-  int second = 0;
-  QColor labelColor = QColor(255, 175, 3, 240);
-  QColor valueColor = QColor(255, 255, 255, 240);
-
-  minute = (int)(standstillElapsedTime / 60);
-  second = (int)((standstillElapsedTime) - (minute * 60));
-
-  if (standStill) {
-    snprintf(lab_str, sizeof(lab_str), "STOP");
-    snprintf(val_str, sizeof(val_str), "%01d:%02d", minute, second);
-  }
-
-  drawStandstillTimerText(p, x, y, lab_str, val_str, labelColor, valueColor);
 }
 
 void AnnotatedCameraWidget::drawText(QPainter &p, int x, int y, const QString &text, int alpha) {

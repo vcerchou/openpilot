@@ -145,7 +145,7 @@ typedef struct UIScene {
 
   bool navigate_on_openpilot = false;
 
-  bool stand_still_timer;
+  bool mapbox_running;
   
   float light_sensor;
   bool started, ignition, is_metric, map_on_left, longitudinal_control;
