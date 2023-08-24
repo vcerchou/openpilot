@@ -604,7 +604,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     // right panel end
 
   // opkr standstill
-  //if (standStill) {
+  if (standStill) {
     int minute = 0;
     int second = 0;
     minute = int(standstillElapsedTime / 60);
