@@ -604,7 +604,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     // right panel end
 
   // opkr standstill
-  if (engageable) {
+  if (standStill) {
     int minute = 0;
     int second = 0;
     minute = int(standstillElapsedTime / 60);
@@ -612,7 +612,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.setPen(ochreColor(220));
     debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+420, "STOP", 220, 135);
     p.setPen(whiteColor(220));
-    debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+450, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, 140);
+    debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, 140);
   }
   // End winnie
   
