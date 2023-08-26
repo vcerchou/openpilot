@@ -66,7 +66,6 @@ private:
 class AnnotatedCameraWidget : public CameraWidget {
   Q_OBJECT
 
-
 public:
   explicit AnnotatedCameraWidget(VisionStreamType type, QWidget* parent = 0);
   void updateState(const UIState &s);
@@ -77,7 +76,8 @@ private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
   void drawTextColor(QPainter &p, int x, int y, const QString &text, const QColor &color);
   void debugText(QPainter &p, int x, int y, const QString &text, int alpha = 255, int fontsize = 30, bool bold = false);
-
+  void drawTurnSignals(QPainter &p);
+  
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
@@ -106,6 +106,9 @@ private:
   bool gps_state = false;
   int gpsSatelliteCount = 0;
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
+  bool left_on, right_on = false;
+
+
   float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
   float maxTempC = 0;
   int fanSpeed = 0;
@@ -134,7 +137,9 @@ protected:
   inline QColor greenColor(int alpha = 255) { return QColor(0, 255, 0, alpha); }
   inline QColor yellowColor(int alpha = 255) { return QColor(218, 202, 37, alpha); }
   inline QColor ochreColor(int alpha = 255) { return QColor(218, 111, 37, alpha); }
-
+  
+  QPixmap ic_turn_signal_l;
+  QPixmap ic_turn_signal_r;
 
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
