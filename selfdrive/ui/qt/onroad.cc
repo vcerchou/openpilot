@@ -284,6 +284,8 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   main_layout->addWidget(map_settings_btn, 0, Qt::AlignBottom | Qt::AlignRight);
 
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
+  ic_turn_signal_l = QPixmap("../assets/images/turn_signal_l.png");
+  ic_turn_signal_r = QPixmap("../assets/images/turn_signal_r.png");
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -634,6 +636,86 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   drawText(p, rect().center().x(), 210, speedStr);
   p.setFont(InterFont(66));
   drawText(p, rect().center().x(), 290, speedUnit, 200);
+  p.restore();
+}
+
+void AnnotatedCameraWidget::drawTurnSignals(QPainter &p) {
+  p.save();
+
+  static int blink_index = 0;
+  static int blink_wait = 0;
+  static double prev_ts = 0.0;
+
+  if(blink_wait > 0) {
+    blink_wait--;
+    blink_index = 0;
+  }
+  else {
+    const SubMaster &sm = *(uiState()->sm);
+    auto car_state = sm["carState"].getCarState();
+    bool left_on = car_state.getLeftBlinker();
+    bool right_on = car_state.getRightBlinker();
+
+    const float img_alpha = 0.8f;
+    const int fb_w = width() / 2 - 200;
+    const int center_x = width() / 2;
+    const int w = fb_w / 25;
+    const int h = 160;
+    const int gap = fb_w / 25;
+    const int margin = (int)(fb_w / 3.8f);
+    const int base_y = (height() - h) / 2;
+    const int draw_count = 8;
+
+    int x = center_x;
+    int y = base_y;
+
+    if(left_on) {
+      for(int i = 0; i < draw_count; i++) {
+        float alpha = img_alpha;
+        int d = std::abs(blink_index - i);
+        if(d > 0)
+          alpha /= d*2;
+
+        p.setOpacity(alpha);
+        float factor = (float)draw_count / (i + draw_count);
+        p.drawPixmap(x - w - margin, y + (h-h*factor)/2, w*factor, h*factor, ic_turn_signal_l);
+        x -= gap + w;
+      }
+    }
+
+    x = center_x;
+    if(right_on) {
+      for(int i = 0; i < draw_count; i++) {
+        float alpha = img_alpha;
+        int d = std::abs(blink_index - i);
+        if(d > 0)
+          alpha /= d*2;
+
+        float factor = (float)draw_count / (i + draw_count);
+        p.setOpacity(alpha);
+        p.drawPixmap(x + margin, y + (h-h*factor)/2, w*factor, h*factor, ic_turn_signal_r);
+        x += gap + w;
+      }
+    }
+
+    if(left_on || right_on) {
+
+      double now = millis_since_boot();
+      if(now - prev_ts > 900/UI_FREQ) {
+        prev_ts = now;
+        blink_index++;
+      }
+
+      if(blink_index >= draw_count) {
+        blink_index = draw_count - 1;
+        blink_wait = UI_FREQ/4;
+      }
+    }
+    else {
+      blink_index = 0;
+    }
+  }
+
   p.restore();
 }
 
