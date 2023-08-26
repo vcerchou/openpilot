@@ -41,7 +41,7 @@ class CarState(CarStateBase):
     speed_kph = cp.vl["ENGINE_DATA"]["SPEED"]
     ret.standstill = speed_kph < .1
     
-    ret.standStill = self.CP.standStill
+    ret.standStill = ret.standstill
 
     can_gear = int(cp.vl["GEAR"]["GEAR"])
     ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(can_gear, None))
