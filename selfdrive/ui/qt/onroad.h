@@ -90,6 +90,8 @@ class AnnotatedCameraWidget : public CameraWidget {
 
   Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
   Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
+  Q_PROPERTY(bool left_on MEMBER left_on);
+  Q_PROPERTY(bool right_on MEMBER right_on);
 
   Q_PROPERTY(float latAccelFactor MEMBER latAccelFactor);
   Q_PROPERTY(float friction MEMBER friction);
@@ -120,7 +122,8 @@ private:
   void debugText(QPainter &p, int x, int y, const QString &text, int alpha = 255, int fontsize = 30, bool bold = false);
   void drawStandstillTimerText(QPainter &p, int x, int y, const char* label, const char* value, QColor &color1, QColor &color2);
   void drawStandstillTimer(QPainter &p, int x, int y);
-
+  void drawTurnSignals(QPainter &p);
+  
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
   QPixmap dm_img;
@@ -149,6 +152,7 @@ private:
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
 
   bool left_blindspot, right_blindspot = false;
+  bool left_on, right_on = false;
 
 
   float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
@@ -183,7 +187,9 @@ protected:
   inline QColor yellowColor(int alpha = 255) { return QColor(218, 202, 37, alpha); }
   inline QColor ochreColor(int alpha = 255) { return QColor(218, 111, 37, alpha); }
 
-
+  QPixmap ic_turn_signal_l;
+  QPixmap ic_turn_signal_r;
+  
   double prev_draw_t = 0;
   FirstOrderFilter fps_filter;
 };
