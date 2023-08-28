@@ -474,6 +474,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.drawText(sign_rect.adjusted(0, 85, 0, 0), Qt::AlignTop | Qt::AlignHCenter, speedLimitStr);
   }
 
+  //TurnSignals
+  drawTurnSignals(p);
+  
   int x,y = 0;
   // bottom info
   QString infoText;
