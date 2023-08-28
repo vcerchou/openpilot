@@ -351,6 +351,10 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("left_blindspot", ce.getLeftBlindspot());
   setProperty("right_blindspot", ce.getRightBlindspot());
 
+  //Blinker
+  setProperty("left_on", ce.getLeftBlinker());
+  setProperty("right_on", ce.getRightBlinker());
+
   //
   setProperty("steerRatio", lp.getSteerRatio());
   setProperty("latAccelFactor", cs.getLateralControlState().getTorqueState().getLatAccelFactor());
@@ -651,11 +655,6 @@ void AnnotatedCameraWidget::drawTurnSignals(QPainter &p) {
     blink_index = 0;
   }
   else {
-    const SubMaster &sm = *(uiState()->sm);
-    auto car_state = sm["carState"].getCarState();
-    bool left_on = car_state.getLeftBlinker();
-    bool right_on = car_state.getRightBlinker();
-
     const float img_alpha = 0.8f;
     const int fb_w = width() / 2 - 200;
     const int center_x = width() / 2;

@@ -90,6 +90,8 @@ class AnnotatedCameraWidget : public CameraWidget {
 
   Q_PROPERTY(bool left_blindspot MEMBER left_blindspot);
   Q_PROPERTY(bool right_blindspot MEMBER right_blindspot);
+  Q_PROPERTY(bool left_on MEMBER left_on);
+  Q_PROPERTY(bool right_on MEMBER right_on);
 
   Q_PROPERTY(float latAccelFactor MEMBER latAccelFactor);
   Q_PROPERTY(float friction MEMBER friction);
@@ -150,6 +152,7 @@ private:
   float gpsBearing, gpsVerticalAccuracy, gpsAltitude, gpsAccuracy = 0;
 
   bool left_blindspot, right_blindspot = false;
+  bool left_on, right_on = false;
 
 
   float latAccelFactor, friction, latAccelFactorRaw, frictionRaw = 0;
