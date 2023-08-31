@@ -400,7 +400,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
-  UIState *s = uiState();
+
   // Header gradient
   QLinearGradient bg(0, UI_HEADER_HEIGHT - (UI_HEADER_HEIGHT / 2.5), 0, UI_HEADER_HEIGHT);
   bg.setColorAt(0, QColor::fromRgbF(0, 0, 0, 0.45));
@@ -619,9 +619,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     minute = int(standstillElapsedTime / 60);
     second = int(standstillElapsedTime) - (minute * 60);
     p.setPen(ochreColor(220));
-    debugText(p, s->scene.mapbox_running?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, s->scene.mapbox_running?90:135);
+    debugText(p, onroad->isVisible()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, onroad->isVisible()?90:135);
     p.setPen(whiteColor(220));
-    debugText(p, s->scene.mapbox_running?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), s->scene.mapbox_running?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, s->scene.mapbox_running?95:140);
+    debugText(p, onroad->isVisible()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), onroad->isVisible()?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, onroad->isVisible()?95:140);
   }
   // End winnie
   
