@@ -619,9 +619,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     minute = int(standstillElapsedTime / 60);
     second = int(standstillElapsedTime) - (minute * 60);
     p.setPen(ochreColor(220));
-    debugText(p, onroad->isVisible()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, onroad->isVisible()?90:135);
+    debugText(p, map_settings_btn->isEnabled()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, map_settings_btn->isEnabled()?90:135);
     p.setPen(whiteColor(220));
-    debugText(p, onroad->isVisible()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), onroad->isVisible()?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, onroad->isVisible()?95:140);
+    debugText(p, map_settings_btn->isEnabled()?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), map_settings_btn->isEnabled()?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, map_settings_btn->isEnabled()?95:140);
   }
   // End winnie
   
