@@ -619,9 +619,9 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     minute = int(standstillElapsedTime / 60);
     second = int(standstillElapsedTime) - (minute * 60);
     p.setPen(ochreColor(220));
-    debugText(p, MapSettingsButton::clicked?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, MapSettingsButton::clicked?90:135);
+    debugText(p, nvg->map_settings_btn, &MapSettingsButton::clicked?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), UI_BORDER_SIZE+420, "STOP", 220, nvg->map_settings_btn, &MapSettingsButton::clicked?90:135);
     p.setPen(whiteColor(220));
-    debugText(p, MapSettingsButton::clicked?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), MapSettingsButton::clicked?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, MapSettingsButton::clicked?95:140);
+    debugText(p, nvg->map_settings_btn, &MapSettingsButton::clicked?(rect().right()-UI_BORDER_SIZE-325):(rect().right()-UI_BORDER_SIZE-545), nvg->map_settings_btn, &MapSettingsButton::clicked?UI_BORDER_SIZE+500:UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, nvg->map_settings_btn, &MapSettingsButton::clicked?95:140);
   }
   // End winnie
   
