@@ -81,7 +81,7 @@ procs = [
   PythonProcess("updated", "selfdrive.updated", only_offroad, enabled=not PC),
   PythonProcess("uploader", "system.loggerd.uploader", always_run),
   PythonProcess("statsd", "selfdrive.statsd", always_run),
-  PythonProcess("otisserv", "selfdrive.navd.otisserv", offroad=True),   
+  PythonProcess("otisserv", "selfdrive.navd.otisserv", always_run),   
    
   # debug procs
   NativeProcess("bridge", "cereal/messaging", ["./bridge"], notcar),
