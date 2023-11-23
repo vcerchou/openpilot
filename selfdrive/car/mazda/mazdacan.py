@@ -153,7 +153,7 @@ def create_radar_command(packer, car_fingerprint, frame, CC, CS):
     accel = int(crz_info["ACCEL_CMD"])
 
   if car_fingerprint in GEN1:
-      
+    values = {      
       crz_info["ACC_ACTIVE"] = int(CC.longActive)
       crz_info["ACC_SET_ALLOWED"] = int(bool(int(CS.cp.vl["GEAR"]["GEAR"]) & 4)) # we can set ACC_SET_ALLOWED bit when in drive. Allows crz to be set from 1kmh.
       crz_info["CRZ_ENDED"] = 0 # this should keep acc on down to 5km/h on my 2018 M3
@@ -163,7 +163,8 @@ def create_radar_command(packer, car_fingerprint, frame, CC, CS):
       crz_ctrl["ACC_ACTIVE_2"] = int(CC.longActive)
       crz_ctrl["DISABLE_TIMER_1"] = 0
       crz_ctrl["DISABLE_TIMER_2"] = 0
-
+    }
+    
     ret.append(packer.make_can_msg("CRZ_INFO", 0, crz_info))
     ret.append(packer.make_can_msg("CRZ_CTRL", 0, crz_ctrl))
 
