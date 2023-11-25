@@ -94,6 +94,8 @@ private:
   int status = STATUS_DISENGAGED;
   std::unique_ptr<PubMaster> pm;
 
+  bool left_blindspot, right_blindspot = false;
+  
   int skip_frame_count = 0;
   bool wide_cam_requested = false;
 

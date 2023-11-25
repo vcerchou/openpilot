@@ -311,6 +311,9 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   speedUnit =  s.scene.is_metric ? tr("km/h") : tr("mph");
   hideBottomIcons = (cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE);
   status = s.status;
+  //winnie add
+  left_blindspot = car_state.getLeftBlindspot();
+  right_blindspot = car_state.getRightBlindspot();
 
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
@@ -476,6 +479,11 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.drawPolygon(scene.lane_line_vertices[i]);
   }
 
+  // TODO: Fix empty spaces when curiving back on itself
+  painter.setBrush(QColor::fromRgbF(1.0, 0.0, 0.0, 0.2));
+  if (left_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[0]);
+  if (right_blindspot) painter.drawPolygon(scene.lane_barrier_vertices[1]);
+  
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
     painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - scene.road_edge_stds[i], 0.0, 1.0)));
