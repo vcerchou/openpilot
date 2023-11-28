@@ -3,6 +3,7 @@ from openpilot.selfdrive.controls.lib.drive_helpers import CONTROL_N, MIN_SPEED,
 from openpilot.selfdrive.controls.lib.desire_helper import DesireHelper
 import cereal.messaging as messaging
 from cereal import log
+from openpilot.common.realtime import DT_MDL
 
 TRAJECTORY_SIZE = 33
 CAMERA_OFFSET = 0.04
@@ -27,8 +28,12 @@ class LateralPlanner:
 
     self.debug_mode = debug
 
+    self.standstill_elapsed = 0.0
+    self.stand_still = False
+
   def update(self, sm):
     v_ego_car = sm['carState'].vEgo
+    self.stand_still = sm['carState'].standStill
 
     # Parse model predictions
     md = sm['modelV2']
@@ -71,4 +76,10 @@ class LateralPlanner:
     lateralPlan.laneChangeState = self.DH.lane_change_state
     lateralPlan.laneChangeDirection = self.DH.lane_change_direction
 
+    if self.stand_still:
+      self.standstill_elapsed += DT_MDL
+    else:
+      self.standstill_elapsed = 0.0
+    lateralPlan.standstillElapsed = int(self.standstill_elapsed)
+    
     pm.send('lateralPlan', plan_send)

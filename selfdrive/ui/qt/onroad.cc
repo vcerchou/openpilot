@@ -337,7 +337,12 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   lead_stat = lead_one.getStatus();
   dist_rel = lead_one.getDRel();
   vel_rel = lead_one.getVRel();
-
+  left_on = car_state.getLeftBlinker();
+  right_on = car_state.getRightBlinker();
+  //stop time
+  standStill = car_state.getStandStill();
+  standstillElapsedTime = sm["lateralPlan"].getLateralPlan().getStandstillElapsed();
+  
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
@@ -568,6 +573,17 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
 
     // right panel end
 
+  // opkr standstill
+  if (standStill) {
+    int minute = 0;
+    int second = 0;
+    minute = int(standstillElapsedTime / 60);
+    second = int(standstillElapsedTime) - (minute * 60);
+    p.setPen(ochreColor(220));
+    debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+420, "STOP", 220, 135);
+    p.setPen(whiteColor(220));
+    debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, 140);
+  }
   // End winnie
   
   // EU (Vienna style) sign
