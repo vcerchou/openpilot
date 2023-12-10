@@ -339,10 +339,12 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   lead_stat = lead_one.getStatus();
   dist_rel = lead_one.getDRel();
   vel_rel = lead_one.getVRel();
-  standstillElapsedTime = sm["lateralPlan"].getLateralPlan().getStandstillElapsed();
   left_on = car_state.getLeftBlinker();
   right_on = car_state.getRightBlinker();
-
+  //stop time
+  standStill = car_state.getStandStill();
+  standstillElapsedTime = sm["lateralPlan"].getLateralPlan().getStandstillElapsed();
+  
   // update engageability/experimental mode button
   experimental_btn->updateState(s);
 
