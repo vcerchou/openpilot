@@ -29,6 +29,9 @@ function agnos_init {
     fi
     $DIR/system/hardware/tici/updater $AGNOS_PY $MANIFEST
   fi
+
+  #fix translation 
+  chmod 755 /data/openpilot/selfdrive/ui/update_translations.py
 }
 
 function launch {
