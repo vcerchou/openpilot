@@ -342,6 +342,8 @@ struct DeviceState @0xa4d8b5af2aa492eb {
   fanSpeedPercentDesired @10 :UInt16;
   screenBrightnessPercent @37 :Int8;
 
+  ipAddress @45 :Text;
+  
   struct ThermalZone {
     name @0 :Text;
     temp @1 :Float32;

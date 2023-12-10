@@ -38,7 +38,7 @@ PANDA_STATES_TIMEOUT = round(1000 / SERVICE_LIST['pandaStates'].frequency * 1.5)
 
 ThermalBand = namedtuple("ThermalBand", ['min_temp', 'max_temp'])
 HardwareState = namedtuple("HardwareState", ['network_type', 'network_info', 'network_strength', 'network_stats',
-                                             'network_metered', 'nvme_temps', 'modem_temps'])
+                                             'network_metered', 'nvme_temps', 'modem_temps', 'ip_address'])
 
 # List of thermal bands. We will stay within this region as long as we are within the bounds.
 # When exiting the bounds, we'll jump to the lower or higher band. Bands are ordered in the dict.
@@ -108,6 +108,8 @@ def hw_state_thread(end_event, hw_queue):
   modem_restarted = False
   modem_missing_count = 0
 
+  ip_address = ""
+
   while not end_event.is_set():
     # these are expensive calls. update every 10s
     if (count % int(10. / DT_TRML)) == 0:
@@ -137,6 +139,8 @@ def hw_state_thread(end_event, hw_queue):
 
         tx, rx = HARDWARE.get_modem_data_usage()
 
+        ip_address = HARDWARE.get_ip_address()
+
         hw_state = HardwareState(
           network_type=network_type,
           network_info=HARDWARE.get_network_info(),
@@ -145,6 +149,7 @@ def hw_state_thread(end_event, hw_queue):
           network_metered=HARDWARE.get_network_metered(network_type),
           nvme_temps=HARDWARE.get_nvme_temperatures(),
           modem_temps=modem_temps,
+          ip_address = ip_address,
         )
 
         try:
@@ -192,6 +197,7 @@ def thermald_thread(end_event, hw_queue) -> None:
     network_stats={'wwanTx': -1, 'wwanRx': -1},
     nvme_temps=[],
     modem_temps=[],
+    ip_address = "",
   )
 
   all_temp_filter = FirstOrderFilter(0., TEMP_TAU, DT_TRML, initialized=False)
@@ -262,6 +268,8 @@ def thermald_thread(end_event, hw_queue) -> None:
 
     msg.deviceState.screenBrightnessPercent = HARDWARE.get_screen_brightness()
 
+    msg.deviceState.ipAddress = last_hw_state.ip_address
+    
     # this subset is only used for offroad
     temp_sources = [
       msg.deviceState.memoryTempC,
