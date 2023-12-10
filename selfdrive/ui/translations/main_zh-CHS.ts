@@ -459,532 +459,532 @@
     <name>OnroadAlerts</name>
     <message>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation> %1</translation>
     </message>
     <message>
         <source>%1 °C</source>
-        <translation type="unfinished"></translation>
+        <translation> %1 °C</translation>
     </message>
     <message>
         <source>%1% frames dropped</source>
-        <translation type="unfinished"></translation>
+        <translation> %1% 帧丢失</translation>
     </message>
     <message>
         <source>%1% full</source>
-        <translation type="unfinished"></translation>
+        <translation> %1% 已满</translation>
     </message>
     <message>
         <source>%1% used</source>
-        <translation type="unfinished"></translation>
+        <translation> 已使用%1%</translation>
     </message>
     <message>
         <source>Adaptive Cruise Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation> 自适应巡航禁用</translation>
     </message>
     <message>
         <source>Always keep hands on wheel and eyes on road</source>
-        <translation type="unfinished"></translation>
+        <translation> 始终将手放在方向盘上，眼睛注视路面</translation>
     </message>
     <message>
         <source>BRAKE!</source>
-        <translation type="unfinished"></translation>
+        <translation> 刹车！</translation>
     </message>
     <message>
         <source>Be ready to take over at any time</source>
-        <translation type="unfinished"></translation>
+        <translation> 随时准备接管</translation>
     </message>
     <message>
         <source>Brake Hold Active</source>
-        <translation type="unfinished"></translation>
+        <translation> 制动保持有效</translation>
     </message>
     <message>
         <source>CAN Bus Disconnected</source>
-        <translation type="unfinished"></translation>
+        <translation> CAN Bus Disconnected</translation>
     </message>
     <message>
         <source>CAN Bus Disconnected: Check Connections</source>
-        <translation type="unfinished"></translation>
+        <translation> CAN 总线断开：检查连接</translation>
     </message>
     <message>
         <source>CAN Bus Disconnected: Likely Faulty Cable</source>
-        <translation type="unfinished"></translation>
+        <translation> CAN 总线断开：可能是电缆故障</translation>
     </message>
     <message>
         <source>CAN Error</source>
-        <translation type="unfinished"></translation>
+        <translation> CAN错误</translation>
     </message>
     <message>
         <source>CAN Error: Check Connections</source>
-        <translation type="unfinished"></translation>
+        <translation> CAN 错误：检查连接</translation>
     </message>
     <message>
         <source>Calibration Incomplete</source>
-        <translation type="unfinished"></translation>
+        <translation> 校准不完整</translation>
     </message>
     <message>
         <source>Calibration Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation> 校准无效</translation>
     </message>
     <message>
         <source>Calibration Invalid: Remount Device &amp; Recalibrate</source>
-        <translation type="unfinished"></translation>
+        <translation> 校准无效：重新安装设备并重新安装 重新校准</translation>
     </message>
     <message>
         <source>Calibration in Progress</source>
-        <translation type="unfinished"></translation>
+        <translation> 校准正在进行中</translation>
     </message>
     <message>
         <source>Calibration in Progress: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation> 正在进行校准：%1%</translation>
     </message>
     <message>
         <source>Camera CRC Error - Driver</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机 CRC 错误 - 驾驶员</translation>
     </message>
     <message>
         <source>Camera CRC Error - Road</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机 CRC 错误 - 道路</translation>
     </message>
     <message>
         <source>Camera CRC Error - Road Fisheye</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机 CRC 错误 - 道路鱼眼</translation>
     </message>
     <message>
         <source>Camera Frame Rate Low</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机帧率低</translation>
     </message>
     <message>
         <source>Camera Frame Rate Low: Reboot Your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机帧速率低：重新启动您的设备</translation>
     </message>
     <message>
         <source>Camera Malfunction</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机故障</translation>
     </message>
     <message>
         <source>Camera Malfunction: Reboot Your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> 相机故障：重新启动您的设备</translation>
     </message>
     <message>
         <source>Cancel Pressed</source>
-        <translation type="unfinished"></translation>
+        <translation> 按下取消</translation>
     </message>
     <message>
         <source>Car Detected in Blindspot</source>
-        <translation type="unfinished"></translation>
+        <translation> 盲点检测到汽车</translation>
     </message>
     <message>
         <source>Car Unrecognized</source>
-        <translation type="unfinished"></translation>
+        <translation> 汽车无法识别</translation>
     </message>
     <message>
         <source>Changing Lanes</source>
-        <translation type="unfinished"></translation>
+        <translation> 变道</translation>
     </message>
     <message>
         <source>Check Hardware</source>
-        <translation type="unfinished"></translation>
+        <translation> 检查硬件</translation>
     </message>
     <message>
         <source>Check comma power connections</source>
-        <translation type="unfinished"></translation>
+        <translation> 检查comma power连接</translation>
     </message>
     <message>
         <source>Communication Issue Between Processes</source>
-        <translation type="unfinished"></translation>
+        <translation> 进程之间的通信问题</translation>
     </message>
     <message>
         <source>Communication Issue between Processes</source>
-        <translation type="unfinished"></translation>
+        <translation> 进程之间的通信问题</translation>
     </message>
     <message>
         <source>Controls Lagging</source>
-        <translation type="unfinished"></translation>
+        <translation> 控制滞后</translation>
     </message>
     <message>
         <source>Controls Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation> 控制不匹配</translation>
     </message>
     <message>
         <source>Controls Process Lagging: Reboot Your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> 控制进程滞后：重新启动您的设备</translation>
     </message>
     <message>
         <source>Cruise Fault: Restart the Car</source>
-        <translation type="unfinished"></translation>
+        <translation> A</translation>
     </message>
     <message>
         <source>Cruise Fault: Restart the car to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 巡航故障：重新启动汽车</translation>
     </message>
     <message>
         <source>Cruise Is Off</source>
-        <translation type="unfinished"></translation>
+        <translation> 巡航关闭</translation>
     </message>
     <message>
         <source>DISENGAGE IMMEDIATELY</source>
-        <translation type="unfinished"></translation>
+        <translation> 立即脱离</translation>
     </message>
     <message>
         <source>Dashcam Mode</source>
-        <translation type="unfinished"></translation>
+        <translation> 行车记录仪模式</translation>
     </message>
     <message>
         <source>Dashcam mode</source>
-        <translation type="unfinished"></translation>
+        <translation> 行车记录仪模式</translation>
     </message>
     <message>
         <source>Dashcam mode for unsupported car</source>
-        <translation type="unfinished"></translation>
+        <translation> 适用于不受支持的汽车的行车记录仪模式</translation>
     </message>
     <message>
         <source>Device Fell Off Mount</source>
-        <translation type="unfinished"></translation>
+        <translation> 设备从安装位置掉落</translation>
     </message>
     <message>
         <source>Device Remount Detected: Recalibrating</source>
-        <translation type="unfinished"></translation>
+        <translation> 检测到设备重新安装：重新校准</translation>
     </message>
     <message>
         <source>Distraction Level Too High</source>
-        <translation type="unfinished"></translation>
+        <translation> 分心程度过高</translation>
     </message>
     <message>
         <source>Door Open</source>
-        <translation type="unfinished"></translation>
+        <translation> 车门打开</translation>
     </message>
     <message>
         <source>Drive Above %1</source>
-        <translation type="unfinished"></translation>
+        <translation> 行驶至%1以上</translation>
     </message>
     <message>
         <source>Drive above %1 to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 行驶至%1以上</translation>
     </message>
     <message>
         <source>Drive to Calibrate</source>
-        <translation type="unfinished"></translation>
+        <translation> 开车校准</translation>
     </message>
     <message>
         <source>Driver Distracted</source>
-        <translation type="unfinished"></translation>
+        <translation> 司机分心</translation>
     </message>
     <message>
         <source>Driver Unresponsive</source>
-        <translation type="unfinished"></translation>
+        <translation> 司机反应迟钝</translation>
     </message>
     <message>
         <source>Driving Model Lagging</source>
-        <translation type="unfinished"></translation>
+        <translation> 驾驶模型滞后</translation>
     </message>
     <message>
         <source>Electronic Stability Control Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation> 电子稳定控制禁用</translation>
     </message>
     <message>
         <source>Enable Adaptive Cruise to Engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 启用自适应巡航</translation>
     </message>
     <message>
         <source>Fan Malfunction</source>
-        <translation type="unfinished"></translation>
+        <translation> 风扇故障</translation>
     </message>
     <message>
         <source>GPS Malfunction</source>
-        <translation type="unfinished"></translation>
+        <translation> GPS故障</translation>
     </message>
     <message>
         <source>Gas: %1%, Steer: %2%</source>
-        <translation type="unfinished"></translation>
+        <translation> 油门：%1%，转向：%2%</translation>
     </message>
     <message>
         <source>Gear not D</source>
-        <translation type="unfinished"></translation>
+        <translation> 档位不在 D</translation>
     </message>
     <message>
         <source>Hardware malfunctioning if sky is visible</source>
-        <translation type="unfinished"></translation>
+        <translation> 如果天空可见，则硬件出现故障</translation>
     </message>
     <message>
         <source>Harness Relay Malfunction</source>
-        <translation type="unfinished"></translation>
+        <translation> 线束继电器故障</translation>
     </message>
     <message>
         <source>High CPU Usage</source>
-        <translation type="unfinished"></translation>
+        <translation> CPU 使用率高</translation>
     </message>
     <message>
         <source>Joystick Mode</source>
-        <translation type="unfinished"></translation>
+        <translation> 操纵杆模式</translation>
     </message>
     <message>
         <source>LKAS Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation> LKAS 已禁用</translation>
     </message>
     <message>
         <source>LKAS Disabled: Enable LKAS to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> LKAS 禁用：启用 LKAS</translation>
     </message>
     <message>
         <source>LKAS Fault: Restart the Car</source>
-        <translation type="unfinished"></translation>
+        <translation> LKAS故障：重新启动汽车</translation>
     </message>
     <message>
         <source>LKAS Fault: Restart the car to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> LKAS故障：重新启动汽车</translation>
     </message>
     <message>
         <source>Lane Departure Detected</source>
-        <translation type="unfinished"></translation>
+        <translation> 检测到车道偏离</translation>
     </message>
     <message>
         <source>Likely Hardware Issue</source>
-        <translation type="unfinished"></translation>
+        <translation> 可能的硬件问题</translation>
     </message>
     <message>
         <source>Low Battery</source>
-        <translation type="unfinished"></translation>
+        <translation> 低电量</translation>
     </message>
     <message>
         <source>Low Communication Rate between Processes</source>
-        <translation type="unfinished"></translation>
+        <translation> 进程间通信速率低</translation>
     </message>
     <message>
         <source>Low Memory</source>
-        <translation type="unfinished"></translation>
+        <translation> 内存不足</translation>
     </message>
     <message>
         <source>Low Memory: Reboot Your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> 内存不足：重新启动您的设备</translation>
     </message>
     <message>
         <source>Model uncertain at this speed</source>
-        <translation type="unfinished"></translation>
+        <translation> 在此速度下模型不确定</translation>
     </message>
     <message>
         <source>Out of Storage</source>
-        <translation type="unfinished"></translation>
+        <translation> 存储空间不足</translation>
     </message>
     <message>
         <source>Parking Brake Engaged</source>
-        <translation type="unfinished"></translation>
+        <translation> 驻车制动器已开启</translation>
     </message>
     <message>
         <source>Pay Attention</source>
-        <translation type="unfinished"></translation>
+        <translation> 注意</translation>
     </message>
     <message>
         <source>Pedal Pressed</source>
-        <translation type="unfinished"></translation>
+        <translation> 踩下踏板</translation>
     </message>
     <message>
         <source>Planner Solution Error</source>
-        <translation type="unfinished"></translation>
+        <translation> 规划器解决方案错误</translation>
     </message>
     <message>
         <source>Poor GPS reception</source>
-        <translation type="unfinished"></translation>
+        <translation> GPS 接收不良</translation>
     </message>
     <message>
         <source>Posenet Speed Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation> Posenet 速度无效</translation>
     </message>
     <message>
         <source>Press Resume to Exit Standstill</source>
-        <translation type="unfinished"></translation>
+        <translation> 按“恢复”退出静止状态</translation>
     </message>
     <message>
         <source>Press Set to Engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 按设置启用</translation>
     </message>
     <message>
         <source>Process Not Running</source>
-        <translation type="unfinished"></translation>
+        <translation> 进程未运行</translation>
     </message>
     <message>
         <source>Radar Error: Restart the Car</source>
-        <translation type="unfinished"></translation>
+        <translation> 雷达错误：重新启动汽车</translation>
     </message>
     <message>
         <source>Reboot your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> 重新启动您的设备</translation>
     </message>
     <message>
         <source>Release Brake to Engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 释放制动器</translation>
     </message>
     <message>
         <source>Remount Detected: Recalibrating</source>
-        <translation type="unfinished"></translation>
+        <translation> 检测到重新安装：重新校准</translation>
     </message>
     <message>
         <source>Remount Device (Pitch: %1°, Yaw: %2°)</source>
-        <translation type="unfinished"></translation>
+        <translation> 重新安装设备（俯仰：%1°，偏航：%2°）</translation>
     </message>
     <message>
         <source>Resume Driving Manually</source>
-        <translation type="unfinished"></translation>
+        <translation> 恢复手动驾驶</translation>
     </message>
     <message>
         <source>Reverse
 Gear</source>
-        <translation type="unfinished"></translation>
+        <translation> 倒档</translation>  
     </message>
     <message>
         <source>Reverse Gear</source>
-        <translation type="unfinished"></translation>
+        <translation> 倒档</translation>
     </message>
     <message>
         <source>Risk of Collision</source>
-        <translation type="unfinished"></translation>
+        <translation> 碰撞风险</translation>
     </message>
     <message>
         <source>Seatbelt Unlatched</source>
-        <translation type="unfinished"></translation>
+        <translation> 安全带未扣好</translation>
     </message>
     <message>
         <source>Sensor Data Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation> 传感器数据无效</translation>
     </message>
     <message>
         <source>Slow down to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 减速</translation>
     </message>
     <message>
         <source>Speaker not found</source>
-        <translation type="unfinished"></translation>
+        <translation> 未找到扬声器</translation>
     </message>
     <message>
         <source>Speed Error: %1 m/s</source>
-        <translation type="unfinished"></translation>
+        <translation> 速度误差：%1 m/s</translation>
     </message>
     <message>
         <source>Speed Too High</source>
-        <translation type="unfinished"></translation>
+        <translation> 速度太高</translation>
     </message>
     <message>
         <source>Speed too low</source>
-        <translation type="unfinished"></translation>
+        <translation> 速度太慢</translation>
     </message>
     <message>
         <source>Steer Left to Start Lane Change Once Safe</source>
-        <translation type="unfinished"></translation>
+        <translation> 确认安全后向左变道</translation>
     </message>
     <message>
         <source>Steer Right to Start Lane Change Once Safe</source>
-        <translation type="unfinished"></translation>
+        <translation> 确认安全后向右变道</translation>
     </message>
     <message>
         <source>Steer Unavailable Below %1</source>
-        <translation type="unfinished"></translation>
+        <translation> 低于 %1 时无法转向</translation>
     </message>
     <message>
         <source>Steering Temporarily Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation> 转向暂时无法使用</translation>
     </message>
     <message>
         <source>Stock AEB: Risk of Collision</source>
-        <translation type="unfinished"></translation>
+        <translation> 原厂AEB：碰撞风险</translation>
     </message>
     <message>
         <source>Stock LKAS is on</source>
-        <translation type="unfinished"></translation>
+        <translation> 原厂LKAS 已开启</translation>
     </message>
     <message>
         <source>System Initializing</source>
-        <translation type="unfinished"></translation>
+        <translation> 系统初始化</translation>
     </message>
     <message>
         <source>System Overheated</source>
-        <translation type="unfinished"></translation>
+        <translation> 系统过热</translation>
     </message>
     <message>
         <source>TAKE CONTROL</source>
-        <translation type="unfinished"></translation>
+        <translation> 接管控制</translation>
     </message>
     <message>
         <source>TAKE CONTROL IMMEDIATELY</source>
-        <translation type="unfinished"></translation>
+        <translation> 立即接管控制</translation>
     </message>
     <message>
         <source>Take Control</source>
-        <translation type="unfinished"></translation>
+        <translation> 接管控制</translation>
     </message>
     <message>
         <source>Touch Steering Wheel</source>
-        <translation type="unfinished"></translation>
+        <translation> 触碰方向盘</translation>
     </message>
     <message>
         <source>Touch Steering Wheel: No Face Detected</source>
-        <translation type="unfinished"></translation>
+        <translation> 触碰方向盘：未检测到面部</translation>
     </message>
     <message>
         <source>Turn Exceeds Steering Limit</source>
-        <translation type="unfinished"></translation>
+        <translation> 转弯超出转向限制</translation>
     </message>
     <message>
         <source>Turn off stock LKAS to engage</source>
-        <translation type="unfinished"></translation>
+        <translation> 关闭原厂LKAS</translation>
     </message>
     <message>
         <source>USB Error: Reboot Your Device</source>
-        <translation type="unfinished"></translation>
+        <translation> USB 错误：重新启动您的设备</translation>
     </message>
     <message>
         <source>Vehicle Sensors Calibrating</source>
-        <translation type="unfinished"></translation>
+        <translation> 车辆传感器校准</translation>
     </message>
     <message>
         <source>Vehicle Sensors Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation> 车辆传感器无效</translation>
     </message>
     <message>
         <source>Vehicle Steering Time Limit</source>
-        <translation type="unfinished"></translation>
+        <translation> 车辆转向时间限制</translation>
     </message>
     <message>
         <source>WARNING: This branch is not tested</source>
-        <translation type="unfinished"></translation>
+        <translation> 警告：该分支未经测试</translation>
     </message>
     <message>
         <source>openpilot Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation> openpilot 取消</translation>
     </message>
     <message>
         <source>openpilot Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation> openpilot 不可用</translation>
     </message>
     <message>
         <source>Waiting for controls to start</source>
-        <translation type="unfinished"></translation>
+        <translation>等待开始控制</translation>
     </message>
     <message>
         <source>Controls Unresponsive</source>
-        <translation type="unfinished"></translation>
+        <translation>控件无响应</translation>
     </message>
     <message>
         <source>Reboot Device</source>
-        <translation type="unfinished"></translation>
+        <translation>重启设备</translation>
     </message>
     <message>
         <source>Possible Hardware Issue</source>
-        <translation type="unfinished"></translation>
+        <translation>可能有硬件问题</translation>
     </message>
     <message>
         <source>locationd Permanent Error</source>
-        <translation type="unfinished"></translation>
+        <translation>位置永久错误</translation>
     </message>
     <message>
         <source>locationd Temporary Error</source>
-        <translation type="unfinished"></translation>
+        <translation>位置临时错误</translation>
     </message>
     <message>
         <source>paramsd Permanent Error</source>
-        <translation type="unfinished"></translation>
+        <translation>参数永久错误</translation>
     </message>
     <message>
         <source>paramsd Temporary Error</source>
-        <translation type="unfinished"></translation>
+        <translation>参数临时错误</translation>
     </message>
 </context>
 <context>
@@ -1037,15 +1037,15 @@ Gear</source>
     </message>
     <message>
         <source>24/7 LTE connectivity</source>
-        <translation>全天候 LTE 連線</translation>
+        <translation>24/7 LTE 连接</translation>
     </message>
     <message>
         <source>Turn-by-turn navigation</source>
-        <translation>领航功能</translation>
+        <translation>路线规划导航</translation>
     </message>
     <message>
         <source>1 year of drive storage</source>
-        <translation>一年的行驶记录储存空间</translation>
+        <translation>1 年驱动器存储</translation>
     </message>
 </context>
 <context>
@@ -1608,6 +1608,10 @@ This may take up to a minute.</source>
         <translation>驾驶风格</translation>
     </message>
     <message>
+        <source>Enable AutoLaneChange</source>
+        <translation>启用自动变道</translation>
+    </message>
+    <message>
         <source>Standard is recommended. In aggressive mode, openpilot will follow lead cars closer and be more aggressive with the gas and brake. In relaxed mode openpilot will stay further away from lead cars.</source>
         <translation>推荐使用标准模式。在积极模式中，openpilot 会更靠近前车并在加速和刹车方面更积极。在舒适模式中，openpilot 会与前车保持较远的距离。</translation>
     </message>
@@ -1632,8 +1636,12 @@ This may take up to a minute.</source>
         <translation>当导航有目的地时，openpilot 将输入地图信息到模型中。这为模型提供了有用的背景信息，使 openpilot 能够在叉路/出口时适当地保持左侧或右侧行驶。车道变换行为保持不变，仍由驾驶员激活。这是一个 Alpha 版的功能；可能会出现错误，特别是在出口和分叉处。这些错误可能包括意外的车道越界、晚出口、朝着分隔栏驶向安全地带等。</translation>
     </message>
     <message>
-        <source>The driving visualization will transition to the road-facing wide-angle camera at low speeds to better show some turns. The Experimental mode logo will also be shown in the top right corner. When a navigation destination is set and the driving model is using it as input, the driving path on the map will turn green.</source>
-        <translation>行驶画面将在低速时切换到道路朝向的广角摄像头，以更好地显示一些转弯。实验模式标志也将显示在右上角。当设置了导航目的地并且驾驶模型正在使用它作为输入时，地图上的驾驶路径将变为绿色。</translation>
+        <source>The driving visualization will transition to the road-facing wide-angle camera at low speeds to better show some turns. The Experimental mode logo will also be shown in the top right corner.When a navigation destination is set and the driving model is using it as input, the driving path on the map will turn green.</source>
+        <translation>驾驶可视化将在低速时过渡到面向道路的广角摄像头，以更好地显示一些转弯。 实验模式标志也会显示在右上角。当设置了导航目的地并且驾驶模型使用它作为输入时，地图上的驾驶路径将变成绿色。</translation>
+    </message>
+    <message>
+        <source>Operation of the turn signal at 60㎞/h speed will result in a short change of the vehicle</source>
+        <translation>以 60 ㎞/h 的速度操作转向灯将导致车辆短暂变化</translation>
     </message>
 </context>
 <context>
