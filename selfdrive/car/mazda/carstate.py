@@ -27,6 +27,8 @@ class CarState(CarStateBase):
     self.ti_error = 0
     self.ti_lkas_allowed = False
 
+    self.lead_distance = 0
+    
   def update(self, cp, cp_cam, cp_body):
 
     ret = car.CarState.new_message()
@@ -119,6 +121,9 @@ class CarState(CarStateBase):
     self.acc_active_last = ret.cruiseState.enabled
 
     self.crz_btns_counter = cp.vl["CRZ_BTNS"]["CTR"]
+
+    self.lead_distance = cp_cam.vl["CRZ_CTRL"]["RADAR_LEAD_RELATIVE_DISTANCE"]
+    ret.radarDistance = self.lead_distance
 
     # camera signals
     self.lkas_disabled = cp_cam.vl["CAM_LANEINFO"]["LANE_LINES"] == 0

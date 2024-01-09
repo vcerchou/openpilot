@@ -118,6 +118,7 @@ private:
   float vel_rel = 0;
   bool standStill;
   int standstillElapsedTime;
+  float radarDistance = 0;
 
 protected:
   void paintGL() override;

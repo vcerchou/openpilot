@@ -360,6 +360,8 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   vel_rel = lead_one.getVRel();
   left_on = car_state.getLeftBlinker();
   right_on = car_state.getRightBlinker();
+  radarDistance = car_state.getRadarDistance();
+  
   //stop time
   standStill = car_state.getStandStill();
   standstillElapsedTime = sm["lateralPlan"].getLateralPlan().getStandstillElapsed();
@@ -879,15 +881,34 @@ void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState
 
   float g_xo = sz / 5;
   float g_yo = sz / 10;
+  // opkr
+  if (radarDistance < 149) {
+    QPointF glow[] = {{x + (sz * 1.35) + g_xo, y + sz + g_yo}, {x, y - g_xo}, {x - (sz * 1.35) - g_xo, y + sz + g_yo}};
+    painter.setBrush(QColor(218, 202, 37, 255));
+    painter.drawPolygon(glow, std::size(glow));
 
-  QPointF glow[] = {{x + (sz * 1.35) + g_xo, y + sz + g_yo}, {x, y - g_yo}, {x - (sz * 1.35) - g_xo, y + sz + g_yo}};
-  painter.setBrush(QColor(218, 202, 37, 255));
-  painter.drawPolygon(glow, std::size(glow));
+    // chevron
+    QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
+    painter.setBrush(redColor(fillAlpha));
+    painter.drawPolygon(chevron, std::size(chevron));
+    painter.setPen(QColor(0x0, 0x0, 0xff));
+    //painter.setRenderHint(QPainter::TextAntialiasing);
+    painter.setFont(InterFont(35, QFont::DemiBold));
+    painter.drawText(QRect(x - (sz * 1.25), y, 2 * (sz * 1.25), sz * 1.25), Qt::AlignCenter, QString("R"));
+  } else {
+    QPointF glow[] = {{x + (sz * 1.35) + g_xo, y + sz + g_yo}, {x, y - g_xo}, {x - (sz * 1.35) - g_xo, y + sz + g_yo}};
+    painter.setBrush(QColor(0, 255, 0, 255));
+    painter.drawPolygon(glow, std::size(glow));
 
-  // chevron
-  QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
-  painter.setBrush(redColor(fillAlpha));
-  painter.drawPolygon(chevron, std::size(chevron));
+    // chevron
+    QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
+    painter.setBrush(greenColor(fillAlpha));
+    painter.drawPolygon(chevron, std::size(chevron));
+    painter.setPen(QColor(0x0, 0x0, 0x0));
+    //painter.setRenderHint(QPainter::TextAntialiasing);
+    painter.setFont(InterFont(35, QFont::DemiBold));
+    painter.drawText(QRect(x - (sz * 1.25), y, 2 * (sz * 1.25), sz * 1.25), Qt::AlignCenter, QString("V"));
+  }
 
   painter.restore();
 }
