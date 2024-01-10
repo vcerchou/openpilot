@@ -122,7 +122,7 @@ class CarState(CarStateBase):
 
     self.crz_btns_counter = cp.vl["CRZ_BTNS"]["CTR"]
 
-    self.lead_distance = cp_cam.vl["CRZ_CTRL"]["RADAR_LEAD_RELATIVE_DISTANCE"]
+    self.lead_distance = cp_cam.vl["RADAR_361"]["MSGS_1"] / 16
     ret.radarDistance = self.lead_distance
 
     # camera signals
@@ -189,7 +189,7 @@ class CarState(CarStateBase):
         ("CAM_LANEINFO", 2),
         ("CAM_LKAS", 16),
         ("CRZ_CTRL",50), 
-        ("CRZ_INFO",50),
+        ("CRZ_INFO",50),      
       ]
 
       for addr in range(361,367):

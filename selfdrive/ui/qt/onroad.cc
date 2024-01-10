@@ -466,10 +466,11 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   int x,y = 0;
   // bottom info
   QString infoText;
-  infoText.sprintf("SR[%.2f] [ (%.2f,%.2f) / (%.2f,%.2f) ]",
+  infoText.sprintf("SR[%.2f] [ (%.2f,%.2f) / (%.2f,%.2f) ] RDR[%.2f]",
     steerRatio,
     latAccelFactor, friction,
-    latAccelFactorRaw, frictionRaw
+    latAccelFactorRaw, frictionRaw,
+    radarDistance
   );
 
   x = rect().left() + btn_size * 1.5;
