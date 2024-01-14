@@ -466,17 +466,16 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   int x,y = 0;
   // bottom info
   QString infoText;
-  infoText.sprintf("SR[%.2f] [ (%.2f,%.2f) / (%.2f,%.2f) ] RDR[%.2f]",
+  infoText.sprintf("SR[%.2f] [ (%.2f,%.2f) / (%.2f,%.2f) ]",
     steerRatio,
     latAccelFactor, friction,
-    latAccelFactorRaw, frictionRaw,
-    radarDistance
+    latAccelFactorRaw, frictionRaw
   );
 
   x = rect().left() + btn_size * 1.5;
   y = rect().height();
 
-  p.setFont(InterFont(30));
+  p.setFont(InterFont(34));
   drawTextColor(p, x, y, infoText, whiteColor(200));
 
   // right panel
@@ -610,6 +609,19 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
     p.setPen(whiteColor(220));
     debugText(p, rect().right()-UI_BORDER_SIZE-545, UI_BORDER_SIZE+550, QString::number(minute).rightJustified(2,'0') + ":" + QString::number(second).rightJustified(2,'0'), 220, 140);
   }
+
+  //radar
+  QString infoRadar;
+  infoRadar.sprintf("Radar [%.2f]",
+    radarDistance
+  );
+
+  x = rect().right() - (btn_size * 2.5);
+  y = (UI_BORDER_SIZE * 1);
+
+  p.setFont(InterFont(38));
+  drawTextColor(p, x, y, infoRadar, whiteColor(200));
+
   // End winnie
   
   // EU (Vienna style) sign
