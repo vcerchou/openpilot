@@ -1,13 +1,11 @@
 import copy
 
-import math
 from cereal import car
 from openpilot.common.conversions import Conversions as CV
 from opendbc.can.can_define import CANDefine
 from opendbc.can.parser import CANParser
 from openpilot.selfdrive.car.interfaces import CarStateBase
 from openpilot.selfdrive.car.mazda.values import DBC, LKAS_LIMITS, GEN1, TI_STATE, CAR
-from openpilot.selfdrive.car.mazda.radar_interface import RadarInterface
 
 class CarState(CarStateBase):
   def __init__(self, CP):
@@ -30,7 +28,6 @@ class CarState(CarStateBase):
     self.ti_lkas_allowed = False
 
     self.lead_distance = 0
-    self.radar_interface = RadarInterface(CP)
     
   def update(self, cp, cp_cam, cp_body):
 
@@ -125,8 +122,7 @@ class CarState(CarStateBase):
 
     self.crz_btns_counter = cp.vl["CRZ_BTNS"]["CTR"]
 
-    #self.lead_distances = min((value for addr in range(361, 367) for value in [self.radar_interface.pts.get(addr, {}).get('dRel', 0)] if value > 0), default=0)
-    self.lead_distances = min(filter(lambda x: x != 0, set([point.dRel for point in radar_interface.update(can_strings).points])))
+    self.lead_distance = cp_cam.vl["RADAR_361"]["MSGS_1"] / 16
     ret.radarDistance = self.lead_distance
 
     # camera signals

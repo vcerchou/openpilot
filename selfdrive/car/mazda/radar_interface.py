@@ -18,8 +18,7 @@ class RadarInterface(RadarInterfaceBase):
     super().__init__(CP)
     self.updated_messages = set()
     self.track_id = 0
-    self.pts = {}
-    
+
     self.radar_off_can = CP.radarUnavailable
     self.rcp = get_radar_can_parser(CP)
 
