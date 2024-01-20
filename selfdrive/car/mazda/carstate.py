@@ -6,6 +6,7 @@ from opendbc.can.can_define import CANDefine
 from opendbc.can.parser import CANParser
 from openpilot.selfdrive.car.interfaces import CarStateBase
 from openpilot.selfdrive.car.mazda.values import DBC, LKAS_LIMITS, GEN1, TI_STATE, CAR
+from openpilot.selfdrive.car.mazda.radar_interface import RadarInterface
 
 class CarState(CarStateBase):
   def __init__(self, CP):
@@ -28,6 +29,7 @@ class CarState(CarStateBase):
     self.ti_lkas_allowed = False
 
     self.lead_distance = 0
+    radar_interface = RadarInterface(CP)
     
   def update(self, cp, cp_cam, cp_body):
 
@@ -123,8 +125,14 @@ class CarState(CarStateBase):
     self.crz_btns_counter = cp.vl["CRZ_BTNS"]["CTR"]
 
     self.lead_distance = cp_cam.vl["RADAR_361"]["MSGS_1"] / 16
-    ret.radarDistance = self.lead_distance
-
+  
+    radar_data = radar_interface.update(can_strings)
+    min_dRel = float('inf')
+    for point in radar_data.points:
+        if point.dRel < min_dRel:
+            min_dRel = point.dRel
+    ret.radarDistance = min_dRel
+    
     # camera signals
     self.lkas_disabled = cp_cam.vl["CAM_LANEINFO"]["LANE_LINES"] == 0
     self.cam_lkas = cp_cam.vl["CAM_LKAS"]
