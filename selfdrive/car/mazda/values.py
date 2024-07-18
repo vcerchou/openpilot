@@ -60,9 +60,8 @@ class MazdaFlags(IntFlag):
 
 @dataclass
 class MazdaPlatformConfig(PlatformConfig):
-  dbc_dict: DbcDict = field(default_factory=lambda: dbc_dict('mazda_2017', None))
+  dbc_dict: DbcDict = field(default_factory=lambda: dbc_dict('mazda_2017', 'mazda_radar'))
   flags: int = MazdaFlags.GEN1
-
 
 class CAR(Platforms):
   MAZDA_CX5 = MazdaPlatformConfig(
@@ -76,6 +75,7 @@ class CAR(Platforms):
   MAZDA_3 = MazdaPlatformConfig(
     [MazdaCarDocs("Mazda 3 2017-18")],
     MazdaCarSpecs(mass=2875 * CV.LB_TO_KG, wheelbase=2.7, steerRatio=14.0)
+    flags=MazdaFlags.GEN1
   )
   MAZDA_6 = MazdaPlatformConfig(
     [MazdaCarDocs("Mazda 6 2017-20")],
@@ -120,3 +120,4 @@ FW_QUERY_CONFIG = FwQueryConfig(
 )
 
 DBC = CAR.create_dbc_map()
+GEN1 = CAR.with_flags(MazdaFlags.GEN1)
