@@ -1,4 +1,4 @@
-from openpilot.selfdrive.car.mazda.values import Buttons, MazdaFlags，GEN1
+from openpilot.selfdrive.car.mazda.values import Buttons, MazdaFlags
 
 
 def create_steering_control(packer, CP, frame, apply_steer, lkas):
@@ -61,12 +61,12 @@ def create_steering_control(packer, CP, frame, apply_steer, lkas):
 
   return packer.make_can_msg("CAM_LKAS", 0, values)
 
-def create_ti_steering_control(packer, car_fingerprint, frame, apply_steer):
+def create_ti_steering_control(packer, CP, frame, apply_steer):
 
   key = 3294744160
   chksum = apply_steer
 
-  if car_fingerprint in GEN1:
+  if CP.flags & MazdaFlags.GEN1:
     values = {
         "LKAS_REQUEST"     : apply_steer,
         "CHKSUM"           : chksum,
@@ -140,7 +140,7 @@ def create_button_cmd(packer, CP, counter, button):
 
     return packer.make_can_msg("CRZ_BTNS", 0, values)
 
-def create_radar_command(packer, car_fingerprint, frame, CC, CS):
+def create_radar_command(packer, CP, frame, CC, CS):
   accel = 0
   ret = []
   crz_ctrl = CS.crz_cntr
@@ -152,7 +152,7 @@ def create_radar_command(packer, car_fingerprint, frame, CC, CS):
   else:
     accel = int(crz_info["ACCEL_CMD"])
 
-  if car_fingerprint in GEN1:
+  if CP.flags & MazdaFlags.GEN1:
       crz_info["ACC_ACTIVE"] = int(CC.longActive)
       crz_info["ACC_SET_ALLOWED"] = int(bool(int(CS.cp.vl["GEAR"]["GEAR"]) & 4)) # we can set ACC_SET_ALLOWED bit when in drive. Allows crz to be set from 1kmh.
       crz_info["CRZ_ENDED"] = 0 # this should keep acc on down to 5km/h on my 2018 M3
