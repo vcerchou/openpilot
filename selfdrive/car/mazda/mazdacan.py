@@ -1,4 +1,4 @@
-from openpilot.selfdrive.car.mazda.values import Buttons, MazdaFlags
+from openpilot.selfdrive.car.mazda.values import Buttons, MazdaFlags，GEN1
 
 
 def create_steering_control(packer, CP, frame, apply_steer, lkas):
