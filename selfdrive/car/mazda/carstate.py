@@ -142,7 +142,7 @@ class CarState(CarStateBase):
   @staticmethod
   def get_ti_messages(CP):
     messages = []
-    if CP.enableTorqueInterceptor and CP.carFingerprint in GEN1:
+    if CP.enableTorqueInterceptor and CP.flags & MazdaFlags.GEN1:
       messages += [
         ("TI_FEEDBACK", 50),
       ]
