@@ -119,3 +119,4 @@ FW_QUERY_CONFIG = FwQueryConfig(
 )
 
 DBC = CAR.create_dbc_map()
+GEN1 = CAR.with_flags.(MazdaFlags.GEN1)
