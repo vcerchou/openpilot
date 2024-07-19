@@ -75,7 +75,7 @@ class CarController(CarControllerBase):
 
     """ACC RADAR COMMAND"""                                                    
     if self.frame % 2 == 0:
-      can_sends.extend(mazdacan.create_radar_command(self.packer, CS.CP.carFingerprint, self.frame, CC, CS))
+      can_sends.extend(mazdacan.create_radar_command(self.packer, CS.CP, self.frame, CC, CS))
       
     new_actuators = CC.actuators.as_builder()
     new_actuators.steer = apply_steer / CarControllerParams.STEER_MAX
