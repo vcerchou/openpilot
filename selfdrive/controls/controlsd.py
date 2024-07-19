@@ -294,7 +294,13 @@ class Controls:
         #Update CP based on torque_interceptor_ready
         self.CP = get_ti()
         
-    # Handle HW and system malfunctions
+        # set alternative experiences since get_ti() reset it to default.
+        if not self.disengage_on_accelerator:
+          self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.DISABLE_DISENGAGE_ON_GAS
+        if self.always_on_lateral:
+          self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.ALWAYS_ON_LATERAL
+        self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.RAISE_LONGITUDINAL_LIMITS_TO_ISO_MAXHandle HW and system malfunctions
+        
     # Order is very intentional here. Be careful when modifying this.
     # All events here should at least have NO_ENTRY and SOFT_DISABLE.
     num_events = len(self.events)
