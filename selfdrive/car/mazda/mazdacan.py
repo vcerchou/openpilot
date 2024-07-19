@@ -159,9 +159,9 @@ def create_radar_command(packer, CP, frame, CC, CS):
 
   crz_ctrl["CRZ_ACTIVE"] = int(CC.longActive)
   crz_ctrl["ACC_ACTIVE_2"] = int(CC.longActive)
-  crz_ctrl["DISABLE_TIMER_1"] = 0
-  crz_ctrl["DISABLE_TIMER_2"] = 0
-
+  crz_ctrl["5_SEC_DISABLE_TIMER"] = 0
+  crz_ctrl["HANDS_OFF_STEERING"] = 0
+  
   ret.append(packer.make_can_msg("CRZ_INFO", 0, crz_info))
   ret.append(packer.make_can_msg("CRZ_CTRL", 0, crz_ctrl))
 
