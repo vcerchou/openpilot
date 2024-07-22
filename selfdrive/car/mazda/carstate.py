@@ -106,12 +106,13 @@ class CarState(CarStateBase):
 
     # TODO: the signal used for available seems to be the adaptive cruise signal, instead of the main on
     #       it should be used for carState.cruiseState.nonAdaptive instead
+    self.crz_info = copy.copy(cp_cam.vl["CRZ_INFO"])
+    self.crz_cntr = copy.copy(cp_cam.vl["CRZ_CTRL"])
     ret.cruiseState.available = cp.vl["PEDALS"]["CRZ_AVAILABLE"] == 1
     ret.cruiseState.enabled = cp.vl["PEDALS"]["ACC_ACTIVE"] == 1
     ret.cruiseState.standstill = cp.vl["PEDALS"]["STANDSTILL"] == 1
     ret.cruiseState.speed = cp.vl["CRZ_EVENTS"]["CRZ_SPEED"] * CV.KPH_TO_MS
-    self.crz_info = copy.copy(cp_cam.vl["CRZ_INFO"])
-    self.crz_cntr = copy.copy(cp_cam.vl["CRZ_CTRL"])
+
     
     if ret.cruiseState.enabled:
       if not self.lkas_allowed_speed and self.acc_active_last:
