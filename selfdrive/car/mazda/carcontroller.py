@@ -68,8 +68,8 @@ class CarController(CarControllerBase):
     # send steering command
     can_sends.append(mazdacan.create_ti_steering_control(self.packer, self.CP,
                                                       self.frame, ti_apply_steer))
-    can_sends.append(mazdacan.create_steering_control(self.packer, self.CP,
-                                                      self.frame, apply_steer, CS.cam_lkas))
+    can_sends.append(mazdacan.create_steering_control(self.packer, self.frame, 
+                                                      apply_steer, CS.cam_lkas))
 
     """ACC RADAR COMMAND"""                                                    
     if self.frame % 2 == 0:

@@ -140,7 +140,7 @@ def create_button_cmd(packer, CP, counter, button):
 
     return packer.make_can_msg("CRZ_BTNS", 0, values)
 
-def create_radar_command(packer, CP, frame, CC, CS):
+def create_radar_command(packer, frame, CC, CS):
   accel = 0
   ret = []
   crz_ctrl = CS.crz_cntr
