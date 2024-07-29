@@ -22,6 +22,7 @@ class CarState(CarStateBase):
 
     self.prev_distance_button = 0
     self.distance_button = 0
+    self.cam_lkas = 0
 
     self.ti_ramp_down = False
     self.ti_version = 1

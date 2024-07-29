@@ -7,7 +7,6 @@
 #define MAZDA_STEER_TORQUE  0x240
 #define MAZDA_ENGINE_DATA   0x202
 #define MAZDA_PEDALS        0x165
-#define MAZDA_CRZ_EVENTS    0x21F
 
 // Radar
 #define MAZDA_CRZ_CTRL      0x21c
