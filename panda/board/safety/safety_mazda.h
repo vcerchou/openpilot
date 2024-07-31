@@ -49,7 +49,6 @@ RxCheck mazda_rx_checks[] = {
 };
 
 RxCheck mazda_ti_rx_checks[] = {
-  {.msg = {{MAZDA_CRZ_CTRL,     2, 8, .frequency = 50U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_CRZ_BTNS,     0, 8, .frequency = 10U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_STEER_TORQUE, 0, 8, .frequency = 83U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_ENGINE_DATA,  0, 8, .frequency = 100U}, { 0 }, { 0 }}},
