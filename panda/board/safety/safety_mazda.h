@@ -41,19 +41,11 @@ const CanMsg MAZDA_TX_MSGS[] = {{MAZDA_LKAS, 0, 8}, {MAZDA_CRZ_BTNS, 0, 8}, {MAZ
                                 {MAZDA_RADAR_499, 0, 8}};
 
 RxCheck mazda_rx_checks[] = {
-  {.msg = {{MAZDA_CRZ_CTRL,     0, 8, .frequency = 50U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_CRZ_BTNS,     0, 8, .frequency = 10U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_STEER_TORQUE, 0, 8, .frequency = 83U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_ENGINE_DATA,  0, 8, .frequency = 100U}, { 0 }, { 0 }}},
   {.msg = {{MAZDA_PEDALS,       0, 8, .frequency = 50U}, { 0 }, { 0 }}},
-};
-
-RxCheck mazda_ti_rx_checks[] = {
-  {.msg = {{MAZDA_CRZ_BTNS,     0, 8, .frequency = 10U}, { 0 }, { 0 }}},
-  {.msg = {{MAZDA_STEER_TORQUE, 0, 8, .frequency = 83U}, { 0 }, { 0 }}},
-  {.msg = {{MAZDA_ENGINE_DATA,  0, 8, .frequency = 100U}, { 0 }, { 0 }}},
-  {.msg = {{MAZDA_PEDALS,       0, 8, .frequency = 50U}, { 0 }, { 0 }}},
-  {.msg = {{TI_STEER_TORQUE,    1, 8, .frequency = 50U}, { 0 }, { 0 }}},
+  {.msg = {{TI_STEER_TORQUE,    1, 8, .frequency = 50U}, { 0 }, { 0 }}}, 
 };
 
 // track msgs coming from OP so that we know what CAM msgs to drop and what to forward
