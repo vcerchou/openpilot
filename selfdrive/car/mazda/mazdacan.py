@@ -165,7 +165,7 @@ def create_radar_command(packer, frame, CP, CC, CS):
   ret.append(packer.make_can_msg("CRZ_INFO", 0, crz_info))
   ret.append(packer.make_can_msg("CRZ_CTRL", 0, crz_ctrl))
 
-  if (frame % 10 == 0):
+  if int(frame % 10 == 0):
     for addr in range(361,367):
       addr_name = f"RADAR_{addr}"
       msg = CS.cp_cam.vl[addr_name]
