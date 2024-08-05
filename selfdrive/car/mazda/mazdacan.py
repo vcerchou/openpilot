@@ -1,5 +1,5 @@
 from openpilot.selfdrive.car.mazda.values import Buttons, MazdaFlags
-
+from openpilot.common.numpy_fast import clip
 
 def create_steering_control(packer, CP, frame, apply_steer, lkas):
 
@@ -140,6 +140,15 @@ def create_button_cmd(packer, CP, counter, button):
 
     return packer.make_can_msg("CRZ_BTNS", 0, values)
 
+STATIC_DATA_21B = [0x01FFE000, 0x00000000]
+STATIC_DATA_361 = [0xFFF7FEFE, 0x1FC]
+STATIC_DATA_362 = [0xFFF7FEFE, 0x1FC]
+STATIC_DATA_363 = [0xFFF7FEFE, 0x1FC0000]
+STATIC_DATA_364 = [0xFFF7FEFE, 0x1FC0000]
+STATIC_DATA_365 = [0xFFF7FE7F, 0xFBFF3FC]
+STATIC_DATA_366 = [0xFFF7FE7F, 0xFBFF3FC]
+static_data_list = [STATIC_DATA_361, STATIC_DATA_362, STATIC_DATA_363, STATIC_DATA_364, STATIC_DATA_365, STATIC_DATA_366]
+
 def create_radar_command(packer, frame, CP, CC, CS):
   accel = 0
   ret = []
@@ -166,14 +175,23 @@ def create_radar_command(packer, frame, CP, CC, CS):
   ret.append(packer.make_can_msg("CRZ_CTRL", 0, crz_ctrl))
 
   if (frame % 10 == 0):
-    for addr in range(361,367):
+    for i, addr in enumerate(range(361,367)):
       addr_name = f"RADAR_{addr}"
       msg = CS.cp_cam.vl[addr_name]
       values = {
-        "MSGS_1" : int(msg["MSGS_1"]),
-        "MSGS_2" : int(msg["MSGS_2"]),
-        "CTR"    : int(msg["CTR"])
-      } 
+        "MSGS_1" : static_data_list[i][0],
+        "MSGS_2" : static_data_list[i][1],
+        "CTR"    : int(msg["CTR"]) #frame % 16
+      }
+      if addr == 361:
+        values.update({
+          "INVERSE_SPEED" : int(CS.out.vEgo * -4.4),
+          "BIT" : 1,
+        })
+      if addr == 362:
+        values.update({  
+          "CLIPPED_STEER_ANGLE" : int(clip(steer_angle, 0, 4092)),
+        })
       ret.append(packer.make_can_msg(addr_name, 0, values))
 
   return ret
