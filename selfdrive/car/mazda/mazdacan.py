@@ -173,7 +173,9 @@ def create_radar_command(packer, frame, CP, CC, CS):
   
   ret.append(packer.make_can_msg("CRZ_INFO", 0, crz_info))
   ret.append(packer.make_can_msg("CRZ_CTRL", 0, crz_ctrl))
-
+  # convert steering angle to radar units and clip to range
+  steer_angle = (CS.out.steeringAngleDeg *-17.4) + 2048
+  
   if (frame % 10 == 0):
     for i, addr in enumerate(range(361,367)):
       addr_name = f"RADAR_{addr}"
